@@ -56,14 +56,30 @@ MomHealPokemon:
 	call GBFadeOutToWhite
 	call ReloadMapData
 	predef HealParty
+
+	ld a, [wAudioROMBank]
+	cp BANK("Audio Engine 3")
+	ld [wAudioSavedROMBank], a
+	jr nz, .next
+	ld a, SFX_STOP_ALL_MUSIC
+	ld [wNewSoundID], a
+	call PlaySound
+	ld a, BANK(Music_PkmnHealed)
+	ld [wAudioROMBank], a
+.next
 	ld a, MUSIC_PKMN_HEALED
 	ld [wNewSoundID], a
 	call PlaySound
-.next
+.loop
 	ld a, [wChannelSoundIDs]
 	cp MUSIC_PKMN_HEALED
-	jr z, .next
+	jr z, .loop
+	xor a
+	ld [wAudioFadeOutControl], a
+	ld a, [wAudioSavedROMBank]
+	ld [wAudioROMBank], a
 	ld a, [wMapMusicSoundID]
+	ld [wLastMusicSoundID], a
 	ld [wNewSoundID], a
 	call PlaySound
 	call GBFadeInFromWhite
