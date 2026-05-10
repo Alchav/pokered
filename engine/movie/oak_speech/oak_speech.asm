@@ -77,17 +77,26 @@ OakSpeech:
 	;ld a, $FF ; [wd732]
 	;bit 1, a ; possibly a debug mode bit
 .Archipelago_Skip_Player_Name_1
-    ld a, 1
-    and a
-    jr nz, .skipPlayerName
+	ld a, 1
+	and a
+	jr nz, .skipPlayerName
+	ld de, RedPicFront
+	lb bc, BANK(RedPicFront), $00
+	call IntroDisplayPicCenteredOrUpperRight
+	call MovePicLeft
 	ld hl, OakSpeechText1
 	call PrintText
 	call ChoosePlayerName
 .skipPlayerName
 .Archipelago_Skip_Rival_Name_1
-    ld a, 1
-    and a
-    jr nz, .skipRivalName
+	ld a, 1
+	and a
+	jr nz, .skipRivalName
+	call ClearScreen
+	ld de, Rival1Pic
+	lb bc, BANK(Rival1Pic), $00
+	call IntroDisplayPicCenteredOrUpperRight
+	call FadeInIntroPic
 	ld hl, OakSpeechText2
 	call PrintText
 	call ChooseRivalName
