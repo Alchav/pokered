@@ -67,7 +67,7 @@ OakSpeech:
 	ld a, $00
 	ld c, a
 	ld b, FLAG_SET
-	ld hl, wTownVisitedFlag
+	ld hl, wTownVisitedFlag   ; mark town as visited (for flying)
 	predef FlagActionPredef
 	ld a, [wDefaultMap]
 	ld [wDestinationMap], a
@@ -78,6 +78,10 @@ OakSpeech:
 	ld a, 1
 	and a
 	jr nz, .skipPlayerName
+	ld de, RedPicFront
+	lb bc, BANK(RedPicFront), $00
+	call IntroDisplayPicCenteredOrUpperRight
+	call MovePicLeft
 	ld hl, OakSpeechText1
 	call PrintText
 	call ChoosePlayerName
@@ -86,14 +90,16 @@ OakSpeech:
 	ld a, 1
 	and a
 	jr nz, .skipRivalName
+	call ClearScreen
+	ld de, Rival1Pic
+	lb bc, BANK(Rival1Pic), $00
+	call IntroDisplayPicCenteredOrUpperRight
+	call FadeInIntroPic
 	ld hl, OakSpeechText2
 	call PrintText
 	call ChooseRivalName
 .skipRivalName
 	jp .skipChoosingNames
-	ld a, [wd732]
-	bit 1, a ; possibly a debug mode bit
-	jp nz, .skipChoosingNames
 	ld de, ProfOakPic
 	lb bc, BANK(ProfOakPic), $00
 	call IntroDisplayPicCenteredOrUpperRight
@@ -136,7 +142,7 @@ OakSpeech:
 	lb bc, BANK(RedPicFront), $00
 	call IntroDisplayPicCenteredOrUpperRight
 	call GBFadeInFromWhite
-	ld a, [wd72d]
+	ld a, $FF ;[wd72d]
 	and a
 	jr nz, .next
 	ld hl, OakSpeechText3
@@ -193,8 +199,7 @@ OakSpeechText1:
 	text_end
 OakSpeechText2:
 	text_far _OakSpeechText2A
-	sound_cry_pikachu
-	text_far _OakSpeechText2B
+
 	text_end
 IntroducePlayerText:
 	text_far _IntroducePlayerText

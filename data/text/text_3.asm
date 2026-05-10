@@ -433,21 +433,13 @@ _NotEnoughMemoryText::
 	done
 
 _OakSpeechText1::
-	text "Hello there!"
-	line "Welcome to the"
-	cont "world of #MON!"
-
-	para "My name is OAK!"
-	line "People call me"
-	cont "the #MON PROF!"
+	text "What's your name?"
+	prompt
+_OakSpeechText2A::
+	text "What's your"
+	line "rival's name?"
 	prompt
 
-_OakSpeechText2A::
-	text "This world is"
-	line "inhabited by"
-	cont "creatures called"
-	cont "#MON!@"
-	text_end
 
 _OakSpeechText2B::
 	text $51,"For some people,"
