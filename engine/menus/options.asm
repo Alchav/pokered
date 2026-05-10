@@ -20,6 +20,7 @@ DisplayOptionMenu_:
 
 GetOptionPointer:
 	ld a, [wOptionsCursorLocation]
+	call GetOptionsMenuTableIndex
 	ld e, a
 	ld d, $0
 	ld hl, OptionMenuJumpTable
@@ -40,80 +41,104 @@ OptionMenuJumpTable:
 	dw OptionsMenu_SpeakerSettings
 	dw OptionsMenu_Cancel
 
+OptionBattleStyleInGame:
+.Archipelago_Option_Battle_Style_In_Game_0
+	db 0
+
+GetOptionsMenuTableIndex:
+	ld d, a
+	ld a, [OptionBattleStyleInGame]
+	and a
+	ld a, d
+	ret nz
+	cp 2
+	ret c
+	inc a
+	ret
+
+GetOptionsMenuDisplayIndex:
+	ld d, a
+	ld a, [OptionBattleStyleInGame]
+	and a
+	ld a, d
+	ret nz
+	cp 6
+	ret nz
+	inc a
+	ret
+
+GetLastOptionsMenuCursor:
+	ld a, [OptionBattleStyleInGame]
+	and a
+	ld a, 6
+	ret z
+	ld a, 7
+	ret
+
+GetOptionsMenuOptionCount:
+	ld a, [OptionBattleStyleInGame]
+	and a
+	ld c, 6
+	ret z
+	ld c, 7
+	ret
+
+GetOptionsMenuValueCoordX14:
+	hlcoord 14, 2
+	jr GetOptionsMenuValueCoord
+
+GetOptionsMenuValueCoordX8:
+	hlcoord 8, 2
+
+GetOptionsMenuValueCoord:
+	ld bc, SCREEN_WIDTH * 2
+	ld a, [wOptionsCursorLocation]
+	jp AddNTimes
+
 OptionsMenu_TextSpeed:
-	call GetTextSpeed
 	ldh a, [hJoy5]
 	bit 4, a ; right
 	jr nz, .pressedRight
 	bit 5, a
 	jr nz, .pressedLeft
-	jr .nonePressed
+	jr .display
 .pressedRight
-	ld a, c
-	cp $2
-	jr c, .increase
-	ld c, $ff
-.increase
-	inc c
-	ld a, e
+	ld a, [wOptions]
+	and $f
+	inc a
+	and $f
 	jr .save
 .pressedLeft
-	ld a, c
-	and a
-	jr nz, .decrease
-	ld c, $3
-.decrease
-	dec c
-	ld a, d
+	ld a, [wOptions]
+	and $f
+	dec a
+	and $f
 .save
 	ld b, a
 	ld a, [wOptions]
 	and $f0
 	or b
 	ld [wOptions], a
-.nonePressed
-	ld b, $0
-	ld hl, TextSpeedStringsPointerTable
-	add hl, bc
-	add hl, bc
-	ld e, [hl]
-	inc hl
-	ld d, [hl]
-	hlcoord 14, 2
-	call PlaceString
-	and a
-	ret
-
-TextSpeedStringsPointerTable:
-	dw FastText
-	dw MidText
-	dw SlowText
-
-FastText:
-	db "FAST@"
-MidText:
-	db "MID @"
-SlowText:
-	db "SLOW@"
-
-GetTextSpeed:
+.display
 	ld a, [wOptions]
 	and $f
-	cp $5
-	jr z, .slowTextOption
-	cp $1
-	jr z, .fastTextOption
-; mid text option
-	ld c, $1
-	lb de, 1, 5
-	ret
-.slowTextOption
-	ld c, $2
-	lb de, 3, 1
-	ret
-.fastTextOption
-	ld c, $0
-	lb de, 5, 3
+	push af
+	call GetOptionsMenuValueCoordX14
+	pop af
+	cp 10
+	jr c, .singleDigit
+	ld [hl], "1"
+	inc hl
+	sub 10
+	add "0"
+	ld [hl], a
+	jr .done
+.singleDigit
+	add "0"
+	ld [hli], a
+	ld [hl], " "
+.done
+	and a
 	ret
 
 OptionsMenu_BattleAnimations:
@@ -137,7 +162,7 @@ OptionsMenu_BattleAnimations:
 	ld e, [hl]
 	inc hl
 	ld d, [hl]
-	hlcoord 14, 4
+	call GetOptionsMenuValueCoordX14
 	call PlaceString
 	and a
 	ret
@@ -173,7 +198,7 @@ OptionsMenu_BattleStyle:
 	ld e, [hl]
 	inc hl
 	ld d, [hl]
-	hlcoord 14, 6
+	call GetOptionsMenuValueCoordX14
 	call PlaceString
 	and a
 	ret
@@ -208,7 +233,7 @@ OptionsMenu_AutoRun:
 	ld e, [hl]
 	inc hl
 	ld d, [hl]
-	hlcoord 14, 8
+	call GetOptionsMenuValueCoordX14
 	call PlaceString
 	and a
 	ret
@@ -251,7 +276,7 @@ OptionsMenu_SpeakerSettings:
 	ld e, [hl]
 	inc hl
 	ld d, [hl]
-	hlcoord 8, 14
+	call GetOptionsMenuValueCoordX8
 	call PlaceString
 	and a
 	ret
@@ -307,7 +332,7 @@ OptionsMenu_GBPrinterBrightness:
 	ld e, [hl]
 	inc hl
 	ld d, [hl]
-	hlcoord 8, 10
+	call GetOptionsMenuValueCoordX8
 	call PlaceString
 	and a
 	ret
@@ -351,7 +376,7 @@ OptionsMenu_APItemText:
 	ld e, [hl]
 	inc hl
 	ld d, [hl]
-	hlcoord 14, 12
+	call GetOptionsMenuValueCoordX14
 	call PlaceString
 	and a
 	ret
@@ -410,8 +435,10 @@ OptionsControl:
 	and a
 	ret
 .pressedDown
+	call GetLastOptionsMenuCursor
+	ld b, a
 	ld a, [hl]
-	cp $7
+	cp b
 	jr nz, .doNotWrapAround
 	ld [hl], $0
 	scf
@@ -424,7 +451,9 @@ OptionsControl:
 	ld a, [hl]
 	and a
 	jr nz, .regularDecrement
-	ld [hl], $8
+	call GetLastOptionsMenuCursor
+	inc a
+	ld [hl], a
 .regularDecrement
 	dec [hl]
 	scf
@@ -442,6 +471,7 @@ OptionsMenu_UpdateCursorPosition:
 	hlcoord 1, 2
 	ld bc, SCREEN_WIDTH * 2
 	ld a, [wOptionsCursorLocation]
+	call GetOptionsMenuDisplayIndex
 	call AddNTimes
 	ld [hl], "▶"
 	ret
@@ -451,14 +481,19 @@ InitOptionsMenu:
 	lb bc, SCREEN_HEIGHT - 2, SCREEN_WIDTH - 2
 	call TextBoxBorder
 	hlcoord 2, 2
+	ld a, [OptionBattleStyleInGame]
+	and a
 	ld de, AllOptionsText
+	jr nz, .gotOptionsText
+	ld de, AllOptionsTextNoBattleStyle
+.gotOptionsText
 	call PlaceString
 	hlcoord 2, 16
 	ld de, OptionMenuCancelText
 	call PlaceString
 	xor a
 	ld [wOptionsCursorLocation], a
-	ld c, 7 ; the number of options to loop through
+	call GetOptionsMenuOptionCount
 .loop
 	push bc
 	call GetOptionPointer ; updates the next option
@@ -478,6 +513,14 @@ AllOptionsText:
 	db "TEXT SPEED :"
 	next "ANIMATION  :"
 	next "BATTLESTYLE:"
+	next "AUTO RUN   :"
+	next "PRINT:"
+	next "AP TEXT    :"
+	next "SOUND:@"
+
+AllOptionsTextNoBattleStyle:
+	db "TEXT SPEED :"
+	next "ANIMATION  :"
 	next "AUTO RUN   :"
 	next "PRINT:"
 	next "AP TEXT    :"
