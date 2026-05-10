@@ -136,6 +136,7 @@ CeruleanCityScript1:
 	ld hl, CeruleanCityText_1966d
 	ld de, CeruleanCityText_19672
 	call SaveEndBattleTextPointers
+	EventBattleTrainersanity EVENT_BEAT_CERULEAN_RIVAL_ITEM
 	ld a, OPP_RIVAL1
 	ld [wCurOpponent], a
 	ld a, 3
@@ -274,6 +275,7 @@ CeruleanCityText2:
 	ld hl, CeruleanCityText_196ee
 	ld de, CeruleanCityText_196ee
 	call SaveEndBattleTextPointers
+	EventBattleTrainersanity EVENT_BEAT_CERULEAN_ROCKET_THIEF_ITEM
 	ldh a, [hSpriteIndexOrTextID]
 	ld [wSpriteIndex], a
 	call EngageMapTrainer
@@ -284,6 +286,7 @@ CeruleanCityText2:
 .beatRocketThief
 	ld hl, CeruleanCityText_196f3
 	call PrintText
+.Archipelago_Event_Rocket_Thief
 	lb bc, TM_DIG, 1
 	call GiveItem
 	jr c, .Success
@@ -337,7 +340,24 @@ CeruleanCityText5:
 CeruleanCityText11:
 CeruleanCityText6:
 	text_far _CeruleanCityText6
-	text_end
+	text_asm
+	ld a, [wYCoord]
+	cp 11
+	jp nz, TextScriptEnd
+	ld hl, CeruleanTrashedHouseWarpData + 2
+	ld a, [hli]
+	ld [wDestinationWarpID], a
+	ld a, [hl]
+	ldh [hWarpDestinationMap], a
+	ld a, CERULEAN_CITY
+	ld [wLastMap], a
+	ld [wWarpedFromWhichMap], a
+	xor a
+	ld [wWarpedFromWhichWarp], a
+	ld hl, wd72d
+	set 1, [hl]
+	set 3, [hl]
+	jp TextScriptEnd
 
 CeruleanCityText7:
 	text_asm
@@ -420,7 +440,73 @@ CeruleanCityText9:
 	text_end
 
 CeruleanCityText10:
-	text_far _CeruleanCityText10
+	text_asm
+	ld hl, wObtainedBadges
+	ld b, $1
+	call CountSetBits
+	ld a, [wNumSetBits]
+	ld [wUnusedCC5B], a
+	farcall GetKeyItemCount
+	ld hl, CeruleanCityTextCaveGuy
+	call PrintText
+	ld a, [wUnusedCC5B]
+.Archipelago_Option_Cerulean_Cave_Badges_1
+	cp 0
+	jr c, .dontLeave
+	ld a, [wUnusedD366]
+.Archipelago_Option_Cerulean_Cave_Key_Items_1
+	cp 0
+	jr nc, .leave
+.dontLeave
+	ld a, [wYCoord]
+	cp 11
+	jp nz, TextScriptEnd
+	ld hl, CeruleanCeruleanCaveWarpData + 2
+	ld a, [hli]
+	ld [wDestinationWarpID], a
+	ld a, [hl]
+	ldh [hWarpDestinationMap], a
+	ld a, CERULEAN_CITY
+	ld [wLastMap], a
+	ld [wWarpedFromWhichMap], a
+	ld a, $06
+	ld [wWarpedFromWhichWarp], a
+	ld hl, wd72d
+	set 1, [hl]
+	set 3, [hl]
+	jp TextScriptEnd
+.leave
+	call WaitForTextScrollButtonPress
+	ld hl, CeruleanCityCaveGuyLeaves
+	call PrintText
+	call GBFadeOutToBlack
+	ld a, HS_CERULEAN_CAVE_GUY
+	ld [wMissableObjectIndex], a
+	predef HideObject
+	call GBFadeInFromBlack
+	jp TextScriptEnd
+
+CeruleanCityTextCaveGuy:
+	text "To pass through,"
+	line "you need a total"
+	cont "of "
+.Archipelago_Text_Cerulean_Cave_Badges_0
+	db "0 badges and "
+.Archipelago_Text_Cerulean_Cave_Key_Items_1
+	cont "0 key items. "
+	para "You have @"
+	text_decimal wUnusedCC5B, 1, 1
+	text " badges"
+	line "and @"
+	text_decimal wUnusedD366, 1, 2
+	text " key items."
+	done
+
+CeruleanCityCaveGuyLeaves:
+	text "Oh, you've reached"
+	line "your goal!"
+	cont "I'm outta here!@"
+	text_waitbutton
 	text_end
 
 CeruleanCityText12:

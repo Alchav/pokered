@@ -60,13 +60,13 @@ ItemUsePtrTable:
 	dw UnusableItem      ; DOME_FOSSIL
 	dw UnusableItem      ; HELIX_FOSSIL
 	dw UnusableItem      ; SECRET_KEY
-	dw UnusableItem
+	dw UnusableItem      ; AP_ITEM
 	dw UnusableItem      ; BIKE_VOUCHER
 	dw ItemUseXAccuracy  ; X_ACCURACY
 	dw ItemUseEvoStone   ; LEAF_STONE
 	dw ItemUseCardKey    ; CARD_KEY
 	dw UnusableItem      ; NUGGET
-	dw UnusableItem      ; ??? PP_UP
+	dw ItemUsePC         ; LAPTOP
 	dw ItemUsePokedoll   ; POKE_DOLL
 	dw ItemUseMedicine   ; FULL_HEAL
 	dw ItemUseMedicine   ; REVIVE
@@ -100,6 +100,34 @@ ItemUsePtrTable:
 	dw ItemUsePPRestore  ; MAX_ETHER
 	dw ItemUsePPRestore  ; ELIXER
 	dw ItemUsePPRestore  ; MAX_ELIXER
+	dw UnusableItem      ; TEA
+	dw ItemUseCut        ; MASTER_SWORD
+	dw ItemUseFly        ; FLUTE
+	dw ItemUseStrength   ; TITANS_MITT
+	dw ItemUseFlash      ; LAMP
+	dw UnusableItem      ; PLANT_KEY
+	dw UnusableItem      ; MANSION_KEY
+	dw UnusableItem      ; HIDEOUT_KEY
+	dw ItemUseEvoStone   ; TRADE_STONE
+	dw UnusableItem      ; SAFARI_PASS
+	dw UnusableItem      ; POISON_TRAP
+	dw UnusableItem      ; PARALYZE_TRAP
+	dw UnusableItem      ; ICE_TRAP
+	dw UnusableItem      ; FIRE_TRAP
+	dw UnusableItem      ; TWENTY_COINS
+	dw UnusableItem      ; HUNDRED_COINS
+	dw ItemUseCardKey    ; CARD_KEY_2F
+	dw ItemUseCardKey    ; CARD_KEY_3F
+	dw ItemUseCardKey    ; CARD_KEY_4F
+	dw ItemUseCardKey    ; CARD_KEY_5F
+	dw ItemUseCardKey    ; CARD_KEY_6F
+	dw ItemUseCardKey    ; CARD_KEY_7F
+	dw ItemUseCardKey    ; CARD_KEY_8F
+	dw ItemUseCardKey    ; CARD_KEY_9F
+	dw ItemUseCardKey    ; CARD_KEY_10F
+	dw ItemUseCardKey    ; CARD_KEY_11F
+	dw UnusableItem      ; PROGRESSIVE_CARD_KEY
+	dw UnusableItem      ; SLEEP_TRAP
 
 ItemUseBall:
 
@@ -182,6 +210,7 @@ ItemUseBall:
 	cp POKEMON_TOWER_6F
 	jr nz, .loop
 	ld a, [wEnemyMonSpecies2]
+.Archipelago_Ghost_Battle5_1
 	cp RESTLESS_SOUL
 	ld b, $10 ; can't be caught value
 	jp z, .setAnimData
@@ -529,7 +558,7 @@ ItemUseBall:
 	cp BATTLE_TYPE_OLD_MAN ; is this the old man battle?
 	jp z, .oldManCaughtMon ; if so, don't give the player the caught Pokémon
 	cp BATTLE_TYPE_PIKACHU
-	jr z, .oldManCaughtMon ; same with Pikachu battle
+	jp z, .oldManCaughtMon ; same with Pikachu battle
 	ld hl, ItemUseBallText05
 	call PrintText
 
@@ -556,6 +585,7 @@ ItemUseBall:
 	ld hl, ItemUseBallText06
 	call PrintText
 	call ClearSprites
+	farcall registerDexSanity
 	ld a, [wEnemyMonSpecies]
 	ld [wd11e], a
 	predef ShowPokedexData
@@ -696,8 +726,83 @@ ItemUseBicycle:
 	ld [wWalkBikeSurfState], a
 	ret
 
+ItemUseCut:
+	ld a, [wIsInBattle]
+	and a
+	jp nz, ItemUseNotTime
+	ld a, [wObtainedBadges]
+	bit BIT_CASCADEBADGE, a
+	jp z, NewBadgeRequired
+	ld a, 1
+	ld [wArchipelagoFieldMoveItemUsed], a
+	predef UsedCut
+	xor a
+	ld [wArchipelagoFieldMoveItemUsed], a
+	ret
+
+ItemUseFly:
+	ld a, [wIsInBattle]
+	and a
+	jp nz, ItemUseNotTime
+	ld a, [wObtainedBadges]
+	bit BIT_THUNDERBADGE, a
+	jp z, NewBadgeRequired
+	call CheckIfInOutsideMap
+	jp nz, ItemUseNotTime
+	call ChooseFlyDestination
+	ld a, [wd732]
+	bit 3, a
+	jr nz, .flySelected
+	xor a
+	ld [wActionResultOrTookBattleTurn], a
+	ret
+.flySelected
+	call Func_1510
+	ret
+
+ItemUseStrength:
+	ld a, [wIsInBattle]
+	and a
+	jp nz, ItemUseNotTime
+	ld a, [wObtainedBadges]
+	bit BIT_RAINBOWBADGE, a
+	jp z, NewBadgeRequired
+	predef PrintStrengthTxt
+	ret
+
+ItemUseFlash:
+	ld a, [wIsInBattle]
+	and a
+	jp nz, ItemUseNotTime
+	ld a, [wObtainedBadges]
+	bit BIT_BOULDERBADGE, a
+	jp z, NewBadgeRequired
+	xor a
+	ld [wMapPalOffset], a
+	ld hl, FlashLightsAreaText
+	call PrintText
+	call GBPalWhiteOutWithDelay3
+	ret
+
 ; used for Surf out-of-battle effect
 ItemUseSurfboard:
+	ld a, [wObtainedBadges]
+.Archipelago_HM_Surf_Badge_a_0
+	bit BIT_SOULBADGE, a
+	jr nz, .hasSurfBadge
+.Archipelago_HM_Surf_Badge_b_1
+	bit BIT_SOULBADGE, a
+	jp z, NewBadgeRequired
+.hasSurfBadge
+	farcall IsSurfingAllowed
+	ld hl, wd728
+	bit 1, [hl]
+	res 1, [hl]
+	jr nz, .surfAllowed
+	xor a
+	ld [wActionResultOrTookBattleTurn], a
+	ret
+.surfAllowed
 	ld a, [wWalkBikeSurfState]
 	ld [wWalkBikeSurfStateCopy], a
 	cp 2 ; is the player already surfing?
@@ -782,6 +887,21 @@ SurfingGotOnText:
 
 SurfingNoPlaceToGetOffText:
 	text_far _SurfingNoPlaceToGetOffText
+	text_end
+
+FlashLightsAreaText:
+	text_far _FlashLightsAreaText
+	text_end
+
+NewBadgeRequired:
+	ld hl, NewBadgeRequiredText
+	call PrintText
+	xor a
+	ld [wActionResultOrTookBattleTurn], a
+	ret
+
+NewBadgeRequiredText:
+	text_far _NewBadgeRequiredText
 	text_end
 
 ItemUsePokedex:
@@ -895,6 +1015,18 @@ RefusingText:
 	text_far _RefusingText
 	text_end
 
+ItemUsePC:
+	ld a, [wIsInBattle]
+	and a
+	jp nz, ItemUseNotTime
+	ld a, SFX_TURN_ON_PC
+	call PlaySoundWaitForCurrent
+	call ReloadMapData
+	call UpdateSprites
+	ld b, BANK(ActivatePC)
+	ld hl, ActivatePC
+	jp bankswitchAndContinue
+
 ItemUseVitamin:
 	ld a, [wIsInBattle]
 	and a
@@ -956,7 +1088,7 @@ ItemUseMedicine:
 .checkItemType
 	ld a, [wcf91]
 	cp REVIVE
-	jr nc, .healHP ; if it's a Revive or Max Revive
+	jp nc, .healHP ; if it's a Revive or Max Revive
 	cp FULL_HEAL
 	jr z, .cureStatusAilment ; if it's a Full Heal
 	cp HP_UP
@@ -1008,7 +1140,17 @@ ItemUseMedicine:
 	ld de, wBattleMonStats
 	ld bc, NUM_STATS * 2
 	call CopyData ; copy party stats to in-battle stat data
+.Archipelago_Option_Fix_Combat_Bugs_Heal_Stat_Modifiers_1
+	ld a, 0
+	and a
+	jr nz, .fixStatModifiers
 	predef DoubleOrHalveSelectedStats
+	jp .doneHealing
+.fixStatModifiers
+	xor a
+	ld [wCalculateWhoseStats], a
+	callfar CalculateModifiedStats
+	callfar ApplyBadgeStatBoosts
 	jp .doneHealing
 
 .healHP
@@ -1668,6 +1810,8 @@ ItemUseEscapeRope:
 INCLUDE "data/tilesets/escape_rope_tilesets.asm"
 
 ItemUseRepel:
+	ld a, REPEL
+	ld [wRepelItemUsed], a
 	ld b, 100
 
 ItemUseRepelCommon:
@@ -1751,6 +1895,8 @@ ItemUsePokedoll:
 	dec a
 	jp nz, ItemUseNotTime
 	ld a, $01
+.Archipelago_Option_Silph_Scope_Skip_0
+	ld [wBattleResult], a
 	ld [wEscapedFromBattle], a
 	jp PrintItemUseTextAndRemoveItem
 
@@ -1772,10 +1918,14 @@ ItemUseGuardSpec:
 	jp PrintItemUseTextAndRemoveItem
 
 ItemUseSuperRepel:
+	ld a, SUPER_REPEL
+	ld [wRepelItemUsed], a
 	ld b, 200
 	jp ItemUseRepelCommon
 
 ItemUseMaxRepel:
+	ld a, MAX_REPEL
+	ld [wRepelItemUsed], a
 	ld b, 250
 	jp ItemUseRepelCommon
 
@@ -2020,6 +2170,7 @@ CoinCaseNumCoinsText:
 ItemUseOldRod:
 	call FishingInit
 	jp c, ItemUseNotTime
+.Archipelago_Wild_Old_Rod
 	lb bc, 5, MAGIKARP
 	ld a, $1 ; set bite
 	jr RodResponse
@@ -2029,11 +2180,9 @@ ItemUseGoodRod:
 	jp c, ItemUseNotTime
 .RandomLoop
 	call Random
-	srl a
-	jr c, .SetBite
 	and %11
 	cp 2
-	jr nc, .RandomLoop
+	jr nc, .RandomLoop ; retry until result is 0 or 1
 	; choose which monster appears
 	ld hl, GoodRodMons
 	add a
@@ -2044,10 +2193,7 @@ ItemUseGoodRod:
 	inc hl
 	ld c, [hl]
 	and a
-.SetBite
-	ld a, 0
-	rla
-	xor 1
+	ld a, 1
 	jr RodResponse
 
 INCLUDE "data/wild/good_rod.asm"
@@ -2064,13 +2210,7 @@ ItemUseSuperRod:
 	and a ; are there fish in the map?
 	jr z, DoNotGenerateFishingEncounter ; if not, do not generate an encounter
 	ld a, $1
-	ld [wRodResponse], a
-	call Random
-	and $1
-	jr nz, RodResponse
-	xor a
-	ld [wRodResponse], a
-	jr DoNotGenerateFishingEncounter
+	jr RodResponse
 
 RodResponse:
 	ld [wRodResponse], a
@@ -2319,6 +2459,9 @@ ItemUsePPRestore:
 ; are used to count how many PP Ups have been used on the move. So, Max Ethers
 ; and Max Elixirs will not be detected as having no effect on a move with full
 ; PP if the move has had any PP Ups used on it.
+.Archipelago_Option_Fix_Combat_Bugs_PP_Restore_0
+	nop
+	nop
 	cp b ; does current PP equal max PP?
 	ret z
 	jr .storeNewAmount
@@ -2510,6 +2653,7 @@ ItemUseTMHM:
 
 	ld a, [wcf91]
 	call IsItemHM
+.Archipelago_Option_Reusable_TMs
 	ret c
 	jp RemoveUsedItem
 
@@ -2535,6 +2679,11 @@ PrintItemUseTextAndRemoveItem:
 	ld a, SFX_HEAL_AILMENT
 	call PlaySound
 	call WaitForTextScrollButtonPress ; wait for button press
+	ld a, [wDontConsumeRepel]
+	and a
+	xor a
+	ld [wDontConsumeRepel], a
+	ret nz
 
 RemoveUsedItem:
 	ld hl, wNumBagItems

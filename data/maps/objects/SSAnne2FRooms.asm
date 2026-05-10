@@ -23,9 +23,11 @@ SSAnne2FRooms_Object:
 	object_event  0, 14, SPRITE_GENTLEMAN, STAY, RIGHT, 3, OPP_GENTLEMAN, 5
 	object_event  2, 11, SPRITE_COOLTRAINER_F, STAY, DOWN, 4, OPP_LASS, 12
 	object_event  1,  2, SPRITE_GENTLEMAN, STAY, DOWN, 5 ; person
+.Archipelago_Missable_SS_Anne_2F_Item_1
 	object_event 12,  1, SPRITE_POKE_BALL, STAY, NONE, 6, MAX_ETHER
 	object_event 21,  2, SPRITE_GENTLEMAN, STAY, DOWN, 7 ; person
 	object_event 22,  1, SPRITE_GRAMPS, STAY, DOWN, 8 ; person
+.Archipelago_Missable_SS_Anne_2F_Item_2
 	object_event  0, 12, SPRITE_POKE_BALL, STAY, NONE, 9, RARE_CANDY
 	object_event 12, 12, SPRITE_GENTLEMAN, STAY, DOWN, 10 ; person
 	object_event 11, 14, SPRITE_LITTLE_BOY, STAY, NONE, 11 ; person

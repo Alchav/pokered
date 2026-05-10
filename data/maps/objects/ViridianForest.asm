@@ -24,8 +24,11 @@ ViridianForest_Object:
 	object_event  2, 18, SPRITE_YOUNGSTER, STAY, LEFT, 4, OPP_BUG_CATCHER, 3
 	object_event  2, 41, SPRITE_COOLTRAINER_F, STAY, NONE, 5, OPP_LASS, 19
 	object_event 13, 17, SPRITE_YOUNGSTER, STAY, RIGHT, 6, OPP_BUG_CATCHER, 15
+.Archipelago_Missable_Viridian_Forest_Item_1
 	object_event 25, 11, SPRITE_POKE_BALL, STAY, NONE, 7, POTION
+.Archipelago_Missable_Viridian_Forest_Item_2
 	object_event 12, 29, SPRITE_POKE_BALL, STAY, NONE, 8, POTION
+.Archipelago_Missable_Viridian_Forest_Item_3
 	object_event  1, 31, SPRITE_POKE_BALL, STAY, NONE, 9, POKE_BALL
 	object_event 27, 40, SPRITE_YOUNGSTER, STAY, NONE, 10 ; person
 

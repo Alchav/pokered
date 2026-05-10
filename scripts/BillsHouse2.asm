@@ -1,21 +1,9 @@
 Func_f2418::
-	ld hl, BillsHouseText_f243b
-	call PrintText
-	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
-	jr nz, .asm_f2433
-.asm_f2427
 	ld hl, BillsHouseText_f2440
 	call PrintText
 	ld a, $2
 	ld [wBillsHouseCurScript], a
 	ret
-
-.asm_f2433
-	ld hl, BillsHouseText_f2445
-	call PrintText
-	jr .asm_f2427
 
 BillsHouseText_f243b:
 	text_far _BillsHouseText_1e865
@@ -32,8 +20,7 @@ BillsHouseText_f2445:
 Func_f244a::
 	CheckEvent EVENT_GOT_SS_TICKET
 	jr nz, .asm_f247e
-	ld hl, BillsHouseText_f248c
-	call PrintText
+.Archipelago_Event_Bill
 	lb bc, S_S_TICKET, 1
 	call GiveItem
 	jr nc, .asm_f2485
@@ -46,6 +33,7 @@ Func_f244a::
 	ld a, HS_CERULEAN_GUARD_2
 	ld [wMissableObjectIndex], a
 	predef HideObject
+	ret
 .asm_f247e
 	ld hl, BillsHouseText_f249d
 	call PrintText
@@ -63,7 +51,6 @@ BillsHouseText_f248c:
 BillsHouseText_f2491:
 	text_far _SSTicketReceivedText
 	sound_get_key_item
-	text_promptbutton
 	text_end
 
 BillsHouseText_f2498:

@@ -514,6 +514,8 @@ Func_fc7aa:
 	ld [hl], a
 	cp $4
 	jp z, Func_fca0a
+	call IsPlayerRunning
+	jp c, FastPikachuFollow
 	call AreThereAtLeastTwoStepsInPikachuFollowCommandBuffer
 	jp c, FastPikachuFollow
 	jp NormalPikachuFollow
@@ -1471,6 +1473,32 @@ AreThereAtLeastTwoStepsInPikachuFollowCommandBuffer:
 
 .set_carry
 	scf
+	ret
+
+IsPlayerRunning:
+	ld a, [wWalkBikeSurfState]
+	and a
+	jr nz, .notRunning
+	call IsPlayerCharacterBeingControlledByGame
+	jr nz, .notRunning
+	ld a, [wArchipelagoOptions]
+	bit BIT_AUTO_RUN_OFF, a
+	jr z, .autoRun
+	ldh a, [hJoyHeld]
+	bit BIT_B_BUTTON, a
+	jr z, .notRunning
+	scf
+	ret
+
+.autoRun
+	ldh a, [hJoyHeld]
+	bit BIT_B_BUTTON, a
+	jr nz, .notRunning
+	scf
+	ret
+
+.notRunning
+	and a
 	ret
 
 WillPikachuSpawnOnTheScreen:

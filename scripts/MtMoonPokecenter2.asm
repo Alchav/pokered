@@ -1,6 +1,4 @@
 MagikarpSalesman::
-	CheckEvent EVENT_BOUGHT_MAGIKARP, 1
-	jp c, .alreadyBoughtMagikarp
 	ld hl, .Text1
 	call PrintText
 	ld a, MONEY_BOX
@@ -21,6 +19,7 @@ MagikarpSalesman::
 	ld hl, .NoMoneyText
 	jr .printText
 .enoughMoney
+.Archipelago_Gift_Magikarp_2
 	lb bc, MAGIKARP, 5
 	call GivePokemon
 	jr nc, .done

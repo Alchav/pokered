@@ -1,5 +1,6 @@
 VictoryRoad1FWildMons:
 	def_grass_wildmons 15 ; encounter rate
+.Archipelago_Wild_VictoryRoad1F_0
 	db 26, GEODUDE
 	db 31, GEODUDE
 	db 36, GEODUDE

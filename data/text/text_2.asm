@@ -211,21 +211,21 @@ _RockTunnelPokecenterGuyText::
 	cont "LAVENDER TOWN!"
 	done
 
-_UnusedBenchGuyText1::
-	text "I wish I could"
-	line "catch #MON."
-	done
+;_UnusedBenchGuyText1::
+;	text "I wish I could"
+;	line "catch #MON."
+;	done
 
-_UnusedBenchGuyText2::
-	text "I'm tired from"
-	line "all the fun..."
-	done
+;_UnusedBenchGuyText2::
+;	text "I'm tired from"
+;	line "all the fun..."
+;	done
 
-_UnusedBenchGuyText3::
-	text "SILPH's manager"
-	line "is hiding in the"
-	cont "SAFARI ZONE."
-	done
+;_UnusedBenchGuyText3::
+;	text "SILPH's manager"
+;	line "is hiding in the"
+;	cont "SAFARI ZONE."
+;	done
 
 _VermilionPokecenterGuyText::
 	text "It is true that a"
@@ -375,38 +375,129 @@ _CinnabarGymQuizShortIntroText::
 	done
 
 _CinnabarQuizQuestionsText1::
-	text "CATERPIE evolves"
-	line "into BUTTERFREE?"
+.Archipelago_Text_Quiz_A_1
+	text "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
 	done
 
 _CinnabarQuizQuestionsText2::
-	text "There are 9"
-	line "certified #MON"
-	cont "LEAGUE BADGEs?"
+.Archipelago_Text_Quiz_B_1
+	text "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
 	done
 
 _CinnabarQuizQuestionsText3::
-	text "POLIWAG evolves 3"
-	line "times?"
+.Archipelago_Text_Quiz_C_1
+	text "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
 	done
 
 _CinnabarQuizQuestionsText4::
-	text "Are thunder moves"
-	line "effective against"
-	cont "ground element-"
-	cont "type #MON?"
+.Archipelago_Text_Quiz_D_1
+	text "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
 	done
 
 _CinnabarQuizQuestionsText5::
-	text "#MON of the"
-	line "same kind and"
-	cont "level are not"
-	cont "identical?"
+.Archipelago_Text_Quiz_E_1
+	text "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
 	done
 
 _CinnabarQuizQuestionsText6::
-	text "TM28 contains"
-	line "TOMBSTONER?"
+.Archipelago_Text_Quiz_F_1
+	text "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
+	db "                  "
 	done
 
 _CinnabarGymQuizCorrectText::
@@ -448,33 +539,6 @@ _BillsHousePokemonListText1::
 _BillsHousePokemonListText2::
 	text "Which #MON do"
 	line "you want to see?"
-	done
-
-_OakLabEmailText::
-	text "There's an e-mail"
-	line "message here!"
-
-	para "..."
-
-	para "Calling all"
-	line "#MON trainers!"
-
-	para "The elite trainers"
-	line "of #MON LEAGUE"
-	cont "are ready to take"
-	cont "on all comers!"
-
-	para "Bring your best"
-	line "#MON and see"
-	cont "how you rate as a"
-	cont "trainer!"
-
-	para "#MON LEAGUE HQ"
-	line "INDIGO PLATEAU"
-
-	para "PS: PROF.OAK,"
-	line "please visit us!"
-	cont "..."
 	done
 
 _GameCornerCoinCaseText::
@@ -771,15 +835,15 @@ _VermilionGymTrashSuccessText1::
 	line "lock opened!@"
 	text_end
 
-_VermilionGymTrashSuccessText2::
-	text "Hey! There's"
-	line "another switch"
-	cont "under the trash!"
-	cont "Turn it on!"
-	prompt
+;_VermilionGymTrashSuccessText2::
+;	text "Hey! There's"
+;	line "another switch"
+;	cont "under the trash!"
+;	cont "Turn it on!"
+;	prompt
 
 _VermilionGymTrashSuccessText3::
-	text "The 2nd electric"
+	text "The electric"
 	line "lock opened!"
 
 	para "The motorized door"
@@ -792,19 +856,6 @@ _VermilionGymTrashFailText::
 	cont "Hey! The electric"
 	cont "locks were reset!@"
 	text_end
-
-_FoundHiddenItemText::
-	text "<PLAYER> found"
-	line "@"
-	text_ram wcd6d
-	text "!@"
-	text_end
-
-_HiddenItemBagFullText::
-	text "But, <PLAYER> has"
-	line "no more room for"
-	cont "other items!"
-	done
 
 _FoundHiddenCoinsText::
 	text "<PLAYER> found"
@@ -940,7 +991,7 @@ _Rival1WinText::
 
 _PlayerBlackedOutText2::
 	text "<PLAYER> is out of"
-	line "useable #MON!"
+	line "usable #MON!"
 
 	para "<PLAYER> blacked"
 	line "out!"
@@ -1270,7 +1321,7 @@ _BoostedText::
 	text_end
 
 _ExpPointsText::
-	text_decimal wExpAmountGained, 2, 4
+	text_decimal wExpAmountGained, 2, 5
 	text " EXP. Points!"
 	prompt
 

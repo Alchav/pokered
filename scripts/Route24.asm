@@ -108,22 +108,23 @@ Route24Text1:
 	ResetEvent EVENT_NUGGET_REWARD_AVAILABLE
 	CheckEvent EVENT_GOT_NUGGET
 	jr nz, .got_item
-	ld hl, Route24Text_51510
-	call PrintText
+	;ld hl, Route24Text_51510
+	;call PrintText
+.Archipelago_Event_Nugget_Bridge
 	lb bc, NUGGET, 1
 	call GiveItem
 	jr nc, .bag_full
 	SetEvent EVENT_GOT_NUGGET
 	ld hl, Route24Text_5151a
 	call PrintText
-	ld hl, Route24Text_51526
-	call PrintText
+	;ld hl, Route24Text_51526
+	;call PrintText
 	ld hl, wd72d
 	set 6, [hl]
 	set 7, [hl]
-	ld hl, Route24Text_5152b
-	ld de, Route24Text_5152b
-	call SaveEndBattleTextPointers
+	;ld hl, Route24Text_5152b
+	;ld de, Route24Text_5152b
+	;call SaveEndBattleTextPointers
 	ldh a, [hSpriteIndexOrTextID]
 	ld [wSpriteIndex], a
 	call EngageMapTrainer

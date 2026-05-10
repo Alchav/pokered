@@ -157,6 +157,11 @@
 	charmap "'t",        $be
 	charmap "'v",        $bf
 
+	charmap "<ball>",    $c0
+	charmap "<bball>",   $c1
+	charmap "<xball>",   $c2
+	charmap "<wball>",   $c3
+
 	charmap "'",         $e0
 	charmap "<PK>",      $e1
 	charmap "<MN>",      $e2
@@ -170,8 +175,11 @@
 	charmap ".",         $e8
 
 	charmap "ァ",         $e9 ; katakana small a, unused
+	charmap "_",         $e9
 	charmap "ゥ",         $ea ; katakana small u, unused
+	charmap "+",         $ea
 	charmap "ェ",         $eb ; katakana small e, unused
+	charmap "=",         $eb
 
 	charmap "▷",         $ec
 	charmap "▶",         $ed

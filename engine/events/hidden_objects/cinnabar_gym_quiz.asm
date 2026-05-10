@@ -19,13 +19,13 @@ CinnabarGymQuiz::
 	and $f0
 	swap a
 	ldh [hGymGateAnswer], a
-	ldh a, [hGymGateIndex]
-	ld hl, CinnabarGymQuizIntroText
-	cp 1
-	jr z, .onFirstQuestion
-	ld hl, CinnabarGymQuizShortIntroText
-.onFirstQuestion
-	call PrintText
+	; ldh a, [hGymGateIndex]
+	; ld hl, CinnabarGymQuizIntroText
+	; cp 1
+	; jr z, .onFirstQuestion
+	; ld hl, CinnabarGymQuizShortIntroText
+; .onFirstQuestion
+	; call PrintText
 	ldh a, [hGymGateIndex]
 	dec a
 	add a
@@ -104,6 +104,12 @@ CinnabarGymQuiz_1ea92:
 	ld c, a
 	ld b, FLAG_SET
 	call CinnabarGymGateFlagAction
+	ldh a, [hBackupGymGateIndex]
+	add 2
+	ld c, a
+	ld b, FLAG_SET
+	EventFlagAddress hl, EVENT_GOT_TM38
+	predef FlagActionPredef
 	jp UpdateCinnabarGymGateTileBlocks_
 .wrongAnswer
 	call WaitForSoundToFinish

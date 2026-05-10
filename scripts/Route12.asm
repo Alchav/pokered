@@ -29,8 +29,10 @@ Route12Script0:
 	ld a, $d
 	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID
+.Archipelago_Static_Encounter_Snorlax_A_1
 	ld a, SNORLAX
 	ld [wCurOpponent], a
+.Archipelago_Static_Encounter_Snorlax_A_Level_1
 	ld a, 30
 	ld [wCurEnemyLVL], a
 	ld a, HS_ROUTE_12_SNORLAX

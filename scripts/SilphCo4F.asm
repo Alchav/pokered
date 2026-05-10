@@ -112,10 +112,33 @@ SilphCo4TrainerHeader2:
 
 SilphCo4Text1:
 	text_asm
+	ld hl, SplitKeyChecks
+	ld a, [hl]
+	and a
+	jr z, .noSplitKey
+	CheckEvent EVENT_SKC_4F
+	jr nz, .noSplitKey
+.Archipelago_Event_SKC4F
+	lb bc, CARD_KEY_4F, 1
+	call GiveItem
+	jr nc, .bagFull
+	ld hl, DisplayArchipelagoItem
+	call PrintText
+	SetEvent EVENT_SKC_4F
+	jp TextScriptEnd
+.bagFull
+	ld hl, SKC4NoRoomText
+	call PrintText
+	jp TextScriptEnd
+.noSplitKey
 	ld hl, SilphCo4Text_19de0
 	ld de, SilphCo4Text_19de5
 	call SilphCo6Script_1a22f
 	jp TextScriptEnd
+
+SKC4NoRoomText:
+	text_far _TM42NoRoomText
+	text_end
 
 SilphCo4Text_19de0:
 	text_far _SilphCo4Text_19de0

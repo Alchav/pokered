@@ -100,7 +100,11 @@ MACRO trainer
 	db CURRENT_TRAINER_BIT
 	db \2 << 4
 	dw wEventFlags + (\1 - CURRENT_TRAINER_BIT) / 8
-	dw \3, \5, \4, \4
+	dw \3, \5, \4
+	dw wEventFlags + (\1_ITEM / 8)
+	db (\1_ITEM % 8)
+.Archipelago_Trainersanity_\1_ITEM_0
+	db NO_ITEM
 	DEF CURRENT_TRAINER_BIT += 1
 ENDM
 

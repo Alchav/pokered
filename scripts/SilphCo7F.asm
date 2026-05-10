@@ -181,6 +181,7 @@ SilphCo7Script3:
 	ld hl, SilphCo7Text14
 	ld de, SilphCo7Text_51ecd
 	call SaveEndBattleTextPointers
+	EventBattleTrainersanity EVENT_BEAT_SILPH_CO_RIVAL_ITEM
 	ld a, OPP_RIVAL2
 	ld [wCurOpponent], a
 	ld a, [wRivalStarter]
@@ -291,6 +292,7 @@ SilphCo7Text1:
 .givelapras
 	ld hl, .MeetLaprasGuyText
 	call PrintText
+.Archipelago_Gift_Lapras_2
 	lb bc, LAPRAS, 15
 	call GivePokemon
 	jr nc, .done
@@ -369,23 +371,46 @@ SilphCo7Text3:
 
 SilphCo7Text4:
 	text_asm
+	ld hl, SplitKeyChecks
+	ld a, [hl]
+	and a
+	jr z, .noSplitKey
+	CheckEvent EVENT_SKC_7F
+	jr nz, .noSplitKey
+.Archipelago_Event_SKC7F
+	lb bc, CARD_KEY_7F, 1
+	call GiveItem
+	jr nc, .bagFull
+	ld hl, DisplayArchipelagoItem
+	call PrintText
+	SetEvent EVENT_SKC_7F
+	jp TextScriptEnd
+.bagFull
+	ld hl, SKC7NoRoomText
+	call PrintText
+	jp TextScriptEnd
+.noSplitKey
 	CheckEvent EVENT_BEAT_SILPH_CO_GIOVANNI
 	jr nz, .savedsilph
-	ld hl, .rockettext
+	ld hl, SilphCo7Text4RocketText
 	call PrintText
 	jr .done
 .savedsilph
-	ld hl, .savedtext
+	ld hl, SilphCo7Text4SavedText
 	call PrintText
 .done
 	jp TextScriptEnd
 
-.rockettext
+SilphCo7Text4RocketText:
 	text_far _SilphCo7Text_51e46
 	text_end
 
-.savedtext
+SilphCo7Text4SavedText:
 	text_far _SilphCo7Text_51e4b
+	text_end
+
+SKC7NoRoomText:
+	text_far _TM42NoRoomText
 	text_end
 
 SilphCo7Text5:

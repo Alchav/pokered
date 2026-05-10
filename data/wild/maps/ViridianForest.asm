@@ -1,5 +1,6 @@
 ViridianForestWildMons:
 	def_grass_wildmons 25 ; encounter rate
+.Archipelago_Wild_ViridianForest_0
 	db  3, CATERPIE
 	db  4, METAPOD
 	db  4, CATERPIE

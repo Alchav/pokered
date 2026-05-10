@@ -8,20 +8,20 @@ _CeladonGameCornerText1::
 	done
 
 _CeladonGameCornerText_48d22::
-	text "Welcome to ROCKET"
-	line "GAME CORNER!"
-
-	para "Do you need some"
-	line "game coins?"
-
-	para "It's ¥1000 for 50"
+	text "It's ¥1000 for 50"
 	line "coins. Would you"
 	cont "like some?"
 	done
 
+_CeladonGameCornerText_48d22b::
+	text "It's ¥30,000 for"
+	line "1500 coins. Would"
+	cont "you like some?"
+	done
+
 _CeladonGameCornerText_48d27::
 	text "Thanks! Here are"
-	line "your 50 coins!"
+	line "your coins!"
 	done
 
 _CeladonGameCornerText_48d2c::
@@ -64,13 +64,16 @@ _CeladonGameCornerText_48d9c::
 	prompt
 
 _Received10CoinsText::
+_Received20CoinsText::
+_CeladonGameCornerText_48e8d::
 	text "<PLAYER> received"
-	line "10 coins!@"
+	line "a @"
+	text_ram wStringBuffer
+	text "!@"
 	text_end
 
 _CeladonGameCornerText_48da7::
-	text "You don't need my"
-	line "coins!"
+	text "Your bag is full!"
 	done
 
 _CeladonGameCornerText_48dac::
@@ -121,14 +124,8 @@ _CeladonGameCornerText_48e26::
 	line "some coins?"
 	prompt
 
-_Received20CoinsText::
-	text "<PLAYER> received"
-	line "20 coins!@"
-	text_end
-
 _CeladonGameCornerText_48e31::
-	text "You have lots of"
-	line "coins!"
+	text "Your bag is full!"
 	done
 
 _CeladonGameCornerText_48e36::
@@ -144,14 +141,8 @@ _CeladonGameCornerText_48e88::
 	cont "coins, shoo!"
 	prompt
 
-_CeladonGameCornerText_48e8d::
-	text "<PLAYER> received"
-	line "20 coins!@"
-	text_end
-
 _CeladonGameCornerText_48e93::
-	text "You've got your"
-	line "own coins!"
+	text "Your bag is full!"
 	done
 
 _CeladonGameCornerText_48e98::
@@ -179,7 +170,6 @@ _CeladonGameCornerText_48ed8::
 _CeladonGameCornerText_48f09::
 	text "Hey!"
 
-	para "A switch behind"
+	para "A keyhole behind"
 	line "the poster!?"
-	cont "Let's push it!@"
-	text_end
+	done

@@ -1,6 +1,6 @@
 SeafoamIslands1F_Script:
 	call EnableAutoTextBoxDrawing
-	SetEvent EVENT_IN_SEAFOAM_ISLANDS
+	; SetEvent EVENT_IN_SEAFOAM_ISLANDS
 	ld hl, wFlags_0xcd60
 	bit 7, [hl]
 	res 7, [hl]

@@ -8,5 +8,7 @@ VermilionDock_Object:
 	def_bg_events
 
 	def_object_events
+.Archipelago_Static_Encounter_Mew_6
+	object_event 21,  0, SPRITE_POKE_BALL, STAY, DOWN, 1, MEW, 10
 
 	def_warps_to VERMILION_DOCK

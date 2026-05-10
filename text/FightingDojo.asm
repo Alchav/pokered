@@ -1,15 +1,5 @@
 _FightingDojoText_5ce8e::
-	text "Grunt!"
-
-	para "I am the KARATE"
-	line "MASTER! I am the"
-	cont "LEADER here!"
-
-	para "You wish to"
-	line "challenge us?"
-	cont "Expect no mercy!"
-
-	para "Fwaaa!"
+	text "Fwaaa!"
 	done
 
 _FightingDojoText_5ce93::
@@ -18,26 +8,12 @@ _FightingDojoText_5ce93::
 	prompt
 
 _FightingDojoText_5ce98::
-	text "Indeed, I have"
-	line "lost!"
-
-	para "But, I beseech"
-	line "you, do not take"
-	cont "our emblem as"
-	cont "your trophy!"
-
-	para "In return, I will"
-	line "give you a prized"
-	cont "fighting #MON!"
-
-	para "Choose whichever"
+	text "Choose whichever"
 	line "one you like!"
 	done
 
 _FightingDojoText_5ce9d::
-	text "Ho!"
-
-	para "Stay and train at"
+	text "Stay and train at"
 	line "Karate with us!"
 	done
 
@@ -113,18 +89,14 @@ _FightingDojoAfterBattleText4::
 	done
 
 _WantHitmonleeText::
-	text "You want the"
-	line "hard-kicking"
-	cont "HITMONLEE?"
+	text "You want this one?"
 	done
 
 _WantHitmonchanText::
-	text "You want the"
-	line "piston-punching"
-	cont "HITMONCHAN?"
+	text "You want this one?"
 	done
 
 _OtherHitmonText::
-	text "Better not get"
-	line "greedy..."
+	text "Maybe if you beat"
+	line "Sabrina..."
 	done

@@ -25,6 +25,7 @@ Route18GateScript0:
 	ldh [hJoyHeld], a
 	ld a, [wCoordIndex]
 	cp $1
+.Archipelago_Option_Route_18_Gate_Fix_0
 	jr z, .asm_498c6
 	ld a, [wCoordIndex]
 	dec a

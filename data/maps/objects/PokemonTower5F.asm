@@ -13,6 +13,7 @@ PokemonTower5F_Object:
 	object_event 14,  3, SPRITE_CHANNELER, STAY, LEFT, 3, OPP_CHANNELER, 16
 	object_event  6, 10, SPRITE_CHANNELER, STAY, RIGHT, 4, OPP_CHANNELER, 17
 	object_event  9, 16, SPRITE_CHANNELER, STAY, RIGHT, 5, OPP_CHANNELER, 18
+.Archipelago_Missable_Pokemon_Tower_5F_Item
 	object_event  6, 14, SPRITE_POKE_BALL, STAY, NONE, 6, NUGGET
 
 	def_warps_to POKEMON_TOWER_5F

@@ -1,5 +1,6 @@
 SeafoamIslands1FWildMons:
 	def_grass_wildmons 15 ; encounter rate
+.Archipelago_Wild_SeafoamIslands1F_0
 	db 18, ZUBAT
 	db 25, KRABBY
 	db 27, KRABBY

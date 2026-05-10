@@ -20,7 +20,9 @@ SafariZoneNorth_Object:
 	bg_event 26, 28, 7 ; SafariZoneNorthText7
 
 	def_object_events
+.Archipelago_Missable_Safari_Zone_North_Item_1
 	object_event 25,  1, SPRITE_POKE_BALL, STAY, NONE, 1, PROTEIN
+.Archipelago_Missable_Safari_Zone_North_Item_2
 	object_event 19,  7, SPRITE_POKE_BALL, STAY, NONE, 2, TM_SKULL_BASH
 
 	def_warps_to SAFARI_ZONE_NORTH

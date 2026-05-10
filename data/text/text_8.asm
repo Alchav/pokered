@@ -112,7 +112,9 @@ _SentToBoxText::
 	cont "sent to #MON"
 	cont "BOX @"
 	text_ram wStringBuffer
-	text " on PC!"
+	text "! (@"
+	text_decimal wBoxCount, 1, 2
+	text "/20)"
 	done
 
 _BoxIsFullText::

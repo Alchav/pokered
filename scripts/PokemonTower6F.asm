@@ -27,13 +27,17 @@ PokemonTower6Script0:
 	ld hl, CoordsData_60b45
 	call ArePlayerCoordsInArray
 	jp nc, CheckFightingMapTrainers
+	ld a, [wPlayerMovingDirection]
+	ld [wCheckDir], a
 	xor a
 	ldh [hJoyHeld], a
 	ld a, $6
 	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID
+.Archipelago_Ghost_Battle1_1
 	ld a, RESTLESS_SOUL
 	ld [wCurOpponent], a
+.Archipelago_Ghost_Battle_Level_1
 	ld a, 30
 	ld [wCurEnemyLVL], a
 	ld a, $4
@@ -61,9 +65,6 @@ PokemonTower6Script4:
 	and a
 	jr nz, .asm_60b82
 	SetEvent EVENT_BEAT_GHOST_MAROWAK
-	ld a, $7
-	ldh [hSpriteIndexOrTextID], a
-	call DisplayTextID
 	xor a
 	ld [wJoyIgnore], a
 	ld a, $0
@@ -73,7 +74,12 @@ PokemonTower6Script4:
 .asm_60b82
 	ld a, $1
 	ld [wSimulatedJoypadStatesIndex], a
-	ld a, $10
+	ld a, [wCheckDir]
+	cp PLAYER_DIR_RIGHT
+	ld a, D_LEFT
+	jr z, .goLeft
+	ld a, D_RIGHT
+.goLeft
 	ld [wSimulatedJoypadStatesEnd], a
 	xor a
 	ld [wSpritePlayerStateData2MovementByte1], a
@@ -134,8 +140,7 @@ PokemonTower6Text3:
 
 PokemonTower6Text7:
 	text_asm
-	ld hl, PokemonTower2Text_60c1f
-	call PrintText
+.Archipelago_Ghost_Battle2_1
 	ld a, RESTLESS_SOUL
 	call PlayCry
 	call WaitForSoundToFinish

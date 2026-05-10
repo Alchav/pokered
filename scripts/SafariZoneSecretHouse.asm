@@ -8,8 +8,9 @@ SafariZoneSecretHouseText1:
 	text_asm
 	CheckEvent EVENT_GOT_HM03
 	jr nz, .got_item
-	ld hl, SafariZoneSecretHouseText_4a350
-	call PrintText
+	;ld hl, SafariZoneSecretHouseText_4a350
+	;call PrintText
+.Archipelago_Event_Safari_Zone_Secret_House
 	lb bc, HM_SURF, 1
 	call GiveItem
 	jr nc, .bag_full

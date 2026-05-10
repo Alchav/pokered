@@ -191,16 +191,17 @@ FanClubText5:
 .check_bike_voucher
 	CheckEvent EVENT_GOT_BIKE_VOUCHER
 	jr nz, .nothingleft
-	ld hl, .meetchairtext
-	call PrintText
-	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
-	jr nz, .nothanks
+	;ld hl, .meetchairtext
+	;call PrintText
+	;call YesNoChoice
+	;ld a, [wCurrentMenuItem]
+	;and a
+	;jr nz, .nothanks
 
 	; tell the story
-	ld hl, .storytext
-	call PrintText
+	;ld hl, .storytext
+	;call PrintText
+.Archipelago_Event_Pokemon_Fan_Club
 	lb bc, BIKE_VOUCHER, 1
 	call GiveItem
 	jr nc, .bag_full

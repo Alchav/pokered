@@ -114,6 +114,32 @@ AccessedMyPCText:
 	text_far _AccessedMyPCText
 	text_end
 
+UseRepelText:
+	text "Use @"
+	text_ram wStringBuffer
+	text "?"
+	done
+
+DisplayUseRepelText_::
+	call GetItemName
+	call CopyToStringBuffer
+	ld hl, UseRepelText
+	ld a, 1
+	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
+	call PrintText
+	call YesNoChoice
+	ld a, [wCurrentMenuItem]
+	and a
+	ret nz
+	ld a, 1
+	ld [wDontConsumeRepel], a
+	ld a, [wRepelItemUsed]
+	ldh [hItemToRemoveID], a
+	ld [wcf91], a
+	call RemoveItemByID
+	call UseItem
+	ret
+
 ; removes one of the specified item ID [hItemToRemoveID] from bag (if existent)
 RemoveItemByID::
 	ld hl, wBagItems

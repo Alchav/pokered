@@ -11,7 +11,9 @@ PokemonTower6F_Object:
 	object_event 12, 10, SPRITE_CHANNELER, STAY, RIGHT, 1, OPP_CHANNELER, 19
 	object_event  9,  5, SPRITE_CHANNELER, STAY, DOWN, 2, OPP_CHANNELER, 20
 	object_event 16,  5, SPRITE_CHANNELER, STAY, LEFT, 3, OPP_CHANNELER, 21
+.Archipelago_Missable_Pokemon_Tower_6F_Item_1
 	object_event  6,  8, SPRITE_POKE_BALL, STAY, NONE, 4, RARE_CANDY
+.Archipelago_Missable_Pokemon_Tower_6F_Item_2
 	object_event 14, 14, SPRITE_POKE_BALL, STAY, NONE, 5, X_ACCURACY
 
 	def_warps_to POKEMON_TOWER_6F

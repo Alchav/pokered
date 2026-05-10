@@ -36,8 +36,9 @@ FuchsiaHouse2Text1:
 	farcall RemoveItemByID
 	SetEvent EVENT_GAVE_GOLD_TEETH
 .gave_gold_teeth
-	ld hl, WardenThankYouText
-	call PrintText
+	;ld hl, WardenThankYouText
+	;call PrintText
+.Archipelago_Event_Warden
 	lb bc, HM_STRENGTH, 1
 	call GiveItem
 	jr nc, .bag_full

@@ -26,13 +26,15 @@ InitPlayerData2:
 	ld hl, wNumBoxItems
 	call InitializeEmptyList
 
-DEF START_MONEY EQU $3000
-	ld hl, wPlayerMoney + 1
-	ld a, HIGH(START_MONEY)
-	ld [hld], a
-	xor a ; LOW(START_MONEY)
+	ld hl, wPlayerMoney
+.Archipelago_Starting_Money_High_1
+	ld a, 0
 	ld [hli], a
-	inc hl
+.Archipelago_Starting_Money_Middle_1
+	ld a, 0
+	ld [hli], a
+.Archipelago_Starting_Money_Low_1
+	ld a, 0
 	ld [hl], a
 
 	ld [wMonDataLocation], a
@@ -50,6 +52,18 @@ DEF START_MONEY EQU $3000
 	ld bc, wGameProgressFlagsEnd - wGameProgressFlags
 	call FillMemory ; clear all game progress flags
 
+.Archipelago_Option_Pokedex_Seen_1
+	ld a, 0
+	and a
+	jr z, .continue
+	ld a, $ff
+	ld hl, wPokedexSeen
+	ld bc, wPokedexSeenEnd - wPokedexSeen - 1
+	call FillMemory
+	ld a, $7f
+	ld [hl], a
+
+.continue
 	jp InitializeMissableObjectsFlags
 
 InitializeEmptyList:

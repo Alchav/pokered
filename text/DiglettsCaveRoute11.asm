@@ -5,4 +5,7 @@ _DiglettsCaveEntRoute11Text1::
 
 	para "It goes right to"
 	line "VIRIDIAN CITY!"
+
+	para "Well, closer to"
+	line "PEWTER, I guess."
 	done

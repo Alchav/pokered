@@ -3,13 +3,6 @@ Route22Gate_Script:
 	ld hl, Route22Gate_ScriptPointers
 	ld a, [wRoute22GateCurScript]
 	call CallFunctionInTable
-	ld a, [wYCoord]
-	cp 4
-	ld a, ROUTE_23
-	jr c, .asm_1e69a
-	ld a, ROUTE_22
-.asm_1e69a
-	ld [wLastMap], a
 	ret
 
 Route22Gate_ScriptPointers:
@@ -38,7 +31,12 @@ Route22GateScriptCoords:
 Route22GateScript_1e6ba:
 	ld a, $1
 	ld [wSimulatedJoypadStatesIndex], a
+	ld a, [wPlayerDirection]
+	cp PLAYER_DIR_DOWN
+	ld a, D_UP
+	jr z, .goUp
 	ld a, D_DOWN
+.goUp
 	ld [wSimulatedJoypadStatesEnd], a
 	ld [wSpritePlayerStateData1FacingDirection], a
 	ld [wJoyIgnore], a
@@ -61,21 +59,57 @@ Route22Gate_TextPointers:
 
 Route22GateText1:
 	text_asm
-	ld a, [wObtainedBadges]
-	bit BIT_BOULDERBADGE, a
-	jr nz, .asm_1e6f6
-	ld hl, Route22GateText_1e704
+.Archipelago_Option_Victory_Road_Badges_1
+	ld a, 8
+	ld [wcd6d], a
+	ld hl, wObtainedBadges
+	ld b, 1
+	call CountSetBits
+	ld a, [wNumSetBits]
+	ld b, a
+	inc b
+	ld a, [wcd6d]
+	cp b
+	jr c, .enoughBadges
+	ld hl, BadgesNeededTextv
+	call PrintText
+	ld hl, NotEnoughBadgesv
 	call PrintText
 	call Route22GateScript_1e6ba
 	ld a, $1
 	jr .asm_1e6fe
-.asm_1e6f6
-	ld hl, Route22GateText_1e71a
+.enoughBadges
+	ld hl, EnoughBadgesv
 	call PrintText
 	ld a, $2
 .asm_1e6fe
 	ld [wRoute22GateCurScript], a
 	jp TextScriptEnd
+
+BadgesNeededTextv:
+	text "You can pass here"
+	line "only if you have"
+	cont "@"
+	text_decimal wcd6d, 1, 1
+	text " badges!"
+	prompt
+
+NotEnoughBadgesv:
+	text "You don't have"
+	line "@"
+	text_decimal wcd6d, 1, 1
+	text " badges yet!@"
+	text_end
+
+EnoughBadgesv:
+	text "Oh! You do have"
+	line "@"
+	text_decimal wcd6d, 1, 1
+	text " badges!"
+
+	para "OK then! Please,"
+	line "go right ahead!@"
+	text_end
 
 Route22GateText_1e704:
 	text_far _Route22GateText_1e704

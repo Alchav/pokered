@@ -1,4 +1,17 @@
 HiddenItems:
+	ld b, ITEMFINDER
+	call IsItemInBag
+.Archipelago_Option_Itemfinder_0
+	ret z
+	ld a, [wCurMap]
+	cp GAME_CORNER
+	jr nz, .notGameCorner
+	ld b, COIN_CASE
+	predef GetQuantityOfItemInBag
+	ld a, b
+	and a
+	ret z
+.notGameCorner
 	ld hl, HiddenItemCoords
 	call FindHiddenItemOrCoinsIndex
 	ld [wHiddenItemOrCoinsIndex], a
@@ -26,7 +39,10 @@ HiddenItems:
 INCLUDE "data/events/hidden_item_coords.asm"
 
 FoundHiddenItemText::
-	text_far _FoundHiddenItemText
+	text "<PLAYER> found"
+	line "@"
+	text_ram wcd6d
+	text "!@"
 	text_asm
 	ld a, [wHiddenObjectFunctionArgument] ; item ID
 	ld b, a
@@ -51,8 +67,10 @@ FoundHiddenItemText::
 	jp TextScriptEnd
 
 HiddenItemBagFullText::
-	text_far _HiddenItemBagFullText
-	text_end
+	text "But, <PLAYER> has"
+	line "no more room for"
+	cont "other items!"
+	done
 
 HiddenCoins:
 	ld b, COIN_CASE
@@ -76,7 +94,7 @@ HiddenCoins:
 	ldh [hCoins], a
 	ldh [hCoins + 1], a
 	ld a, [wHiddenObjectFunctionArgument]
-	sub COIN
+	sub TEN_COINS
 	cp 10
 	jr z, .bcd10
 	cp 20

@@ -1,5 +1,6 @@
 RockTunnel1FWildMons:
 	def_grass_wildmons 15 ; encounter rate
+.Archipelago_Wild_RockTunnel1F_0
 	db 15, ZUBAT
 	db 16, GEODUDE
 	db 17, ZUBAT

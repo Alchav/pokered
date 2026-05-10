@@ -10,14 +10,7 @@ Route23Script_511e9:
 	bit 6, [hl]
 	res 6, [hl]
 	ret z
-	ResetEvents EVENT_VICTORY_ROAD_2_BOULDER_ON_SWITCH1, EVENT_VICTORY_ROAD_2_BOULDER_ON_SWITCH2
-	ResetEvents EVENT_VICTORY_ROAD_3_BOULDER_ON_SWITCH1, EVENT_VICTORY_ROAD_3_BOULDER_ON_SWITCH2
-	ld a, HS_VICTORY_ROAD_3F_BOULDER
-	ld [wMissableObjectIndex], a
-	predef ShowObject
-	ld a, HS_VICTORY_ROAD_2F_BOULDER
-	ld [wMissableObjectIndex], a
-	predef_jump HideObject
+	ret
 
 Route23_ScriptPointers:
 	dw Route23Script0
@@ -25,36 +18,16 @@ Route23_ScriptPointers:
 	dw Route23Script2
 
 Route23Script0:
-	ld hl, YCoordsData_51255
 	ld a, [wYCoord]
-	ld b, a
-	ld e, $0
-	EventFlagBit c, EVENT_PASSED_EARTHBADGE_CHECK + 1, EVENT_PASSED_CASCADEBADGE_CHECK
-.asm_51224
-	ld a, [hli]
-	cp -1
-	ret z
-	inc e
-	dec c
-	cp b
-	jr nz, .asm_51224
 	cp 35
-	jr nz, .asm_51237
+	ret nz
 	ld a, [wXCoord]
 	cp 14
 	ret nc
-.asm_51237
-	ld a, e
-	ldh [hSpriteIndexOrTextID], a
-	ld a, c
-	ld [wWhichBadge], a
-	ld b, FLAG_TEST
-	EventFlagAddress hl, EVENT_PASSED_CASCADEBADGE_CHECK
-	predef FlagActionPredef
-	ld a, c
-	and a
+	CheckEvent EVENT_PASSED_CASCADEBADGE_CHECK
 	ret nz
-	call Route23Script_5125d
+	ld a, 1
+	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID
 	xor a
 	ldh [hJoyHeld], a
@@ -122,7 +95,12 @@ CascadeBadgeText:
 Route23Script_512d8:
 	ld a, $1
 	ld [wSimulatedJoypadStatesIndex], a
+	ld a, [wPlayerDirection]
+	cp PLAYER_DIR_UP
 	ld a, D_DOWN
+	jr z, .down
+	ld a, D_UP
+.down
 	ld [wSimulatedJoypadStatesEnd], a
 	xor a
 	ld [wSpritePlayerStateData1FacingDirection], a
@@ -150,8 +128,23 @@ Route23_TextPointers:
 
 Route23Text1:
 	text_asm
-	EventFlagBit a, EVENT_PASSED_EARTHBADGE_CHECK, EVENT_PASSED_CASCADEBADGE_CHECK
-	call Route23Script_51346
+	ld hl, wObtainedBadges
+	ld b, 1
+	call CountSetBits
+	ld a, [wNumSetBits]
+.Archipelago_Option_Route23_Badges_1
+	cp 0
+	jr nc, .proceed
+	ld hl, VictoryRoadGuardText1
+	call PrintText
+	call Route23Script_512d8
+	ld a, $1
+	ld [wRoute23CurScript], a
+	jp TextScriptEnd
+.proceed
+	ld hl, VictoryRoadGuardText2
+	call PrintText
+	SetEvent EVENT_PASSED_CASCADEBADGE_CHECK
 	jp TextScriptEnd
 
 Route23Text2:

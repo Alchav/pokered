@@ -5,10 +5,8 @@ _DaisyInitialText::
 	done
 
 _DaisyOfferMapText::
-	text "Grandpa asked you"
-	line "to run an errand?"
-	cont "Here, this will"
-	cont "help you!"
+	text "Here, this will"
+	line "help you!"
 	prompt
 
 _GotMapText::

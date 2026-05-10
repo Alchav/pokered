@@ -10,8 +10,9 @@ Route12GateUpstairsText1:
 	text_asm
 	CheckEvent EVENT_GOT_TM39, 1
 	jr c, .got_item
-	ld hl, TM39PreReceiveText
-	call PrintText
+	;ld hl, TM39PreReceiveText
+	;call PrintText
+.Archipelago_Event_Mourning_Girl
 	lb bc, TM_SWIFT, 1
 	call GiveItem
 	jr nc, .bag_full

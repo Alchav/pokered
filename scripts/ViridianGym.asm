@@ -135,10 +135,18 @@ ViridianGymGiovanniPostBattle:
 	ld [wJoyIgnore], a
 ; fallthrough
 ViridianGymReceiveTM27:
-	ld a, $c
+	SetEvent EVENT_BEAT_VIRIDIAN_GYM_GIOVANNI
+	CheckEvent EVENT_GOT_EARTHBADGE
+	jr nz, .Archipelago_Event_Viridian_Gym
+.Archipelago_Badge_Viridian_Gym_2
+	lb bc, EARTHBADGE, 1
+	call GiveItem
+	jr nc, .BagFull
+	ld a, $d
 	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID
-	SetEvent EVENT_BEAT_VIRIDIAN_GYM_GIOVANNI
+	SetEvent EVENT_GOT_EARTHBADGE
+.Archipelago_Event_Viridian_Gym
 	lb bc, TM_FISSURE, 1
 	call GiveItem
 	jr nc, .BagFull
@@ -152,18 +160,13 @@ ViridianGymReceiveTM27:
 	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID
 .gymVictory
-	ld hl, wObtainedBadges
-	set BIT_EARTHBADGE, [hl]
 	ld hl, wBeatGymFlags
 	set BIT_EARTHBADGE, [hl]
-
-	; deactivate gym trainers
-	SetEventRange EVENT_BEAT_VIRIDIAN_GYM_TRAINER_0, EVENT_BEAT_VIRIDIAN_GYM_TRAINER_7
 
 	ld a, HS_ROUTE_22_RIVAL_2
 	ld [wMissableObjectIndex], a
 	predef ShowObject
-	SetEvents EVENT_2ND_ROUTE22_RIVAL_BATTLE, EVENT_ROUTE22_RIVAL_WANTS_BATTLE
+	SetEvent EVENT_2ND_ROUTE22_RIVAL_BATTLE
 	jp ViridianGymResetScripts
 
 ViridianGym_TextPointers:
@@ -206,6 +209,12 @@ GiovanniText:
 	text_asm
 	CheckEvent EVENT_BEAT_VIRIDIAN_GYM_GIOVANNI
 	jr z, .beforeBeat
+	CheckEventReuseA EVENT_GOT_EARTHBADGE
+	jr nz, .checkTM
+	call ViridianGymReceiveTM27
+	call DisableWaitingAfterTextDisplay
+	jr .done
+.checkTM
 	CheckEventReuseA EVENT_GOT_TM27
 	jr nz, .afterBeat
 	call z, ViridianGymReceiveTM27
@@ -233,6 +242,8 @@ GiovanniText:
 	ld hl, ReceivedEarthBadgeText
 	ld de, ReceivedEarthBadgeText
 	call SaveEndBattleTextPointers
+	xor a
+	ld [wEndBattleTrainersanityItem], a
 	ldh a, [hSpriteIndex]
 	ld [wSpriteIndex], a
 	call EngageMapTrainer
@@ -265,6 +276,7 @@ GiovanniEarthBadgeInfoText:
 ReceivedTM27Text:
 	text_far _ReceivedTM27Text
 	sound_get_item_1
+	text_end
 
 TM27ExplanationText:
 	text_far _TM27ExplanationText

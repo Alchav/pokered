@@ -1,23 +1,5 @@
 _LoreleiBeforeBattleText::
-	text "Welcome to"
-	line "#MON LEAGUE!"
-
-	para "I am LORELEI of"
-	line "the ELITE FOUR!"
-
-	para "No one can best"
-	line "me when it comes"
-	cont "to icy #MON!"
-
-	para "Freezing moves"
-	line "are powerful!"
-
-	para "Your #MON will"
-	line "be at my mercy"
-	cont "when they are"
-	cont "frozen solid!"
-
-	para "Hahaha!"
+	text "Hahaha!"
 	line "Are you ready?"
 	done
 

@@ -284,6 +284,7 @@ PokemonMansion1F_Blocks: INCBIN "maps/PokemonMansion1F.blk"
 INCLUDE "data/maps/headers/RockTunnel1F.asm"
 INCLUDE "scripts/RockTunnel1F.asm"
 INCLUDE "data/maps/objects/RockTunnel1F.asm"
+.Archipelago_Map_Rock_Tunnel1F
 RockTunnel1F_Blocks: INCBIN "maps/RockTunnel1F.blk"
 
 INCLUDE "data/maps/headers/SeafoamIslands1F.asm"
@@ -375,7 +376,9 @@ CeruleanCaveB1F_Blocks: INCBIN "maps/CeruleanCaveB1F.blk"
 INCLUDE "data/maps/headers/RockTunnelB1F.asm"
 INCLUDE "scripts/RockTunnelB1F.asm"
 INCLUDE "data/maps/objects/RockTunnelB1F.asm"
-RockTunnelB1F_Blocks: INCBIN "maps/RockTunnelB1F.blk"
+RockTunnelB1F_Blocks:
+.Archipelago_Map_Rock_TunnelB1F
+	INCBIN "maps/RockTunnelB1F.blk"
 
 INCLUDE "data/maps/headers/SeafoamIslandsB1F.asm"
 INCLUDE "scripts/SeafoamIslandsB1F.asm"

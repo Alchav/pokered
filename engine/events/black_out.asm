@@ -18,6 +18,11 @@ ResetStatusAndHalveMoneyOnBlackout::
 	call HasEnoughMoney
 	jr c, .lostmoney ; never happens
 
+.Archipelago_Option_Lose_Money_1
+	ld a, 0
+	and a
+	jr nz, .lostmoney
+
 	; Halve the player's money.
 	ld a, [wPlayerMoney]
 	ldh [hMoney], a

@@ -16,26 +16,31 @@ _Mansion2AfterBattleText1::
 	done
 
 _Mansion2Text3::
-	text "Diary: July 5"
-	line "Guyana,"
-	cont "South America"
-
-	para "A new #MON was"
-	line "discovered deep"
-	cont "in the jungle."
+	text "Diary: Sept. 3"
+	line "We called out for"
+	cont "a Doctor, and the"
+	cont "whole town raised"
+	cont "its hands. From"
+	cont "the guy who hands"
+	cont "out bowling shoes"
+	cont "to the bum on the"
+	cont "corner no one"
+	cont "understands."
 	done
 
 _Mansion2Text4::
-	text "Diary: July 10"
-	line "We christened the"
-	cont "newly discovered"
-	cont "#MON, MEW."
+	text "Diary: Sept. 2"
+	line "Must be a million"
+	cont "degrees in there,"
+	cont "and besides, it"
+	cont "must be pretty"
+	cont "hot."
 	done
 
 _Mansion2Text_520c2::
 	text "A secret switch!"
 
-	para "Press it?"
+	line "Press it?"
 	done
 
 _Mansion2Text_520c7::

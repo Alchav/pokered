@@ -1,5 +1,6 @@
 Route9WildMons:
 	def_grass_wildmons 15 ; encounter rate
+.Archipelago_Wild_Route9_0
 	db 16, NIDORAN_M
 	db 16, NIDORAN_F
 	db 18, RATTATA

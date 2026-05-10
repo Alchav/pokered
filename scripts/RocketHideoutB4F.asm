@@ -207,6 +207,7 @@ RocketHideout4Script10:
 	ld hl, RocketHideout4JessieJamesEndBattleText
 	ld de, RocketHideout4JessieJamesEndBattleText
 	call SaveEndBattleTextPointers
+	EventBattleTrainersanity EVENT_BEAT_ROCKET_HIDEOUT_4_TRAINER_0_ITEM
 	ld a, OPP_ROCKET
 	ld [wCurOpponent], a
 	ld a, $2b
@@ -355,6 +356,7 @@ RocketHideout4Text0:
 	ld hl, RocketHideout4Text_45809
 	ld de, RocketHideout4Text_45809
 	call SaveEndBattleTextPointers
+	EventBattleTrainersanity EVENT_BEAT_ROCKET_HIDEOUT_GIOVANNI_ITEM
 	ldh a, [hSpriteIndex]
 	ld [wSpriteIndex], a
 	call EngageMapTrainer

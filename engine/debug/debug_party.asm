@@ -21,6 +21,7 @@ DebugTeam:
 	db -1 ; end
 
 DebugStart:
+	ret
 IF DEF(_DEBUG)
 	xor a ; PLAYER_PARTY_DATA
 	ld [wMonDataLocation], a

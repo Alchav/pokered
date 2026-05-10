@@ -1,5 +1,6 @@
 Route4WildMons:
 	def_grass_wildmons 20 ; encounter rate
+.Archipelago_Wild_Route4_0
 	db  8, SPEAROW
 	db  9, SPEAROW
 	db  9, MANKEY

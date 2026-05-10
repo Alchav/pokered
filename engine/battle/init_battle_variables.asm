@@ -28,6 +28,7 @@ InitBattleVariables:
 	inc a ; POUND
 	ld [wTestBattlePlayerSelectedMove], a
 	ld a, [wCurMap]
+.Archipelago_Option_Safari_Zone_Battle_Type_1
 	cp SAFARI_ZONE_EAST
 	jr c, .notSafariBattle
 	cp SAFARI_ZONE_CENTER_REST_HOUSE

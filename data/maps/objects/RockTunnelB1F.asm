@@ -16,7 +16,15 @@ RockTunnelB1F_Object:
 	object_event 20, 21, SPRITE_SUPER_NERD, STAY, RIGHT, 4, OPP_POKEMANIAC, 4
 	object_event 30, 10, SPRITE_HIKER, STAY, DOWN, 5, OPP_HIKER, 10
 	object_event 14, 28, SPRITE_COOLTRAINER_F, STAY, RIGHT, 6, OPP_JR_TRAINER_F, 10
-	object_event 33,  5, SPRITE_HIKER, STAY, RIGHT, 7, OPP_HIKER, 11
+	object_event 33,  5, SPRITE_HIKER, STAY, RIGHT, 7, OPP_HIKER, 15 ; was 11
 	object_event 26, 30, SPRITE_SUPER_NERD, STAY, DOWN, 8, OPP_POKEMANIAC, 5
+.Archipelago_Missable_Rock_Tunnel_B1F_Item_1
+	object_event  2, 30, SPRITE_POKE_BALL, STAY, NONE, 9, HIDEOUT_KEY
+.Archipelago_Missable_Rock_Tunnel_B1F_Item_2
+	object_event  2, 24, SPRITE_POKE_BALL, STAY, NONE, 10, MANSION_KEY
+.Archipelago_Missable_Rock_Tunnel_B1F_Item_3
+	object_event  2, 21, SPRITE_POKE_BALL, STAY, NONE, 11, PLANT_KEY
+.Archipelago_Missable_Rock_Tunnel_B1F_Item_4
+	object_event 23,  2, SPRITE_POKE_BALL, STAY, NONE, 12, SAFARI_PASS
 
 	def_warps_to ROCK_TUNNEL_B1F

@@ -130,6 +130,7 @@ Route22Script1:
 	ld hl, Route22RivalDefeatedText1
 	ld de, Route22Text_511bc
 	call SaveEndBattleTextPointers
+	EventBattleTrainersanity EVENT_BEAT_ROUTE22_RIVAL_1ST_BATTLE_ITEM
 	call Route22Script_50ed6
 	ld a, $2
 	ld [wRoute22CurScript], a
@@ -285,6 +286,7 @@ Route22Script4:
 	ld hl, Route22RivalDefeatedText2
 	ld de, Route22Text_511d0
 	call SaveEndBattleTextPointers
+	EventBattleTrainersanity EVENT_BEAT_ROUTE22_RIVAL_2ND_BATTLE_ITEM
 	call Route22Script_50ee1
 	ld a, $5
 	ld [wRoute22CurScript], a

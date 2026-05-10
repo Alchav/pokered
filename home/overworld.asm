@@ -1,5 +1,7 @@
 EnterMap::
 ; Load a new map.
+	ld a, $2a
+	ld [wArchipelagoGameStarted], a
 	ld a, $ff
 	ld [wJoyIgnore], a
 	call LoadMapData
@@ -7,6 +9,7 @@ EnterMap::
 	ld hl, wd72c
 	bit 0, [hl] ; has the player already made 3 steps since the last battle?
 	jr z, .skipGivingThreeStepsOfNoRandomBattles
+.Archipelago_Option_LD_A_Encounter_Minimum_Steps
 	ld a, 3 ; minimum number of steps between battles
 	ld [wNumberOfNoRandomBattleStepsLeft], a
 .skipGivingThreeStepsOfNoRandomBattles
@@ -132,12 +135,15 @@ OverworldLoopLessDelay::
 	ld [wCheckFor180DegreeTurn], a
 	ld a, [wPlayerMovingDirection] ; the direction that was pressed last time
 	and a
-	jr z, .overworldloop
+	jr z, .checkArchipelago
 ; if a direction was pressed last time
 	ld [wPlayerLastStopDirection], a ; save the last direction
 	xor a
 	ld [wPlayerMovingDirection], a ; zero the direction
-.overworldloop
+	jp OverworldLoop
+.checkArchipelago
+	call checkDeathLink
+	call receiveArchipelagoItem
 	jp OverworldLoop
 
 .checkIfDownButtonIsPressed
@@ -242,6 +248,7 @@ OverworldLoopLessDelay::
 	ld [wd435], a
 	call DoBikeSpeedup
 	call AdvancePlayerSprite
+	farcall RunSpeed
 	ld a, [wWalkCounter]
 	and a
 	jp nz, CheckMapConnections ; it seems like this check will never succeed (the other place where CheckMapConnections is run works)
@@ -353,6 +360,7 @@ DoBikeSpeedup::
 	and D_UP | D_LEFT | D_RIGHT
 	ret nz
 .goFaster
+	farcall RunSpeed
 	call AdvancePlayerSprite
 	ret
 
@@ -518,6 +526,8 @@ WarpFound2::
 
 ; if no matching warp was found
 CheckMapConnections::
+	ld a, $ff
+	ld [wDestinationWarpID], a
 .checkWestMap
 	ld a, [wXCoord]
 	cp $ff
@@ -742,6 +752,7 @@ HandleBlackOut::
 	ld a, $08
 	call StopMusic
 	ld hl, wd72e
+	res 4, [hl] ; reset "no battles" bit
 	res 5, [hl]
 	ld a, BANK(SpecialWarpIn) ; also BANK(SpecialEnterMap)
 	call BankswitchCommon
@@ -1221,6 +1232,7 @@ CollisionCheckOnLand::
 ; if not jumping a ledge
 	ld a, [wSimulatedJoypadStatesIndex]
 	and a
+.Archipelago_Debug_WTW_0 ; replace with jr
 	jr nz, .noCollision ; no collisions when the player's movements are being controlled by the game
 	ld a, [wPlayerDirection] ; the direction that the player is trying to go in
 	ld d, a
@@ -1911,6 +1923,15 @@ asm_0dbd:
 	add a ; double it
 	ld [wCurrentMapWidth2], a ; map width in 2x2 tile blocks
 	ld a, [wCurMap]
+.Archipelago_Option_Chaos_Music_0
+	jr .noChaosMusic
+;;;random music
+.random
+	call Random
+.Archipelago_Chaos_Music_Quantity_1
+	cp $F8
+	jr nc, .random
+.noChaosMusic
 	ld c, a
 	ld b, $00
 	ldh a, [hLoadedROMBank]
@@ -2331,4 +2352,19 @@ LoadDestinationWarpPosition::
 	pop af
 	ldh [hLoadedROMBank], a
 	ld [MBC1RomBank], a
+	ret
+
+receiveArchipelagoItem::
+	ld a, [wArchipelagoOptions]
+	bit BIT_AP_ITEM_TEXT_OFF, a
+	jr nz, .goAhead
+	ld a, [wJoyIgnore]
+	bit 7, a
+	ret nz
+.goAhead
+	farcall receiveArchipelagoItem_
+	ret
+
+checkDeathLink::
+	farcall checkDeathLink_
 	ret

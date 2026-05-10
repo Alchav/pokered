@@ -23,6 +23,7 @@ Route13_TextPointers:
 	dw Route13Text8
 	dw Route13Text9
 	dw Route13Text10
+	dw BoulderText
 	dw Route13Text11
 	dw Route13Text12
 	dw Route13Text13

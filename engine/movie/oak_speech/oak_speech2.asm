@@ -24,8 +24,7 @@ ChoosePlayerName:
 	ld b, BANK(RedPicFront)
 	call IntroDisplayPicCenteredOrUpperRight
 .done
-	ld hl, YourNameIsText
-	jp PrintText
+	ret
 
 YourNameIsText:
 	text_far _YourNameIsText
@@ -57,8 +56,7 @@ ChooseRivalName:
 	ld b, $13
 	call IntroDisplayPicCenteredOrUpperRight
 .done
-	ld hl, HisNameIsText
-	jp PrintText
+	ret
 
 HisNameIsText:
 	text_far _HisNameIsText

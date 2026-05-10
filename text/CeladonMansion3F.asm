@@ -1,6 +1,11 @@
 _ProgrammerText::
-	text "Me? I'm the"
-	line "programmer!"
+	text "neveroutbass:"
+	line "Looking for more"
+	cont "variable names I"
+	cont "can change in the"
+	cont "core to break"
+	cont "everyone's dev"
+	cont "branches!"
 	done
 
 _ProgrammerText2::
@@ -14,9 +19,16 @@ _ProgrammerText2::
 	done
 
 _GraphicArtistText::
-	text "I'm the graphic"
-	line "artist!"
-	cont "I drew you!"
+	text "Otiakadult:"
+	line "Set a rule with"
+	cont "state.has()?"
+	cont "No way, that"
+	cont "would be too"
+	cont "easy to"
+	cont "understand!"
+	para "We're"
+	line "professionals"
+	cont "here!"
 	done
 
 _GraphicArtistText2::
@@ -46,14 +58,8 @@ _GraphicArtistText5::
 	done
 
 _WriterText::
-	text "I wrote the story!"
-	line "Isn't ERIKA cute?"
-
-	para "I like MISTY a"
-	line "lot too!"
-
-	para "Oh, and SABRINA,"
-	line "I like her!"
+	text "Klose:"
+	line "smh my head."
 	done
 
 _WriterText2::
@@ -65,25 +71,21 @@ _WriterText2::
 	done
 
 _GameDesignerText::
-	text "Is that right?"
-
-	para "I'm the game"
-	line "designer!"
-
-	para "Filling up your"
-	line "#DEX is tough,"
-	cont "but don't quit!"
-
-	para "When you finish,"
-	line "come tell me!"
+	text "Rationaler:"
+	line "Can we make this"
+	cont "a set instead of"
+	cont "a list? That will"
+	cont "save 0.0000000001"
+	cont "seconds of"
+	cont "generation time!"
 	done
 
 _CompletedDexText::
-	text "Wow! Excellent!"
-	line "You completed"
-	cont "your #DEX!"
-	cont "Congratulations!"
-	cont "...@"
+	text "I don't know why"
+	line "I'm in charge of"
+	cont "handing out"
+	cont "diplomas, but"
+	cont "here you go.@"
 	text_end
 
 _CompletedDexText2::
@@ -94,25 +96,22 @@ _CompletedDexText2::
 	done
 
 _CeladonMansion3Text5::
-	text "It's the game"
-	line "program! Messing"
-	cont "with it could bug"
-	cont "out the game!"
+	text "The “game”"
+	line "variable is now"
+	cont "“game_name” just"
+	cont "to mess with devs!"
 	done
 
 _CeladonMansion3Text6::
-	text "Someone's playing"
-	line "a game instead of"
-	cont "working!"
+	text "class None_()?"
+	line "What is going on"
+	cont "here?"
 	done
 
 _CeladonMansion3Text7::
-	text "It's the script!"
-	line "Better not look"
-	cont "at the ending!"
+	text "Ooh, cookies!"
 	done
 
 _CeladonMansion3Text8::
-	text "GAME FREAK"
-	line "Development Room"
+	text "▶ap-world-dev"
 	done

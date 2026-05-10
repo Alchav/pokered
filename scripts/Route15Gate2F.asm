@@ -9,8 +9,10 @@ Route15GateUpstairsText1:
 	text_asm
 	CheckEvent EVENT_GOT_EXP_ALL
 	jr nz, .got_item
+.Archipelago_Option_Aide_Rt15_1
 	ld a, 50
 	ldh [hOaksAideRequirement], a
+.Archipelago_Event_LD_A_Rt_15_Oaks_Aide
 	ld a, EXP_ALL
 	ldh [hOaksAideRewardItem], a
 	ld [wd11e], a

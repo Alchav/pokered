@@ -1,4 +1,5 @@
 TypeEffects:
+.Archipelago_Type_Chart
 	;  attacker,     defender,     *=
 	db WATER,        FIRE,         SUPER_EFFECTIVE
 	db FIRE,         GRASS,        SUPER_EFFECTIVE
@@ -82,4 +83,8 @@ TypeEffects:
 	db GRASS,        DRAGON,       NOT_VERY_EFFECTIVE
 	db ICE,          DRAGON,       SUPER_EFFECTIVE
 	db DRAGON,       DRAGON,       SUPER_EFFECTIVE
-	db -1 ; end
+	REPT 143
+	db $FE,          $FE,          $FE
+	ENDR
+
+	db -1, -1, -1 ; end

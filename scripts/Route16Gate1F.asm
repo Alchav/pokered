@@ -25,6 +25,7 @@ Route16GateScript0:
 	ldh [hJoyHeld], a
 	ld a, [wCoordIndex]
 	cp $1
+.Archipelago_Option_Route_16_Gate_Fix_0
 	jr z, .asm_4970e
 	ld a, [wCoordIndex]
 	dec a

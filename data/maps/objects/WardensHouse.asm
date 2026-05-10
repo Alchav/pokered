@@ -11,6 +11,7 @@ WardensHouse_Object:
 
 	def_object_events
 	object_event  2,  3, SPRITE_WARDEN, STAY, NONE, 1 ; person
+.Archipelago_Missable_Wardens_House_Item
 	object_event  8,  3, SPRITE_POKE_BALL, STAY, NONE, 2, RARE_CANDY
 	object_event  8,  4, SPRITE_BOULDER, STAY, BOULDER_MOVEMENT_BYTE_2, 3 ; person
 

@@ -125,8 +125,8 @@ DisplayTitleScreen:
 	ld [hli], a
 	jr .titleScreenCopyrightTilesLoop
 
-.tileScreenCopyrightTiles
-	db $e0,$e1,$e2,$e3,$e1,$e2,$ee,$e5,$e6,$e7,$e8,$e9,$ea,$eb,$ec,$ed,$ff ; ©1995-1999 GAME FREAK inc.
+	.tileScreenCopyrightTiles
+	db $7f, $ff
 
 .finishedBouncingPokemonLogo
 	call LoadScreenTilesFromBuffer1
@@ -258,9 +258,8 @@ LoadCopyrightTiles:
 	jp PlaceString
 
 CopyrightTextString:
-	db   $60,$61,$62,$63,$61,$62,$7c,$7f,$65,$66,$67,$68,$69,$6a			 ; ©1995-1999  Nintendo
-	next $60,$61,$62,$63,$61,$62,$7c,$7f,$6b,$6c,$6d,$6e,$6f,$70,$71,$72	 ; ©1995-1999  Creatures inc.
-	next $60,$61,$62,$63,$61,$62,$7c,$7f,$73,$74,$75,$76,$77,$78,$79,$7a,$7b ; ©1995-1999  GAME FREAK inc.
+	db   $7f,$7f,$60,$61,$62,$63,$64,$65,$66,$67,$68,$69,$6a,$7f,$7f
+	next $7f,$7f,$7f,$6b,$6c,$6d,$6e,$6f,$70,$71,$72
 	db   "@"
 
 TitleScreen_PlayPikachuPCM:
@@ -349,8 +348,10 @@ CopyFixedLengthText:
 	ld bc, NAME_LENGTH
 	jp CopyData
 
-NintenText: db "NINTEN@"
-SonyText:   db "SONY@"
+.Archipelago_Player_Name
+NintenText: db "NINTEN@@"
+.Archipelago_Rival_Name
+SonyText:   db "SONY@@@@"
 
 IncrementResetCounter:
 	ld hl, wTitleScreenScene + 2

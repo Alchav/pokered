@@ -21,6 +21,7 @@ SSAnne1FRooms_Object:
 	object_event  2, 11, SPRITE_LITTLE_GIRL, STAY, DOWN, 7 ; person
 	object_event  3, 11, SPRITE_JIGGLYPUFF, STAY, DOWN, 8 ; person
 	object_event 10, 13, SPRITE_GIRL, STAY, RIGHT, 9 ; person
+.Archipelago_Missable_SS_Anne_1F_Item
 	object_event 12, 15, SPRITE_POKE_BALL, STAY, NONE, 10, TM_BODY_SLAM
 	object_event 21, 13, SPRITE_GENTLEMAN, WALK, LEFT_RIGHT, 11 ; person
 

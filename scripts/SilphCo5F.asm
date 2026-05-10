@@ -97,10 +97,33 @@ SilphCo5TrainerHeader3:
 
 SilphCo5Text1:
 	text_asm
+	ld hl, SplitKeyChecks
+	ld a, [hl]
+	and a
+	jr z, .noSplitKey
+	CheckEvent EVENT_SKC_5F
+	jr nz, .noSplitKey
+.Archipelago_Event_SKC5F
+	lb bc, CARD_KEY_5F, 1
+	call GiveItem
+	jr nc, .bagFull
+	ld hl, DisplayArchipelagoItem
+	call PrintText
+	SetEvent EVENT_SKC_5F
+	jp TextScriptEnd
+.bagFull
+	ld hl, SKC5NoRoomText
+	call PrintText
+	jp TextScriptEnd
+.noSplitKey
 	ld hl, SilphCo5Text_1a010
 	ld de, SilphCo5Text_1a015
 	call SilphCo6Script_1a22f
 	jp TextScriptEnd
+
+SKC5NoRoomText:
+	text_far _TM42NoRoomText
+	text_end
 
 SilphCo5Text_1a010:
 	text_far _SilphCo5Text_1a010

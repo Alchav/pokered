@@ -56,9 +56,23 @@ Mansion1Script_Switches::
 	jp DisplayTextID
 
 PokemonMansion1F_ScriptPointers:
-	dw CheckFightingMapTrainers
+	dw PokemonMansionScript0
 	dw DisplayEnemyTrainerTextAndStartBattle
 	dw EndTrainerBattle
+
+PokemonMansionScript0:
+	CheckEvent EVENT_MANSION_SWITCH_ON
+	jp nz, CheckFightingMapTrainers
+	ld a, [wXCoord]
+	cp 20
+	jp c, CheckFightingMapTrainers
+	ld a, [wYCoord]
+	cp 27
+	jp nz, CheckFightingMapTrainers
+	ld hl, wCurrentMapScriptFlags
+	set 5, [hl]
+	SetEvent EVENT_MANSION_SWITCH_ON
+	jp CheckFightingMapTrainers
 
 PokemonMansion1F_TextPointers:
 	dw Mansion1Text1

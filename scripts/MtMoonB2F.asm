@@ -331,6 +331,7 @@ MtMoon3Script12:
 	ld hl, MtMoon3JessieJamesEndBattleText
 	ld de, MtMoon3JessieJamesEndBattleText
 	call SaveEndBattleTextPointers
+	EventBattleTrainersanity EVENT_BEAT_MT_MOON_3_TRAINER_0_ITEM
 	ld a, OPP_ROCKET
 	ld [wCurOpponent], a
 	ld a, $2a
@@ -493,6 +494,7 @@ MtMoon3Text1:
 	ld hl, MtMoon3SuperNerdEndBattleText
 	ld de, MtMoon3SuperNerdEndBattleText
 	call SaveEndBattleTextPointers
+	EventBattleTrainersanity EVENT_BEAT_MT_MOON_EXIT_SUPER_NERD_ITEM
 	ldh a, [hSpriteIndex]
 	ld [wSpriteIndex], a
 	call EngageMapTrainer
@@ -527,14 +529,20 @@ MtMoon3TalkToTrainer:
 
 MtMoon3Text7:
 	text_asm
+.Archipelago_Dome_Fossil_Text_1
+	ld a, DOME_FOSSIL
+	ld [wd11e], a
+	call GetItemName
+	call CopyToStringBuffer
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
-	ld hl, MtMoon3Text_4a0ae
+	ld hl, MtMoon3WantText
 	call PrintText
 	call YesNoChoice
 	ld a, [wCurrentMenuItem]
 	and a
 	jr nz, .asm_4a0ab
+.Archipelago_Event_Dome_Fossil
 	lb bc, DOME_FOSSIL, 1
 	call GiveItem
 	jp nc, MtMoon3Script_4a0fd
@@ -548,20 +556,29 @@ MtMoon3Text7:
 .asm_4a0ab
 	jp TextScriptEnd
 
-MtMoon3Text_4a0ae:
-	text_far _MtMoon3Text_49f24
+MtMoon3WantText:
+	text "You want the"
+	line "@"
+	text_ram wStringBuffer
+	text "?@"
 	text_end
 
 MtMoon3Text8:
 	text_asm
+.Archipelago_Helix_Fossil_Text_1
+	ld a, HELIX_FOSSIL
+	ld [wd11e], a
+	call GetItemName
+	call CopyToStringBuffer
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
-	ld hl, MtMoon3Text_4a0eb
+	ld hl, MtMoon3WantText
 	call PrintText
 	call YesNoChoice
 	ld a, [wCurrentMenuItem]
 	and a
 	jr nz, .asm_4a0e8
+.Archipelago_Event_Helix_Fossil
 	lb bc, HELIX_FOSSIL, 1
 	call GiveItem
 	jp nc, MtMoon3Script_4a0fd
@@ -574,10 +591,6 @@ MtMoon3Text8:
 	call MtMoon3Script_49ce5
 .asm_4a0e8
 	jp TextScriptEnd
-
-MtMoon3Text_4a0eb:
-	text_far _MtMoon3Text_49f64
-	text_end
 
 MtMoon3Script_4a0f0:
 	ld hl, MtMoon3Text_4a0f6

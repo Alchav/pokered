@@ -1,4 +1,5 @@
 GuardDrinksList:
+.Archipelago_Guard_Drink_List
 	db FRESH_WATER
 	db SODA_POP
 	db LEMONADE

@@ -15,6 +15,7 @@ FuchsiaHouse3Text1:
 	ld a, [wCurrentMenuItem]
 	and a
 	jr nz, .refused
+.Archipelago_Rod_Fuchsia_City_Fishing_Brother_2
 	lb bc, GOOD_ROD, 1
 	call GiveItem
 	jr nc, .bag_full

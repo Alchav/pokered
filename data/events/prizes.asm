@@ -4,8 +4,11 @@ PrizeDifferentMenuPtrs:
 	dw PrizeMenuTMsEntries,  PrizeMenuTMsCost
 
 PrizeMenuMon1Entries:
+.Archipelago_Prize_Mon_A2
 	db ABRA
+.Archipelago_Prize_Mon_B2
 	db VULPIX
+.Archipelago_Prize_Mon_C2
 	db WIGGLYTUFF
 	db "@"
 
@@ -16,8 +19,11 @@ PrizeMenuMon1Cost:
 	db "@"
 
 PrizeMenuMon2Entries:
+.Archipelago_Prize_Mon_D2
 	db SCYTHER
+.Archipelago_Prize_Mon_E2
 	db PINSIR
+.Archipelago_Prize_Mon_F2
 	db PORYGON
 	db "@"
 
@@ -28,8 +34,11 @@ PrizeMenuMon2Cost:
 	db "@"
 
 PrizeMenuTMsEntries:
+.Archipelago_Prize_Item_A_0
 	db TM_DRAGON_RAGE
+.Archipelago_Prize_Item_B_0
 	db TM_HYPER_BEAM
+.Archipelago_Prize_Item_C_0
 	db TM_SUBSTITUTE
 	db "@"
 

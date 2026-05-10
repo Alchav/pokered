@@ -14,6 +14,7 @@
 	const TOWN_MAP      ; $05
 	const BICYCLE       ; $06
 	const SURFBOARD     ; $07 buggy?
+DEF FLIPPERS EQU SURFBOARD
 	const SAFARI_BALL   ; $08
 	const POKEDEX       ; $09
 	const MOON_STONE    ; $0A
@@ -53,12 +54,14 @@ DEF SAFARI_ROCK EQU $16 ; overload
 	const HELIX_FOSSIL  ; $2A
 	const SECRET_KEY    ; $2B
 	const UNUSED_ITEM   ; $2C "?????"
+DEF AP_ITEM EQU UNUSED_ITEM
 	const BIKE_VOUCHER  ; $2D
 	const X_ACCURACY    ; $2E
 	const LEAF_STONE    ; $2F
 	const CARD_KEY      ; $30
 	const NUGGET        ; $31
 	const PP_UP_2       ; $32
+DEF LAPTOP EQU PP_UP_2
 	const POKE_DOLL     ; $33
 	const FULL_HEAL     ; $34
 	const REVIVE        ; $35
@@ -68,6 +71,7 @@ DEF SAFARI_ROCK EQU $16 ; overload
 	const MAX_REPEL     ; $39
 	const DIRE_HIT      ; $3A
 	const COIN          ; $3B
+DEF TEN_COINS EQU COIN
 	const FRESH_WATER   ; $3C
 	const SODA_POP      ; $3D
 	const LEMONADE      ; $3E
@@ -92,23 +96,51 @@ DEF SAFARI_ROCK EQU $16 ; overload
 	const MAX_ETHER     ; $51
 	const ELIXER        ; $52
 	const MAX_ELIXER    ; $53
+	const TEA           ; $54
+	const MASTER_SWORD  ; $55
+	const FLUTE         ; $56
+	const TITANS_MITT   ; $57
+	const LAMP          ; $58
+	const PLANT_KEY     ; $59
+	const MANSION_KEY   ; $5A
+	const HIDEOUT_KEY   ; $5B
+	const TRADE_STONE   ; $5C
+	const SAFARI_PASS   ; $5D
+	const POISON_TRAP   ; $5E
+	const PARALYZE_TRAP ; $5F
+	const ICE_TRAP      ; $60
+	const FIRE_TRAP     ; $61
+	const TWENTY_COINS  ; $62
+	const HUNDRED_COINS ; $63
+	const CARD_KEY_2F   ; $64
+	const CARD_KEY_3F   ; $65
+	const CARD_KEY_4F   ; $66
+	const CARD_KEY_5F   ; $67
+	const CARD_KEY_6F   ; $68
+	const CARD_KEY_7F   ; $69
+	const CARD_KEY_8F   ; $6A
+	const CARD_KEY_9F   ; $6B
+	const CARD_KEY_10F  ; $6C
+	const CARD_KEY_11F  ; $6D
+	const PROGRESSIVE_CARD_KEY ; $6E
+	const SLEEP_TRAP    ; $6F
 DEF NUM_ITEMS EQU const_value - 1
 
 ; elevator floors use item IDs
-	const FLOOR_B2F     ; $54
-	const FLOOR_B1F     ; $55
-	const FLOOR_1F      ; $56
-	const FLOOR_2F      ; $57
-	const FLOOR_3F      ; $58
-	const FLOOR_4F      ; $59
-	const FLOOR_5F      ; $5A
-	const FLOOR_6F      ; $5B
-	const FLOOR_7F      ; $5C
-	const FLOOR_8F      ; $5D
-	const FLOOR_9F      ; $5E
-	const FLOOR_10F     ; $5F
-	const FLOOR_11F     ; $60
-	const FLOOR_B4F     ; $61
+	const FLOOR_B2F     ; $70
+	const FLOOR_B1F     ; $71
+	const FLOOR_1F      ; $72
+	const FLOOR_2F      ; $73
+	const FLOOR_3F      ; $74
+	const FLOOR_4F      ; $75
+	const FLOOR_5F      ; $76
+	const FLOOR_6F      ; $77
+	const FLOOR_7F      ; $78
+	const FLOOR_8F      ; $79
+	const FLOOR_9F      ; $7A
+	const FLOOR_10F     ; $7B
+	const FLOOR_11F     ; $7C
+	const FLOOR_B4F     ; $7D
 DEF NUM_FLOORS EQU const_value - 1 - NUM_ITEMS
 
 	const_next $C4

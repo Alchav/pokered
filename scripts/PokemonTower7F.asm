@@ -153,6 +153,7 @@ PokemonTower7Script7:
 	ld hl, PokemonTower7JessieJamesEndBattleText
 	ld de, PokemonTower7JessieJamesEndBattleText
 	call SaveEndBattleTextPointers
+	EventBattleTrainersanity EVENT_BEAT_POKEMONTOWER_7_TRAINER_0_ITEM
 	ld a, OPP_ROCKET
 	ld [wCurOpponent], a
 	ld a, $2c
@@ -235,6 +236,10 @@ PokemonTower7Script_60ebe:
 PokemonTower7Script11:
 	ld a, $ff
 	ld [wJoyIgnore], a
+.Archipelago_Entrance_Shuffle_Fuji_Warp_1
+	ld a, 0
+	and a
+	jr nz, .skipWarp
 	ld a, HS_POKEMON_TOWER_7F_MR_FUJI
 	ld [wMissableObjectIndex], a
 	predef HideObject
@@ -250,6 +255,16 @@ PokemonTower7Script11:
 	set 3, [hl]
 	ld a, $0
 	ld [wPokemonTower7FCurScript], a
+	ret
+.skipWarp
+	call GBFadeOutToBlack
+	ld a, HS_POKEMON_TOWER_7F_MR_FUJI
+	ld [wMissableObjectIndex], a
+	predef HideObject
+	call GBFadeInFromBlack
+	xor a
+	ld [wPokemonTower7FCurScript], a
+	ld [wJoyIgnore], a
 	ret
 
 PokemonTower7F_TextPointers:

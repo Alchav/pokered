@@ -32,6 +32,7 @@ PrintLetterDelay::
 	bit BIT_B_BUTTON, a
 	jr z, .buttonsNotPressed
 .endWait
+.Archipelago_Option_Remove_Text_Delay_0
 	call DelayFrame
 	jr .done
 .buttonsNotPressed ; if neither A nor B is pressed

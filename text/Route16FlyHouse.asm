@@ -10,7 +10,9 @@ _Route16HouseText3::
 
 _ReceivedHM02Text::
 	text "<PLAYER> received"
-	line "HM02!@"
+	line "@"
+	text_ram wStringBuffer
+	text "!@"
 	text_end
 
 _HM02ExplanationText::

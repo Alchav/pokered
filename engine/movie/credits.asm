@@ -1,5 +1,6 @@
 HallOfFamePC:
 	callfar AnimateHallOfFame
+SkipHOFCredits::
 	call ClearScreen
 	ld c, 100
 	call DelayFrames
@@ -207,7 +208,7 @@ FillHalfOfScreenWithWhite:
 	jr nz, .loop
 	ret
 
-Credits: ; Roll credits
+Credits:: ; Roll credits
 	ld de, CreditsOrder
 	push de
 .nextCreditsScreen

@@ -11,9 +11,7 @@ _CeruleanHouse2Text_74e77::
 	prompt
 
 _CeruleanHouse2Text_74e7c::
-	text "Now then..."
-
-	para "Which of the 8"
+	text "Which of the 8"
 	line "BADGEs should I"
 	cont "describe?"
 	done
@@ -28,21 +26,17 @@ _CeruleanHouse2Text_74e96::
 	line "#MON increases"
 	cont "a little bit."
 
-	para "It also lets you"
-	line "use FLASH any-"
-	cont "time you desire."
+	para "Enables:"
+	line "FLASH"
+.Archipelago_Badge_Text_Boulder_Badge
+	db "          "
 	prompt
 
 _CeruleanHouse2Text_74e9b::
-	text "#MON up to L30"
-	line "will obey you."
-
-	para "Any higher, they"
-	line "become unruly!"
-
-	para "It also lets you"
-	line "use CUT outside"
-	cont "of battle."
+	text "Enables:"
+	line "CUT"
+.Archipelago_Badge_Text_Cascade_Badge
+	db "          "
 	prompt
 
 _CeruleanHouse2Text_74ea0::
@@ -50,19 +44,15 @@ _CeruleanHouse2Text_74ea0::
 	line "#MON increases"
 	cont "a little bit."
 
-	para "It also lets you"
-	line "use FLY outside"
-	cont "of battle."
+	para "Enables:"
+	line "FLY"
+.Archipelago_Badge_Text_Thunder_Badge
+	db "          "
 	prompt
 
 _CeruleanHouse2Text_74ea5::
-	text "#MON up to L50"
-	line "will obey you."
-
-	para "Any higher, they"
-	line "become unruly!"
-
-	para "It also lets you"
-	line "use STRENGTH out-"
-	cont "side of battle."
+	text "Enables:"
+	line "STRENGTH"
+.Archipelago_Badge_Text_Rainbow_Badge
+	db "          "
 	prompt

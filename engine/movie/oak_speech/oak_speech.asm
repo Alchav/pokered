@@ -7,6 +7,8 @@ SetDefaultNames:
 	push af
 	ld a, [wPrinterSettings]
 	push af
+	ld a, [wArchipelagoOptions]
+	push af
 	ld hl, wPlayerName
 	ld bc, wBoxDataEnd - wPlayerName
 	xor a
@@ -19,6 +21,8 @@ SetDefaultNames:
 	ld [wSurfingMinigameHiScore], a
 	ld [wSurfingMinigameHiScore + 1], a
 	ld [wSurfingMinigameHiScore + 2], a
+	pop af
+	ld [wArchipelagoOptions], a
 	pop af
 	ld [wPrinterSettings], a
 	pop af
@@ -51,16 +55,42 @@ OakSpeech:
 	call SetDefaultNames
 	predef InitPlayerData2
 	ld hl, wNumBoxItems
+.Archipelago_PC_Item_LD_A
 	ld a, POTION
 	ld [wcf91], a
+.Archipelago_PC_Item_Quantity_LD_A
 	ld a, 1
 	ld [wItemQuantity], a
 	call AddItemToInventory  ; give one potion
+	farcall FillStartInventory
+.Archipelago_Fly_Location_LD_A
+	ld a, $00
+	ld c, a
+	ld b, FLAG_SET
+	ld hl, wTownVisitedFlag
+	predef FlagActionPredef
 	ld a, [wDefaultMap]
 	ld [wDestinationMap], a
 	call SpecialWarpIn
 	xor a
 	ldh [hTileAnimations], a
+.Archipelago_Skip_Player_Name_1
+	ld a, 1
+	and a
+	jr nz, .skipPlayerName
+	ld hl, OakSpeechText1
+	call PrintText
+	call ChoosePlayerName
+.skipPlayerName
+.Archipelago_Skip_Rival_Name_1
+	ld a, 1
+	and a
+	jr nz, .skipRivalName
+	ld hl, OakSpeechText2
+	call PrintText
+	call ChooseRivalName
+.skipRivalName
+	jp .skipChoosingNames
 	ld a, [wd732]
 	bit 1, a ; possibly a debug mode bit
 	jp nz, .skipChoosingNames

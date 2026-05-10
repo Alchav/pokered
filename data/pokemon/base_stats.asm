@@ -1,5 +1,6 @@
 BaseStats::
 	table_width BASE_DATA_SIZE, BaseStats
+.Archipelago_Base_Stats
 INCLUDE "data/pokemon/base_stats/bulbasaur.asm"
 INCLUDE "data/pokemon/base_stats/ivysaur.asm"
 INCLUDE "data/pokemon/base_stats/venusaur.asm"

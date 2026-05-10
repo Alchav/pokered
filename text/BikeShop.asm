@@ -25,9 +25,13 @@ _BikeShopText_1d81f::
 	prompt
 
 _BikeShopText_1d824::
-	text "<PLAYER> exchanged"
-	line "the BIKE VOUCHER"
-	cont "for a BICYCLE.@"
+	text "Exchanged the"
+	line "BIKE VOUCHER!"
+
+	para "<PLAYER> received"
+	line "@"
+	text_ram wStringBuffer
+	text "!@"
 	text_end
 
 _BikeShopComeAgainText::

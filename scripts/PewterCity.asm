@@ -24,12 +24,37 @@ PewterCityScript0:
 	ret
 
 PewterCityScript_1925e:
+.Archipelago_Option_Route3_Guard_B_1
+	ld a, 0
+	and a
+	jr z, .noGymGuy
+	cp 1
+	jr z, .brock
+	cp 2
+	jr z, .anyGym
+	cp 3
+	ld a, [wObtainedBadges]
+	jr z, .boulderBadge
+	and a
+	jr nz, .noGymGuy
+	jr .continue
+.boulderBadge
+	bit BIT_BOULDERBADGE, a
+	jr nz, .noGymGuy
+	jr .continue
+.anyGym
+	ld a, [wBeatGymFlags]
+	and a
+	jr nz, .noGymGuy
+	jr .continue
+.brock
 	CheckEvent EVENT_BEAT_BROCK
-	ret nz
+	jr nz, .noGymGuy
 IF DEF(_DEBUG)
 	call DebugPressedOrHeldB
 	ret nz
 ENDC
+.continue
 	ld hl, CoordsData_19277
 	call ArePlayerCoordsInArray
 	ret nc
@@ -38,6 +63,11 @@ ENDC
 	ld a, $5
 	ldh [hSpriteIndexOrTextID], a
 	jp DisplayTextID
+.noGymGuy
+	ld a, HS_GYM_GUY
+	ld [wMissableObjectIndex], a
+	predef HideObject
+	ret
 
 CoordsData_19277:
 	dbmapcoord 35, 17
@@ -283,6 +313,9 @@ PewterCityText5:
 	text_asm
 	ld hl, PewterCityText_1945d
 	call PrintText
+	ld hl, PewterGymGuyBadCoord
+	call ArePlayerCoordsInArray
+	jp c, TextScriptEnd
 	xor a
 	ldh [hJoyHeld], a
 	ld [wNPCMovementScriptFunctionNum], a
@@ -300,6 +333,10 @@ PewterCityText5:
 PewterCityText_1945d:
 	text_far _PewterCityText_1945d
 	text_end
+
+PewterGymGuyBadCoord:
+	dbmapcoord 36, 16
+	db -1 ; end
 
 PewterCityText14:
 	text_far _PewterCityText14

@@ -1,6 +1,6 @@
 Route20_Script:
-	CheckAndResetEvent EVENT_IN_SEAFOAM_ISLANDS
-	call nz, Route20Script_50cc6
+	; CheckAndResetEvent EVENT_IN_SEAFOAM_ISLANDS
+	; call nz, Route20Script_50cc6
 	call EnableAutoTextBoxDrawing
 	ld hl, Route20TrainerHeaders
 	ld de, Route20_ScriptPointers

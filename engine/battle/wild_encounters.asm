@@ -92,6 +92,16 @@ TryDoWildEncounter:
 	ldh [hSpriteIndexOrTextID], a
 	call EnableAutoTextBoxDrawing
 	call DisplayTextID
+	ld a, [wRepelItemUsed]
+	ld [wd11e], a
+	ld b, a
+	predef GetQuantityOfItemInBag
+	ld a, b
+	and a
+	jr z, .CantEncounter2
+	ld a, TEXT_USE_REPEL
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
 .CantEncounter2
 	ld a, $1
 	and a

@@ -69,6 +69,25 @@ SilphCo10Text2:
 
 SilphCo10Text3:
 	text_asm
+	ld hl, SplitKeyChecks
+	ld a, [hl]
+	and a
+	jr z, .noSplitKey
+	CheckEvent EVENT_SKC_10F
+	jr nz, .noSplitKey
+.Archipelago_Event_SKC10F
+	lb bc, CARD_KEY_10F, 1
+	call GiveItem
+	jr nc, .bagFull
+	ld hl, DisplayArchipelagoItem
+	call PrintText
+	SetEvent EVENT_SKC_10F
+	jp TextScriptEnd
+.bagFull
+	ld hl, SKC10NoRoomText
+	call PrintText
+	jp TextScriptEnd
+.noSplitKey
 	CheckEvent EVENT_BEAT_SILPH_CO_GIOVANNI
 	ld hl, SilphCo10Text_5a1d8
 	jr nz, .asm_cf85f
@@ -76,6 +95,10 @@ SilphCo10Text3:
 .asm_cf85f
 	call PrintText
 	jp TextScriptEnd
+
+SKC10NoRoomText:
+	text_far _TM42NoRoomText
+	text_end
 
 SilphCo10Text_5a1d3:
 	text_far _SilphCo10Text_5a1d3

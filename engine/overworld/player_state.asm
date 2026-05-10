@@ -32,9 +32,6 @@ IsPlayerStandingOnWarp::
 	ret
 
 CheckForceBikeOrSurf::
-	ld hl, wd732
-	bit 5, [hl]
-	ret nz
 	ld hl, ForcedBikeOrSurfMaps
 	ld a, [wYCoord]
 	ld b, a
@@ -45,7 +42,11 @@ CheckForceBikeOrSurf::
 .loop
 	ld a, [hli]
 	cp $ff
-	ret z ;if we reach FF then it's not part of the list
+	jr nz, .continue ;if we reach FF then it's not part of the list
+	ld hl, wd732
+	res 5, [hl]
+	ret
+.continue
 	cp d ;compare to current map
 	jr nz, .incorrectMap
 	ld a, [hli]
@@ -65,6 +66,12 @@ CheckForceBikeOrSurf::
 	ld [wSeafoamIslandsB4FCurScript], a
 	jr z, .forceSurfing
 	;force bike riding
+	ld b, BICYCLE
+	call IsItemInBag
+	ret z
+	ld a, [wWalkBikeSurfState]
+	cp 1
+	ret z
 	ld hl, wd732
 	set 5, [hl]
 	ld a, $1

@@ -1,15 +1,5 @@
 _BlainePreBattleText::
-	text "Hah!"
-
-	para "I am BLAINE! I"
-	line "am the LEADER of"
-	cont "CINNABAR GYM!"
-
-	para "My fiery #MON"
-	line "will incinerate"
-	cont "all challengers!"
-
-	para "Hah! You better"
+	text "Hah! You better"
 	line "have BURN HEAL!"
 	done
 

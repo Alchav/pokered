@@ -13,10 +13,15 @@ RocketHideoutB4F_Object:
 	object_event 25, 10, SPRITE_JAMES, STAY, DOWN, 2
 	object_event 24, 10, SPRITE_JESSIE, STAY, DOWN, 3
 	object_event 11,  2, SPRITE_ROCKET, STAY, DOWN, 4, OPP_ROCKET, 18
+.Archipelago_Missable_Rocket_Hideout_B4F_Item_1
 	object_event 10, 12, SPRITE_POKE_BALL, STAY, NONE, 5, HP_UP
+.Archipelago_Missable_Rocket_Hideout_B4F_Item_2
 	object_event  9,  4, SPRITE_POKE_BALL, STAY, NONE, 6, TM_RAZOR_WIND
+.Archipelago_Missable_Rocket_Hideout_B4F_Item_3
 	object_event 12, 20, SPRITE_POKE_BALL, STAY, NONE, 7, IRON
+.Archipelago_Missable_Rocket_Hideout_B4F_Item_4
 	object_event 25,  2, SPRITE_POKE_BALL, STAY, NONE, 8, SILPH_SCOPE
+.Archipelago_Missable_Rocket_Hideout_B4F_Item_5
 	object_event 10,  2, SPRITE_POKE_BALL, STAY, NONE, 9, LIFT_KEY
 
 	def_warps_to ROCKET_HIDEOUT_B4F

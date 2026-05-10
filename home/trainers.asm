@@ -62,19 +62,9 @@ ReadTrainerHeaderInfo::
 	ld [wTrainerHeaderFlagBit], a  ; store flag's bit
 	jr .done
 .nonZeroOffset
-	cp $2
-	jr z, .readPointer ; read flag's byte ptr
-	cp $4
-	jr z, .readPointer ; read before battle text
-	cp $6
-	jr z, .readPointer ; read after battle text
-	cp $8
-	jr z, .readPointer ; read end battle text
-	cp $a
-	jr nz, .done
-	ld a, [hli]        ; read end battle text (2) but override the result afterwards (XXX why, bug?)
-	ld d, [hl]
-	ld e, a
+	cp $c
+	jr c, .readPointer
+	ld a, [hli]
 	jr .done
 .readPointer
 	ld a, [hli]
@@ -89,6 +79,7 @@ TrainerFlagAction::
 
 TalkToTrainer::
 	call StoreTrainerHeaderPointer
+	call GetTrainersanityData
 	xor a
 	call ReadTrainerHeaderInfo     ; read flag's bit
 	ld a, $2
@@ -100,6 +91,8 @@ TalkToTrainer::
 	ld a, c
 	and a
 	jr z, .trainerNotYetFought     ; test trainer's flag
+	farcall CheckForTrainersanityItem
+	ret c
 	ld a, $6
 	call ReadTrainerHeaderInfo     ; print after battle text
 	jp PrintText
@@ -113,7 +106,6 @@ TalkToTrainer::
 	ld a, $8
 	call ReadTrainerHeaderInfo     ; read end battle text
 	pop de
-	call SaveEndBattleTextPointers
 	ld hl, wFlags_D733
 	set 4, [hl]                    ; activate map script index override (index is set below)
 	ld hl, wFlags_0xcd60
@@ -127,10 +119,10 @@ TalkToTrainer::
 
 ; checks if any trainers are seeing the player and wanting to fight
 CheckFightingMapTrainers::
-IF DEF(_DEBUG)
-	call DebugPressedOrHeldB
-	jr nz, .trainerNotEngaging
-ENDC
+;IF DEF(_DEBUG)
+;	call DebugPressedOrHeldB
+;	jr nz, .trainerNotEngaging
+;ENDC
 	call CheckForEngagingTrainers
 	ld a, [wSpriteIndex]
 	cp $ff
@@ -271,6 +263,18 @@ CheckForEngagingTrainers::
 	ld [wTrainerHeaderFlagBit], a
 	cp -1
 	ret z
+	ld a, $d
+	call ReadTrainerHeaderInfo
+	and a
+	jr nz, .battle
+.Archipelago_Option_Blind_Trainers_1
+	ld b, 255
+	call Random
+	cp b
+	jr c, .continue
+	jr z, .continue
+.battle
+	call GetTrainersanityData
 	ld a, $2
 	call ReadTrainerHeaderInfo       ; read trainer flag's byte ptr
 	ld b, FLAG_TEST
@@ -299,7 +303,7 @@ CheckForEngagingTrainers::
 	and a
 	ret nz        ; break if the trainer is engaging
 .continue
-	ld hl, $c
+	ld hl, $e
 	add hl, de
 	ld d, h
 	ld e, l
@@ -308,16 +312,6 @@ CheckForEngagingTrainers::
 ; hl = text if the player wins
 ; de = text if the player loses
 SaveEndBattleTextPointers::
-	ldh a, [hLoadedROMBank]
-	ld [wEndBattleTextRomBank], a
-	ld a, h
-	ld [wEndBattleWinTextPointer], a
-	ld a, l
-	ld [wEndBattleWinTextPointer + 1], a
-	ld a, d
-	ld [wEndBattleLoseTextPointer], a
-	ld a, e
-	ld [wEndBattleLoseTextPointer + 1], a
 	ret
 
 ; loads data of some trainer on the current map and plays pre-battle music
@@ -336,52 +330,22 @@ EngageMapTrainer::
 	ld [wEngagedTrainerSet], a
 	jp PlayTrainerMusic
 
+GetTrainersanityData::
+	ld a, $a
+	call ReadTrainerHeaderInfo
+	ld [wEndBattleTrainersanityFlagByte], a
+	ld a, h
+	ld [wEndBattleTrainersanityFlagByte + 1], a
+	ld a, $c
+	call ReadTrainerHeaderInfo
+	ld [wEndBattleTrainersanityFlagBit], a
+	ld a, $d
+	call ReadTrainerHeaderInfo
+	ld [wEndBattleTrainersanityItem], a
+	ret
+
 PrintEndBattleText::
-	push hl
-	ld hl, wd72d
-	bit 7, [hl]
-	res 7, [hl]
-	pop hl
-	ret z
-	ldh a, [hLoadedROMBank]
-	push af
-	ld a, [wEndBattleTextRomBank]
-	ldh [hLoadedROMBank], a
-	ld [MBC1RomBank], a
-	push hl
-	farcall SaveTrainerName
-	ld hl, TrainerEndBattleText
-	call PrintText
-	pop hl
-	pop af
-	ldh [hLoadedROMBank], a
-	ld [MBC1RomBank], a
-	farcall FreezeEnemyTrainerSprite
-	jp WaitForSoundToFinish
-
-GetSavedEndBattleTextPointer::
-	ld a, [wBattleResult]
-	and a
-; won battle
-	jr nz, .lostBattle
-	ld a, [wEndBattleWinTextPointer]
-	ld h, a
-	ld a, [wEndBattleWinTextPointer + 1]
-	ld l, a
 	ret
-.lostBattle
-	ld a, [wEndBattleLoseTextPointer]
-	ld h, a
-	ld a, [wEndBattleLoseTextPointer + 1]
-	ld l, a
-	ret
-
-TrainerEndBattleText::
-	text_far _TrainerNameText
-	text_asm
-	call GetSavedEndBattleTextPointer
-	call TextCommandProcessor
-	jp TextScriptEnd
 
 PlayTrainerMusic::
 	ld a, [wEngagedTrainerClass]

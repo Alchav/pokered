@@ -15,6 +15,7 @@ Route12HouseText1:
 	ld a, [wCurrentMenuItem]
 	and a
 	jr nz, .refused
+.Archipelago_Rod_Route12_Fishing_Brother_2
 	lb bc, SUPER_ROD, 1
 	call GiveItem
 	jr nc, .bag_full

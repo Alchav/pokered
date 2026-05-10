@@ -4,11 +4,8 @@ _OakAppearsText::
 	text_end
 
 _OakWalksUpText::
-	text "OAK: That was"
-	line "close!"
-
-	para "Wild #MON live"
-	line "in tall grass!"
+	text "Here, come with"
+	line "me!"
 	done
 
 _OakWhewText::
@@ -16,16 +13,7 @@ _OakWhewText::
 	done
 
 _OakGrassText::
-	text "OAK: A #MON can"
-	line "appear anytime in"
-	cont "tall grass."
-
-	para "You need your own"
-	line "#MON for your"
-	cont "protection."
-	cont "I know!"
-
-	para "Here, come with"
+	text "Here, come with"
 	line "me!"
 	done
 
@@ -36,6 +24,11 @@ _PalletTownText2::
 	para "When they get"
 	line "strong, they can"
 	cont "protect me!"
+
+	para "I'll need it,"
+	line "since I am"
+	cont "apparently"
+	cont "homeless."
 	done
 
 _PalletTownText3::
@@ -51,6 +44,14 @@ _PalletTownText3::
 _PalletTownText4::
 	text "OAK #MON"
 	line "RESEARCH LAB"
+	cont "and also where"
+	cont "OAK lives, I"
+	cont "guess?"
+	para "Or does he live"
+	line "at <RIVAL>'s"
+	cont "house? Who is"
+	cont "raising them"
+	cont "anyways?"
 	done
 
 _PalletTownText5::
@@ -61,8 +62,27 @@ _PalletTownText5::
 
 _PalletTownText6::
 	text "<PLAYER>'s house "
+	para "That's right."
+	line "<PLAYER> owns the"
+	cont "house. Not his"
+	cont "mom. Makes"
+	cont "perfect sense,"
+	cont "why not?"
+	para "Maybe <PLAYER> won"
+	line "a lottery or"
+	cont "something."
+	para "Or his dad left"
+	line "the house to him"
+	cont "in his will."
+	para "I'm sure there's"
+	line "a perfectly good"
+	cont "explanation."
 	done
 
 _PalletTownText7::
 	text "<RIVAL>'s house "
+	para "Why are all the"
+	line "houses in this"
+	cont "town owned by"
+	cont "children?"
 	done

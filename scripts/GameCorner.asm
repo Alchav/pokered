@@ -136,8 +136,61 @@ GameCorner_TextPointers:
 	dw CeladonGameCornerText13
 
 CeladonGameCornerText1:
-	text_far _CeladonGameCornerText1
-	text_end
+	text_asm
+	call CeladonGameCornerScript_48f1e
+	ld hl, CeladonGameCornerText_48d22b
+	call PrintText
+	call YesNoChoice
+	ld a, [wCurrentMenuItem]
+	and a
+	jr nz, .asm_48d0f
+	ld b, COIN_CASE
+	call IsItemInBag
+	jr z, .asm_48d19
+	call Has8540Coins
+	jr nc, .asm_48d14
+	xor a
+	ldh [hMoney + 2], a
+	ldh [hMoney + 1], a
+	ld a, $03
+	ldh [hMoney], a
+	call HasEnoughMoney
+	jr nc, .asm_48cdb
+	ld hl, CeladonGameCornerText_48d31
+	jr .asm_48d1c
+.asm_48cdb
+	xor a
+	ldh [hMoney + 2], a
+	ldh [hMoney + 1], a
+	ld a, $03
+	ldh [hMoney], a
+	ld hl, hMoney + 2
+	ld de, wPlayerMoney + 2
+	ld c, $3
+	predef SubBCDPredef
+	xor a
+	ldh [hUnusedCoinsByte], a
+	ldh [hCoins + 1], a
+	ld a, $15
+	ldh [hCoins], a
+	ld de, wPlayerCoins + 1
+	ld hl, hCoins + 1
+	ld c, $2
+	predef AddBCDPredef
+	call CeladonGameCornerScript_48f1e
+	ld hl, CeladonGameCornerText_48d27
+	jr .asm_48d1c
+.asm_48d0f
+	ld hl, CeladonGameCornerText_48d2c
+	jr .asm_48d1c
+.asm_48d14
+	ld hl, CeladonGameCornerText_48d36
+	jr .asm_48d1c
+.asm_48d19
+	ld hl, CeladonGameCornerText_48d3b
+.asm_48d1c
+	call PrintText
+	jp TextScriptEnd
 
 CeladonGameCornerText2:
 	text_asm
@@ -200,6 +253,10 @@ CeladonGameCornerText_48d22:
 	text_far _CeladonGameCornerText_48d22
 	text_end
 
+CeladonGameCornerText_48d22b:
+	text_far _CeladonGameCornerText_48d22b
+	text_end
+
 CeladonGameCornerText_48d27:
 	text_far _CeladonGameCornerText_48d27
 	text_end
@@ -232,22 +289,13 @@ CeladonGameCornerText5:
 	text_asm
 	CheckEvent EVENT_GOT_10_COINS
 	jr nz, .asm_48d89
-	ld hl, CeladonGameCornerText_48d9c
-	call PrintText
 	ld b, COIN_CASE
 	call IsItemInBag
 	jr z, .asm_48d93
-	call Has9990Coins
+.Archipelago_Event_Game_Corner_Gift_A
+	lb bc, TEN_COINS, 1
+	call GiveItem
 	jr nc, .asm_48d8e
-	xor a
-	ldh [hUnusedCoinsByte], a
-	ldh [hCoins], a
-	ld a, $10
-	ldh [hCoins + 1], a
-	ld de, wPlayerCoins + 1
-	ld hl, hCoins + 1
-	ld c, $2
-	predef AddBCDPredef
 	SetEvent EVENT_GOT_10_COINS
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
@@ -312,22 +360,13 @@ CeladonGameCornerText9:
 	text_asm
 	CheckEvent EVENT_GOT_20_COINS_2
 	jr nz, .asm_48e13
-	ld hl, CeladonGameCornerText_48e26
-	call PrintText
 	ld b, COIN_CASE
 	call IsItemInBag
 	jr z, .asm_48e1d
-	call Has9990Coins
+.Archipelago_Event_Game_Corner_Gift_C
+	lb bc, TWENTY_COINS, 1
+	call GiveItem
 	jr nc, .asm_48e18
-	xor a
-	ldh [hUnusedCoinsByte], a
-	ldh [hCoins], a
-	ld a, $20
-	ldh [hCoins + 1], a
-	ld de, wPlayerCoins + 1
-	ld hl, hCoins + 1
-	ld c, $2
-	predef AddBCDPredef
 	SetEvent EVENT_GOT_20_COINS_2
 	ld hl, Received20CoinsText
 	jr .asm_48e20
@@ -364,22 +403,13 @@ CeladonGameCornerText10:
 	text_asm
 	CheckEvent EVENT_GOT_20_COINS
 	jr nz, .asm_48e75
-	ld hl, CeladonGameCornerText_48e88
-	call PrintText
 	ld b, COIN_CASE
 	call IsItemInBag
 	jr z, .asm_48e7f
-	call Has9990Coins
-	jr z, .asm_48e7a
-	xor a
-	ldh [hUnusedCoinsByte], a
-	ldh [hCoins], a
-	ld a, $20
-	ldh [hCoins + 1], a
-	ld de, wPlayerCoins + 1
-	ld hl, hCoins + 1
-	ld c, $2
-	predef AddBCDPredef
+.Archipelago_Event_Game_Corner_Gift_B
+	lb bc, TWENTY_COINS, 1
+	call GiveItem
+	jr nc, .asm_48e7a
 	SetEvent EVENT_GOT_20_COINS
 	ld hl, CeladonGameCornerText_48e8d
 	jr .asm_48e82
@@ -419,9 +449,7 @@ CeladonGameCornerText11:
 	ld hl, wd72d
 	set 6, [hl]
 	set 7, [hl]
-	ld hl, CeladonGameCornerText_48ed3
-	ld de, CeladonGameCornerText_48ed3
-	call SaveEndBattleTextPointers
+	EventBattleTrainersanity EVENT_FOUND_ROCKET_HIDEOUT_ITEM
 	ldh a, [hSpriteIndex]
 	ld [wSpriteIndex], a
 	call EngageMapTrainer
@@ -450,8 +478,25 @@ CeladonGameCornerText12:
 	text_asm
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
+.Archipelago_Option_Extra_Key_Items_C_1
+	ld a, 0
+	and a
+	jr nz, .checkKey
+	ld hl, CeladonGameCornerTextOrig1
+	call PrintText
+	jr .unlock
+.checkKey
 	ld hl, CeladonGameCornerText_48f09
 	call PrintText
+	call WaitForTextScrollButtonPress
+	ld b, HIDEOUT_KEY
+	call IsItemInBag
+	jr z, .locked
+	ld hl, CeladonGameCornerText_unlock
+	call PrintText
+.unlock
+	ld a, SFX_START_MENU
+	call PlaySound
 	call WaitForSoundToFinish
 	ld a, SFX_GO_INSIDE
 	call PlaySound
@@ -461,15 +506,25 @@ CeladonGameCornerText12:
 	ld [wNewTileBlockID], a
 	lb bc, 2, 8
 	predef ReplaceTileBlock
+.locked
 	jp TextScriptEnd
+
+CeladonGameCornerTextOrig1:
+	text "Hey!"
+
+	para "A switch behind"
+	line "the poster!?"
+	cont "Let's push it!@"
+	text_end
 
 CeladonGameCornerText_48f09:
 	text_far _CeladonGameCornerText_48f09
-	text_asm
-	ld a, SFX_SWITCH
-	call PlaySound
-	call WaitForSoundToFinish
-	jp TextScriptEnd
+	text_end
+
+CeladonGameCornerText_unlock:
+	text "Used the"
+	line "HIDEOUT KEY!"
+	done
 
 CeladonGameCornerText_48f19:
 	text_far _CeladonGameCornerText_48f19
@@ -520,6 +575,13 @@ GameCornerBlankText1:
 
 GameCornerBlankText2:
 	db "       @"
+
+Has8540Coins:
+	ld a, $85
+	ldh [hCoins], a
+	ld a, $40
+	ldh [hCoins + 1], a
+	jp HasEnoughCoins
 
 Has9990Coins:
 	ld a, $99

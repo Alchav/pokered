@@ -1,23 +1,6 @@
 _LTSurgePreBattleText::
-	text "Ten-hut! Welcome"
-	line "to VERMILION GYM!"
-
-	para "Will you look at"
-	line "that, a pint-size"
-	cont "challenger!"
-
-	para "Hahaha! You've got"
-	line "big and brassy"
-	cont "nerves to take me"
-	cont "on with your puny"
-	cont "power!"
-
-	para "A #MON battle"
-	line "is war! I'll show"
-	cont "you, civilian!"
-
-	para "I'll shock you"
-	line "into surrender!"
+	text "I will knock you"
+	line "all down!"
 	done
 
 _LTSurgePostBattleAdviceText::
@@ -46,7 +29,7 @@ _LTSurgeThunderBadgeInfoText::
 	done
 
 _ReceivedTM24Text::
-	text "<PLAYER> received "
+	text "<PLAYER> received"
 	line "@"
 	text_ram wStringBuffer
 	text "!@"
@@ -125,14 +108,8 @@ _VermilionGymEndBattleText3::
 	prompt
 
 _VermilionGymAfterBattleText3::
-	text "LT.SURGE set up"
-	line "double locks!"
-	cont "Here's a hint!"
-
-	para "When you open the"
-	line "1st lock, the 2nd"
-	cont "lock is right"
-	cont "next to it!"
+	text "You only have to"
+	line "find one lock!"
 	done
 
 _VermilionGymGuidePreBattleText::

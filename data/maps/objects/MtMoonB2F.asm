@@ -18,7 +18,9 @@ MtMoonB2F_Object:
 	object_event  9,  4, SPRITE_JAMES, STAY, LEFT, 6
 	object_event 12,  6, SPRITE_FOSSIL, STAY, NONE, 7 ; person
 	object_event 13,  6, SPRITE_FOSSIL, STAY, NONE, 8 ; person
+.Archipelago_Missable_Mt_Moon_B2F_Item_1
 	object_event 25, 21, SPRITE_POKE_BALL, STAY, NONE, 9, HP_UP
+.Archipelago_Missable_Mt_Moon_B2F_Item_2
 	object_event 29,  5, SPRITE_POKE_BALL, STAY, NONE, 10, TM_MEGA_PUNCH
 
 	def_warps_to MT_MOON_B2F

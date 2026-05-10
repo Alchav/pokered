@@ -8,8 +8,8 @@ SafariZoneCheck::
 
 SafariZoneCheckSteps::
 IF DEF(_DEBUG)
-	call DebugPressedOrHeldB
-	ret nz
+	;call DebugPressedOrHeldB
+	;ret nz
 ENDC
 	ld a, [wSafariSteps]
 	ld b, a

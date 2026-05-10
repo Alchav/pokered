@@ -8,8 +8,9 @@ SaffronHouse2Text1:
 	text_asm
 	CheckEvent EVENT_GOT_TM29
 	jr nz, .got_item
-	ld hl, TM29PreReceiveText
-	call PrintText
+	;ld hl, TM29PreReceiveText
+	;call PrintText
+.Archipelago_Event_Mr_Psychic
 	lb bc, TM_PSYCHIC_M, 1
 	call GiveItem
 	jr nc, .bag_full

@@ -10,8 +10,8 @@ CeruleanBadgeHouse_TextPointers:
 
 CeruleanHouse2Text1:
 	text_asm
-	ld hl, CeruleanHouse2Text_74e77
-	call PrintText
+	;ld hl, CeruleanHouse2Text_74e77
+	;call PrintText
 	xor a
 	ld [wCurrentMenuItem], a
 	ld [wListScrollOffset], a

@@ -9,7 +9,7 @@ KeyItemFlags:
 	dbit TRUE  ; SURFBOARD
 	dbit TRUE  ; SAFARI_BALL
 	dbit TRUE  ; POKEDEX
-	dbit FALSE ; MOON_STONE
+	dbit TRUE  ; MOON_STONE
 	dbit FALSE ; ANTIDOTE
 	dbit FALSE ; BURN_HEAL
 	dbit FALSE ; ICE_HEAL
@@ -31,9 +31,9 @@ KeyItemFlags:
 	dbit FALSE ; ESCAPE_ROPE
 	dbit FALSE ; REPEL
 	dbit TRUE  ; OLD_AMBER
-	dbit FALSE ; FIRE_STONE
-	dbit FALSE ; THUNDER_STONE
-	dbit FALSE ; WATER_STONE
+	dbit TRUE  ; FIRE_STONE
+	dbit TRUE  ; THUNDER_STONE
+	dbit TRUE  ; WATER_STONE
 	dbit FALSE ; HP_UP
 	dbit FALSE ; PROTEIN
 	dbit FALSE ; IRON
@@ -43,13 +43,13 @@ KeyItemFlags:
 	dbit TRUE  ; DOME_FOSSIL
 	dbit TRUE  ; HELIX_FOSSIL
 	dbit TRUE  ; SECRET_KEY
-	dbit TRUE  ; UNUSED_ITEM
+	dbit TRUE  ; AP_ITEM
 	dbit TRUE  ; BIKE_VOUCHER
 	dbit FALSE ; X_ACCURACY
-	dbit FALSE ; LEAF_STONE
+	dbit TRUE  ; LEAF_STONE
 	dbit TRUE  ; CARD_KEY
 	dbit FALSE ; NUGGET
-	dbit FALSE ; PP_UP_2
+	dbit TRUE  ; LAPTOP
 	dbit FALSE ; POKE_DOLL
 	dbit FALSE ; FULL_HEAL
 	dbit FALSE ; REVIVE
@@ -74,7 +74,7 @@ KeyItemFlags:
 	dbit TRUE  ; SILPH_SCOPE
 	dbit TRUE  ; POKE_FLUTE
 	dbit TRUE  ; LIFT_KEY
-	dbit FALSE ; EXP_ALL
+	dbit TRUE  ; EXP_ALL
 	dbit TRUE  ; OLD_ROD
 	dbit TRUE  ; GOOD_ROD
 	dbit TRUE  ; SUPER_ROD
@@ -83,4 +83,32 @@ KeyItemFlags:
 	dbit FALSE ; MAX_ETHER
 	dbit FALSE ; ELIXER
 	dbit FALSE ; MAX_ELIXER
+	dbit TRUE  ; TEA
+	dbit TRUE  ; MASTER_SWORD
+	dbit TRUE  ; FLUTE
+	dbit TRUE  ; TITANS_MITT
+	dbit TRUE  ; LAMP
+	dbit TRUE  ; PLANT_KEY
+	dbit TRUE  ; MANSION_KEY
+	dbit TRUE  ; HIDEOUT_KEY
+	dbit TRUE  ; TRADE_STONE
+	dbit TRUE  ; SAFARI_PASS
+	dbit FALSE ; POISON_TRAP
+	dbit FALSE ; PARALYZE_TRAP
+	dbit FALSE ; ICE_TRAP
+	dbit FALSE ; FIRE_TRAP
+	dbit FALSE ; TWENTY_COINS
+	dbit FALSE ; HUNDRED_COINS
+	dbit TRUE  ; CARD_KEY_2F
+	dbit TRUE  ; CARD_KEY_3F
+	dbit TRUE  ; CARD_KEY_4F
+	dbit TRUE  ; CARD_KEY_5F
+	dbit TRUE  ; CARD_KEY_6F
+	dbit TRUE  ; CARD_KEY_7F
+	dbit TRUE  ; CARD_KEY_8F
+	dbit TRUE  ; CARD_KEY_9F
+	dbit TRUE  ; CARD_KEY_10F
+	dbit TRUE  ; CARD_KEY_11F
+	dbit TRUE  ; PROGRESSIVE_CARD_KEY
+	dbit FALSE ; SLEEP_TRAP
 	end_bit_array NUM_ITEMS

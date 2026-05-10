@@ -87,6 +87,11 @@ CreditsTextPointers:
 	dw CreditsText_Nakamichi
 	dw CreditsText_Yoshimura
 	dw CreditsText_Yamazaki
+	dw CreditsText_Mod
+	dw CreditsText_Alchav
+	dw CreditsText_Jim
+	dw CreditsText_Pret
+	dw CreditsText_Danny
 	assert_table_length NUM_CRED_STRINGS
 
 CreditsText_Version:
@@ -265,3 +270,18 @@ CreditsText_Yoshimura:
 	db -6, "KAMON YOSHIMURA@"
 CreditsText_Yamazaki:
 	db -6, "SAKAE YAMAZAKI@"
+
+CreditsText_Mod:
+	db -6, "ARCHIPELAGO MOD@"
+
+CreditsText_Alchav:
+	db -8, "ALEX \"ALCHAV\" AVERY@"
+
+CreditsText_Jim:
+	db -1, "J_IM@"
+
+CreditsText_Pret:
+	db -8, "THE PRET COMMUNITY@"
+
+CreditsText_Danny:
+	db -2, "DANNYE@"

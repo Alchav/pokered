@@ -827,7 +827,9 @@ FaintEnemyPokemon:
 	ld b, EXP_ALL
 	call IsItemInBag
 	push af
+.Archipelago_Option_No_Split_EXP_A_0 ; blank out first jr z, switch next jr z to jr nz
 	jr z, .giveExpToMonsThatFought ; if no exp all, then jump
+	jr z, .skipRegularExp
 
 ; the player has exp all
 ; first, we halve the values that determine exp gain
@@ -853,6 +855,7 @@ FaintEnemyPokemon:
 ; the player has exp all
 ; now, set the gain exp flag for every party member
 ; half of the total stat exp and normal exp will divided evenly amongst every party member
+.skipRegularExp
 	ld a, $1
 	ld [wBoostExpByExpAll], a
 	ld a, [wPartyCount]
@@ -946,14 +949,14 @@ TrainerBattleVictory:
 	ld a, b
 	call nz, PlayBattleVictoryMusic
 	ld hl, TrainerDefeatedText
-	call PrintText
+	; call PrintText
 	ld a, [wLinkState]
 	cp LINK_STATE_BATTLING
 	ret z
 	call ScrollTrainerPicAfterBattle
 	ld c, 40
 	call DelayFrames
-	call PrintEndBattleText
+	farcall CheckForTrainersanityItem
 ; win money
 	ld hl, MoneyForWinningText
 	call PrintText
@@ -1187,6 +1190,14 @@ HandlePlayerBlackOut:
 	cp OAKS_LAB
 	ret z            ; starter battle in oak's lab: don't black out
 .notRival1Battle
+	ld a, [wArchipelagoDeathLink]
+	and a
+	ld a, 3
+	jr z, .sendDeathLink
+	xor a
+.sendDeathLink
+	ld [wArchipelagoDeathLink], a
+
 	ld b, SET_PAL_BATTLE_BLACK
 	call RunPaletteCommand
 	ld hl, PlayerBlackedOutText2
@@ -1946,6 +1957,9 @@ DrawPlayerHUDAndHPBar:
 	set 7, [hl] ;enable low health alarm
 	ret
 
+EnemyOwnedBallString:
+	db "<ball>@"
+
 DrawEnemyHUDAndHPBar:
 	xor a
 	ldh [hAutoBGTransferEnabled], a
@@ -1957,6 +1971,25 @@ DrawEnemyHUDAndHPBar:
 	hlcoord 1, 0
 	call CenterMonName
 	call PlaceString
+	ld a, [wEnemyMonSpecies]
+	ld [wd11e], a
+	farcall IndexToPokedex
+	ld a, [wd11e]
+	dec a
+	ld c, a
+	ld b, FLAG_TEST
+	ld hl, wPokedexOwned
+	predef FlagActionPredef
+	ld a, c
+	and a
+	jr z, .noBall
+	hlcoord 1, 1
+	ld de, EnemyOwnedBallString
+	call PlaceString
+	jr .noDexsanity
+.noBall
+	farcall DexSanityIconCheck
+.noDexsanity
 	hlcoord 4, 1
 	push hl
 	inc hl
@@ -2173,7 +2206,13 @@ DisplayBattleMenu::
 	ld a, $1
 	ld [hli], a ; wMaxMenuItem
 	ld [hl], D_RIGHT | A_BUTTON ; wMenuWatchedKeys
+	ld a, 1
+	ld [wArchipelagoReceiveItemsInMenuAllowed], a
 	call HandleMenuInput
+	push af
+	xor a
+	ld [wArchipelagoReceiveItemsInMenuAllowed], a
+	pop af
 	bit 4, a ; check if right was pressed
 	jr nz, .rightColumn
 	jr .AButtonPressed ; the A button was pressed
@@ -2207,9 +2246,15 @@ DisplayBattleMenu::
 	ld [hli], a ; wMaxMenuItem
 	ld a, D_LEFT | A_BUTTON
 	ld [hli], a ; wMenuWatchedKeys
+	ld a, 1
+	ld [wArchipelagoReceiveItemsInMenuAllowed], a
 	call HandleMenuInput
+	push af
+	xor a
+	ld [wArchipelagoReceiveItemsInMenuAllowed], a
+	pop af
 	bit 5, a ; check if left was pressed
-	jr nz, .leftColumn ; if left was pressed, jump
+	jp nz, .leftColumn ; if left was pressed, jump
 	ld a, [wCurrentMenuItem]
 	add $2 ; if we're in the right column, the actual id is +2
 	ld [wCurrentMenuItem], a
@@ -2898,6 +2943,7 @@ AnyMoveToSelect:
 ; bugfix: only check PP value and not PP up bits
 ; in case all other moves have no PP left and a move has a PP up used on it
 ; and a non-PP up move is disabled
+.Archipelago_Option_Fix_Combat_Bugs_Struggle_0
 	and $3f ; any PP left?
 	ret nz ; return if a move has PP left
 .noMovesLeft
@@ -3618,6 +3664,7 @@ CheckPlayerStatusConditions:
 	ld hl, wPlayerBattleStatus1
 	ld a, [hl]
 	; clear bide, thrashing, charging up, and trapping moves such as warp (already cleared for confusion damage)
+.Archipelago_Option_Fix_Combat_Bugs_Dig_Fly_1
 	and ~((1 << STORING_ENERGY) | (1 << THRASHING_ABOUT) | (1 << CHARGING_UP) | (1 << USING_TRAPPING_MOVE))
 	ld [hl], a
 	ld a, [wPlayerMoveEffect]
@@ -4005,6 +4052,8 @@ DetermineExclamationPointTextNum:
 INCLUDE "data/moves/grammar.asm"
 
 PrintMoveFailureText:
+	xor a
+	ld [wEffectiveMessage], a
 	ld de, wPlayerMoveEffect
 	ldh a, [hWhoseTurn]
 	and a
@@ -4793,6 +4842,7 @@ CriticalHitTest:
 	ld c, [hl]                   ; read move id
 	ld a, [de]
 	bit GETTING_PUMPED, a         ; test for focus energy
+.Archipelago_Option_Fix_Combat_Bugs_Focus_Energy_0
 	jr nz, .focusEnergyUsed      ; bug: using focus energy causes a shift to the right instead of left,
 	                             ; resulting in 1/4 the usual crit chance
 	sla b                        ; (effective (base speed/2)*2)
@@ -4820,12 +4870,23 @@ CriticalHitTest:
 	jr nc, .SkipHighCritical
 	ld b, $ff
 .SkipHighCritical
+	push hl
+	ld hl, FixCombatBugs
+	ld a, [hl]
+	and a
+	pop hl
+	jr z, .noBugFix
+	ld a, b
+	inc a ; optimization of "cp $ff"
+	jr z, .guaranteedCriticalHit
+.noBugFix
 	call BattleRandom            ; generates a random value, in "a"
 	rlc a
 	rlc a
 	rlc a
 	cp b                         ; check a against calculated crit rate
 	ret nc                       ; no critical hit if no borrow
+.guaranteedCriticalHit
 	ld a, $1
 	ld [wCriticalHitOrOHKO], a   ; set critical hit flag
 	ret
@@ -5387,6 +5448,23 @@ AdjustDamageForMoveType:
 	ld a, [wEnemyMoveType]
 	ld [wMoveType], a
 .next
+.Archipelago_Option_Always_Half_STAB
+	ld a, 0
+	and a
+	jr z, .checkSTAB
+	ld hl, wDamage + 1
+	ld a, [hld]
+	ld h, [hl]
+	ld l, a    ; hl = damage
+	ld b, h
+	ld c, l    ; bc = damage
+	srl b
+	rr c      ; bc = floor(0.5 * damage)
+	srl b
+	rr c      ; bc = floor(0.25 * damage)
+	add hl, bc ; hl = floor(1.25 * damage)
+	jr .skipSameTypeAttackBonus
+.checkSTAB
 	ld a, [wMoveType]
 	cp b ; does the move type match type 1 of the attacker?
 	jr z, .sameTypeAttackBonus
@@ -5412,6 +5490,11 @@ AdjustDamageForMoveType:
 	ld hl, wDamageMultipliers
 	set 7, [hl]
 .skipSameTypeAttackBonus
+	ld a, [wDamage]
+	ld [wOldDamage], a
+	ld a, [wDamage + 1]
+	ld [wOldDamage + 1], a
+
 	ld a, [wMoveType]
 	ld b, a
 	ld hl, TypeEffects
@@ -5471,6 +5554,30 @@ AdjustDamageForMoveType:
 	inc hl
 	jp .loop
 .done
+	xor a
+	ld [wEffectiveMessage], a
+
+	ld a, [wOldDamage]
+	ld b, a
+	ld a, [wDamage]
+	cp b
+	jr z, .checkSecondByte
+	jr c, .notVery
+	jr .very
+.checkSecondByte
+	ld a, [wOldDamage + 1]
+	ld b, a
+	ld a, [wDamage + 1]
+	cp b
+	ret z
+	jr c, .notVery
+.very
+	ld a, 2
+	ld [wEffectiveMessage], a
+	ret
+.notVery
+	ld a, 1
+	ld [wEffectiveMessage], a
 	ret
 
 ; function to tell how effective the type of an enemy attack is on the player's current pokemon
@@ -5552,6 +5659,8 @@ MoveHitTest:
 	jr z, .checkForDigOrFlyStatus
 ; This code is buggy. It's supposed to prevent HP draining moves from working on substitutes.
 ; Since CheckTargetSubstitute overwrites a with either $00 or $01, it never works.
+.Archipelago_Option_Fix_Combat_Bugs_HP_Drain_Dream_Eater_0
+	nop
 	cp DRAIN_HP_EFFECT
 	jp z, .moveMissed
 	cp DREAM_EATER_EFFECT
@@ -5619,6 +5728,14 @@ MoveHitTest:
 	ld a, [wEnemyMoveAccuracy]
 	ld b, a
 .doAccuracyCheck
+	ld hl, FixCombatBugs
+	ld a, [hl]
+	and a
+	jr z, .noBugFix
+	ld a, b
+	cp $ff
+	ret z
+.noBugFix
 ; if the random number generated is greater than or equal to the scaled accuracy, the move misses
 ; note that this means that even the highest accuracy is still just a 255/256 chance, not 100%
 	call BattleRandom

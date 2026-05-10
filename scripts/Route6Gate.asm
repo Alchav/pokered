@@ -16,6 +16,8 @@ Route6GateScript0:
 	ld hl, CoordsData_1e08c
 	call ArePlayerCoordsInArray
 	ret nc
+	ld a, [wPlayerMovingDirection]
+	ld [wCheckDir], a
 	ld a, PLAYER_DIR_RIGHT
 	ld [wPlayerMovingDirection], a
 	xor a
@@ -56,7 +58,14 @@ Route6GateScript1:
 Route6GateScript_1e0a1:
 	ld hl, wd730
 	set 7, [hl]
-	ld a, $80
+	ld a, [wCheckDir]
+	cp PLAYER_DIR_UP
+	jr nz, .goUp
+	ld a, D_DOWN
+	jr .gotDirection
+.goUp
+	ld a, D_UP
+.gotDirection
 	ld [wSimulatedJoypadStatesEnd], a
 	ld a, $1
 	ld [wSimulatedJoypadStatesIndex], a

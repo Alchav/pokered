@@ -50,11 +50,12 @@ ViridianMartScript1:
 	and a
 	ret nz
 	call Delay3
+.Archipelago_Event_Pokemart_Quest
+	lb bc, OAKS_PARCEL, 1
+	call GiveItem
 	ld a, $5
 	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID
-	lb bc, OAKS_PARCEL, 1
-	call GiveItem
 	SetEvent EVENT_GOT_OAKS_PARCEL
 	ld a, $2
 	ld [wViridianMartCurScript], a

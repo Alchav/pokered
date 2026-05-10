@@ -19,8 +19,10 @@ Route11GateUpstairsText2:
 	text_asm
 	CheckEvent EVENT_GOT_ITEMFINDER, 1
 	jr c, .got_item
+.Archipelago_Option_Aide_Rt11_1
 	ld a, 30
 	ldh [hOaksAideRequirement], a
+.Archipelago_Event_LD_A_Rt11_Oaks_Aide
 	ld a, ITEMFINDER
 	ldh [hOaksAideRewardItem], a
 	ld [wd11e], a

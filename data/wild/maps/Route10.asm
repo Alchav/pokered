@@ -1,5 +1,6 @@
 Route10WildMons:
 	def_grass_wildmons 15 ; encounter rate
+.Archipelago_Wild_Route10_0
 	db 16, MAGNEMITE
 	db 18, RATTATA
 	db 18, MAGNEMITE

@@ -15,6 +15,9 @@ HealEffect_:
 	        ; causes the move to miss if max HP is 255 or 511 points higher than the current HP
 	inc de
 	inc hl
+.Archipelago_Option_Fix_Combat_Bugs_Heal_Effect_0
+	nop
+	nop
 	ld a, [de]
 	sbc [hl]
 	jp z, .failed ; no effect if user's HP is already at its maximum

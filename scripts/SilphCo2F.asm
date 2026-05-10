@@ -114,8 +114,9 @@ SilphCo2Text1:
 	text_asm
 	CheckEvent EVENT_GOT_TM36
 	jr nz, .asm_59de4
-	ld hl, SilphCo2Text_59ded
-	call PrintText
+	;ld hl, SilphCo2Text_59ded
+	;call PrintText
+.Archipelago_Event_Scared_Woman
 	lb bc, TM_SELFDESTRUCT, 1
 	call GiveItem
 	ld hl, TM36NoRoomText

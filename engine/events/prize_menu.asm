@@ -5,6 +5,7 @@ CeladonPrizeMenu::
 	ld hl, RequireCoinCaseTextPtr
 	jp PrintText
 .havingCoinCase
+	SetEvent EVENT_SEENTPRIZES
 	ld hl, wd730
 	set 6, [hl] ; disable letter-printing delay
 	ld hl, ExchangeCoinsForPrizesTextPtr
@@ -220,6 +221,18 @@ HandlePrizeChoice:
 	ld c, a
 	call GiveItem
 	jr nc, .bagFull
+	ld a, [wWhichPrize]
+	and a
+	jr z, .setPrizeA
+	dec a
+	jr z, .setPrizeB
+	SetEvent EVENT_PRIZE_C
+	jr .subtractCoins
+.setPrizeA
+	SetEvent EVENT_PRIZE_A
+	jr .subtractCoins
+.setPrizeB
+	SetEvent EVENT_PRIZE_B
 	jr .subtractCoins
 .giveMon
 	ld a, [wd11e]

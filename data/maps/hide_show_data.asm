@@ -10,7 +10,7 @@ MapHSPointers:
 	dw NoHS
 	dw NoHS
 	dw NoHS
-	dw NoHS
+	dw FuchsiaCityHS
 	dw NoHS
 	dw NoHS
 	dw SaffronCityHS
@@ -25,9 +25,9 @@ MapHSPointers:
 	dw NoHS
 	dw Route9HS
 	dw NoHS
-	dw NoHS
+	dw Route11HS
 	dw Route12HS
-	dw NoHS
+	dw Route13HS
 	dw NoHS
 	dw Route15HS
 	dw Route16HS
@@ -97,7 +97,7 @@ MapHSPointers:
 	dw NoHS
 	dw NoHS
 	dw NoHS
-	dw NoHS
+	dw VermilionDockHS
 	dw NoHS
 	dw SSAnne2FHS
 	dw NoHS
@@ -177,7 +177,7 @@ MapHSPointers:
 	dw NoHS
 	dw NoHS
 	dw NoHS
-	dw NoHS
+	dw IndigoLeagueHS
 	dw NoHS
 	dw NoHS
 	dw FightingDojoHS
@@ -235,7 +235,7 @@ MapHSPointers:
 	dw NoHS
 	dw NoHS
 	dw NoHS
-	dw NoHS
+	dw RockTunnelB1FHS
 	dw SilphCo9FHS
 	dw SilphCo10FHS
 	dw SilphCo11FHS
@@ -266,18 +266,23 @@ MissableObjects:
 PalletTownHS:
 	db PALLET_TOWN, $01, HIDE
 ViridianCityHS:
+.Archipelago_Option_Old_Man_2
 	db VIRIDIAN_CITY, $05, SHOW
+.Archipelago_Option_Old_Man_Lying_2
 	db VIRIDIAN_CITY, $07, HIDE
 	db VIRIDIAN_CITY, $08, HIDE
 PewterCityHS:
 	db PEWTER_CITY, $03, SHOW
-	db PEWTER_CITY, $05, SHOW
+.Archipelago_Option_Route3_Guard_A_2
+	db PEWTER_CITY, $05, SHOW ; Route 3 block
 CeruleanCityHS:
 	db CERULEAN_CITY, $01, HIDE
 	db CERULEAN_CITY, $02, SHOW
-	db CERULEAN_CITY, $06, HIDE
+.Archipelago_Option_Trashed_House_Guard_A_2
+	db CERULEAN_CITY, $06, HIDE ; right guard
 	db CERULEAN_CITY, $0A, SHOW
-	db CERULEAN_CITY, $0B, SHOW
+.Archipelago_Option_Trashed_House_Guard_B_2
+	db CERULEAN_CITY, $0B, SHOW ; left guard
 SaffronCityHS:
 	db SAFFRON_CITY, $01, SHOW
 	db SAFFRON_CITY, $02, SHOW
@@ -394,7 +399,7 @@ VictoryRoad2FHS:
 	db VICTORY_ROAD_2F, $08, SHOW
 	db VICTORY_ROAD_2F, $09, SHOW
 	db VICTORY_ROAD_2F, $0A, SHOW
-	db VICTORY_ROAD_2F, $0D, SHOW
+	db VICTORY_ROAD_2F, $0D, HIDE
 BillsHouseHS:
 	db BILLS_HOUSE, $01, SHOW
 	db BILLS_HOUSE, $02, HIDE
@@ -513,7 +518,8 @@ SilphCo11FHS:
 	db SILPH_CO_11F, $05, SHOW
 	db SILPH_CO_11F, $06, SHOW
 UnusedMapF4HS:
-	db UNUSED_MAP_F4, $02, SHOW
+FuchsiaCityHS:
+	db FUCHSIA_CITY, $02, HIDE
 PokemonMansion2FHS:
 	db POKEMON_MANSION_2F, $02, SHOW
 PokemonMansion3FHS:
@@ -578,5 +584,21 @@ BluesHouseHSCopy: ; unreferenced
 	db BLUES_HOUSE, $01, SHOW
 	db BLUES_HOUSE, $02, HIDE
 	db BLUES_HOUSE, $03, SHOW
+Route13HS:
+.Archipelago_Option_Boulders_2
+	db ROUTE_13, 11, HIDE
+Route11HS:
+	db ROUTE_11, 11, HIDE
+	db ROUTE_11, 12, HIDE
+RockTunnelB1FHS:
+.Archipelago_Option_Rock_Tunnel_Extra_Items_2
+	db ROCK_TUNNEL_B1F, 9, HIDE
+	db ROCK_TUNNEL_B1F, 10, HIDE
+	db ROCK_TUNNEL_B1F, 11, HIDE
+	db ROCK_TUNNEL_B1F, 12, HIDE
+VermilionDockHS:
+	db VERMILION_DOCK, 1, SHOW
+IndigoLeagueHS:
+	db INDIGO_PLATEAU_LOBBY, 7, SHOW
 	db $FF, $01, SHOW ; end
 	assert_table_length NUM_HS_OBJECTS + 1

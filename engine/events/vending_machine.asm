@@ -1,6 +1,4 @@
 VendingMachineMenu::
-	ld hl, VendingMachineText1
-	call PrintText
 	ld a, MONEY_BOX
 	ld [wTextBoxID], a
 	call DisplayTextBoxID

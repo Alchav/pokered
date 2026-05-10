@@ -1,5 +1,6 @@
 CeruleanCave1FWildMons:
 	def_grass_wildmons 10 ; encounter rate
+.Archipelago_Wild_CeruleanCave1F_0
 	db 50, GOLBAT
 	db 55, GOLBAT
 	db 45, GRAVELER

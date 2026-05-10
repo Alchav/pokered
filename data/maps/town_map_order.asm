@@ -1,4 +1,5 @@
 TownMapOrder:
+.Archipelago_Town_Map_Order
 	db PALLET_TOWN
 	db ROUTE_1
 	db VIRIDIAN_CITY
@@ -10,9 +11,9 @@ TownMapOrder:
 	db MT_MOON_1F
 	db ROUTE_4
 	db CERULEAN_CITY
+	db CERULEAN_CAVE_1F
 	db ROUTE_24
 	db ROUTE_25
-	db BILLS_HOUSE
 	db ROUTE_5
 	db ROUTE_6
 	db VERMILION_CITY
@@ -25,7 +26,9 @@ TownMapOrder:
 	db ROUTE_8
 	db ROUTE_7
 	db CELADON_CITY
+	db ROCKET_HIDEOUT_B1F
 	db SAFFRON_CITY
+	db SILPH_CO_2F
 	db ROUTE_11
 	db ROUTE_12
 	db ROUTE_13
@@ -40,6 +43,7 @@ TownMapOrder:
 	db SEAFOAM_ISLANDS_B1F
 	db ROUTE_20
 	db CINNABAR_ISLAND
+	db POKEMON_MANSION_1F
 	db ROUTE_21
 	db ROUTE_22
 	db ROUTE_23

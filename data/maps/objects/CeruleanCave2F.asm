@@ -12,9 +12,13 @@ CeruleanCave2F_Object:
 	def_bg_events
 
 	def_object_events
+.Archipelago_Missable_Cerulean_Cave_2F_Item_1
 	object_event  0, 11, SPRITE_POKE_BALL, STAY, NONE, 1, RARE_CANDY
+.Archipelago_Missable_Cerulean_Cave_2F_Item_2
 	object_event 16,  7, SPRITE_POKE_BALL, STAY, NONE, 2, ULTRA_BALL
+.Archipelago_Missable_Cerulean_Cave_2F_Item_3
 	object_event 19, 11, SPRITE_POKE_BALL, STAY, NONE, 3, MAX_REVIVE
+.Archipelago_Missable_Cerulean_Cave_2F_Item_4
 	object_event 27,  9, SPRITE_POKE_BALL, STAY, NONE, 4, FULL_RESTORE
 
 	def_warps_to CERULEAN_CAVE_2F

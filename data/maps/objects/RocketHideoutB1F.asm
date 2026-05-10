@@ -16,7 +16,9 @@ RocketHideoutB1F_Object:
 	object_event 18, 17, SPRITE_ROCKET, STAY, DOWN, 3, OPP_ROCKET, 10
 	object_event 15, 25, SPRITE_ROCKET, STAY, RIGHT, 4, OPP_ROCKET, 11
 	object_event 28, 18, SPRITE_ROCKET, STAY, LEFT, 5, OPP_ROCKET, 12
+.Archipelago_Missable_Rocket_Hideout_B1F_Item_1
 	object_event 11, 14, SPRITE_POKE_BALL, STAY, NONE, 6, ESCAPE_ROPE
+.Archipelago_Missable_Rocket_Hideout_B1F_Item_2
 	object_event  9, 17, SPRITE_POKE_BALL, STAY, NONE, 7, HYPER_POTION
 
 	def_warps_to ROCKET_HIDEOUT_B1F

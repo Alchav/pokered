@@ -63,12 +63,15 @@ _PewterCityText_19431::
 	done
 
 _PewterCityText_1945d::
+.Archipelago_Text_Gym_Guy_1
 	text "You're a trainer"
 	line "right? BROCK's"
 	cont "looking for new"
 	cont "challengers!"
 	cont "Follow me!"
 	done
+
+	ds 30, 0
 
 _PewterCityText14::
 	text "If you have the"

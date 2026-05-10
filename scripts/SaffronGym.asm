@@ -43,10 +43,18 @@ SaffronGymSabrinaPostBattle:
 	ld [wJoyIgnore], a
 
 SaffronGymReceiveTM46:
-	ld a, $a
+	SetEvent EVENT_BEAT_SABRINA
+	CheckEvent EVENT_GOT_MARSHBADGE
+	jr nz, .Archipelago_Event_Saffron_Gym
+.Archipelago_Badge_Saffron_Gym_2
+	lb bc, MARSHBADGE, 1
+	call GiveItem
+	jr nc, .BagFull
+	ld a, $b
 	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID
-	SetEvent EVENT_BEAT_SABRINA
+	SetEvent EVENT_GOT_MARSHBADGE
+.Archipelago_Event_Saffron_Gym
 	lb bc, TM_PSYWAVE, 1
 	call GiveItem
 	jr nc, .BagFull
@@ -60,13 +68,8 @@ SaffronGymReceiveTM46:
 	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID
 .gymVictory
-	ld hl, wObtainedBadges
-	set BIT_MARSHBADGE, [hl]
 	ld hl, wBeatGymFlags
 	set BIT_MARSHBADGE, [hl]
-
-	; deactivate gym trainers
-	SetEventRange EVENT_BEAT_SAFFRON_GYM_TRAINER_0, EVENT_BEAT_SAFFRON_GYM_TRAINER_6
 
 	jp SaffronGymResetScripts
 
@@ -106,6 +109,12 @@ SabrinaText:
 	text_asm
 	CheckEvent EVENT_BEAT_SABRINA
 	jr z, .beforeBeat
+	CheckEventReuseA EVENT_GOT_MARSHBADGE
+	jr nz, .checkTM
+	call SaffronGymReceiveTM46
+	call DisableWaitingAfterTextDisplay
+	jr .done
+.checkTM
 	CheckEventReuseA EVENT_GOT_TM46
 	jr nz, .afterBeat
 	call z, SaffronGymReceiveTM46
@@ -124,6 +133,8 @@ SabrinaText:
 	ld hl, ReceivedMarshBadgeText
 	ld de, ReceivedMarshBadgeText
 	call SaveEndBattleTextPointers
+	xor a
+	ld [wEndBattleTrainersanityItem], a
 	ldh a, [hSpriteIndex]
 	ld [wSpriteIndex], a
 	call EngageMapTrainer
@@ -156,7 +167,6 @@ KogaMarshBadgeInfoText:
 ReceivedTM46Text:
 	text_far _ReceivedTM46Text
 	sound_get_item_1
-	text_far _TM46ExplanationText
 	text_end
 
 TM46NoRoomText:

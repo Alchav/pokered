@@ -21,9 +21,9 @@ FightingDojo_ScriptPointers:
 	dw FightingDojoScript3
 
 FightingDojoScript1:
+	call CheckFightingMapTrainers
 	CheckEvent EVENT_DEFEATED_FIGHTING_DOJO
 	ret nz
-	call CheckFightingMapTrainers
 	ld a, [wTrainerHeaderFlagBit]
 	and a
 	ret nz
@@ -70,7 +70,7 @@ FightingDojoScript3:
 .asm_5cde4
 	ld a, $f0
 	ld [wJoyIgnore], a
-	SetEventRange EVENT_BEAT_KARATE_MASTER, EVENT_BEAT_FIGHTING_DOJO_TRAINER_3
+	SetEvent EVENT_BEAT_KARATE_MASTER
 	ld a, $8
 	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID
@@ -116,6 +116,7 @@ FightingDojoText1:
 	ld hl, FightingDojoText_5ce93
 	ld de, FightingDojoText_5ce93
 	call SaveEndBattleTextPointers
+	EventBattleTrainersanity EVENT_DEFEATED_FIGHTING_DOJO_ITEM
 	ldh a, [hSpriteIndexOrTextID]
 	ld [wSpriteIndex], a
 	call EngageMapTrainer
@@ -225,12 +226,15 @@ FightingDojoAfterBattleText4:
 FightingDojoText6:
 ; Hitmonlee Poké Ball
 	text_asm
+	CheckEvent EVENT_BEAT_SABRINA
+	jr nz, .GetMon
 	CheckEitherEventSet EVENT_GOT_HITMONLEE, EVENT_GOT_HITMONCHAN
 	jr z, .GetMon
 	ld hl, OtherHitmonText
 	call PrintText
 	jr .done
 .GetMon
+.Archipelago_Gift_Hitmonlee_1
 	ld a, HITMONLEE
 	call DisplayPokedex
 	ld hl, WantHitmonleeText
@@ -241,6 +245,7 @@ FightingDojoText6:
 	jr nz, .done
 	ld a, [wcf91]
 	ld b, a
+.Archipelago_Gift_Hitmonlee_Level_1
 	ld c, 30
 	call GivePokemon
 	jr nc, .done
@@ -260,12 +265,15 @@ WantHitmonleeText:
 FightingDojoText7:
 ; Hitmonchan Poké Ball
 	text_asm
+	CheckEvent EVENT_BEAT_SABRINA
+	jr nz, .GetMon
 	CheckEitherEventSet EVENT_GOT_HITMONLEE, EVENT_GOT_HITMONCHAN
 	jr z, .GetMon
 	ld hl, OtherHitmonText
 	call PrintText
 	jr .done
 .GetMon
+.Archipelago_Gift_Hitmonchan_1
 	ld a, HITMONCHAN
 	call DisplayPokedex
 	ld hl, WantHitmonchanText
@@ -276,6 +284,7 @@ FightingDojoText7:
 	jr nz, .done
 	ld a, [wcf91]
 	ld b, a
+.Archipelago_Gift_Hitmonchan_Level_1
 	ld c, 30
 	call GivePokemon
 	jr nc, .done

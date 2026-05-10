@@ -29,9 +29,12 @@ _Mansion3AfterBattleText2::
 	done
 
 _Mansion3Text5::
-	text "Diary: Feb. 6"
-	line "MEW gave birth."
-
-	para "We named the"
-	line "newborn MEWTWO."
+	text "Diary: Sept. 4"
+	line "We searched"
+	cont "through all the"
+	cont "rubble, and we"
+	cont "didn't give up"
+	cont "until we found"
+	cont "every single"
+	cont "uncashed check."
 	done

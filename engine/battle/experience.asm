@@ -1,7 +1,16 @@
+CarryEXP:
+	push af
+	ld a, [hMultiplicand + 1]
+	rl a
+	ld [hMultiplicand + 1], a
+	pop af
+	ret
+
 GainExperience:
 	ld a, [wLinkState]
 	cp LINK_STATE_BATTLING
 	ret z ; return if link battle
+.Archipelago_Option_No_Split_EXP_B_0
 	call DivideExpDataByNumMonsGainingExp
 	ld hl, wPartyMon1
 	xor a
@@ -58,10 +67,29 @@ GainExperience:
 	ldh [hMultiplicand], a
 	ldh [hMultiplicand + 1], a
 	ld a, [wEnemyMonBaseExp]
+;.Archipelago_EXP_Modifier
+	;sla a
+	;call c, CarryEXP
+	;sla a
+	;call c, CarryEXP
 	ldh [hMultiplicand + 2], a
 	ld a, [wEnemyMonLevel]
 	ldh [hMultiplier], a
 	call Multiply
+	ld a, [wExpDisabled]
+	and a
+	jr z, .Archipelago_LD_A_Option_EXP_Modifier
+	xor a
+	jr .noexp
+.Archipelago_LD_A_Option_EXP_Modifier
+	ld a, 16
+.noexp
+	ldh [hMultiplier], a
+	call Multiply
+	ld a, 16
+	ldh [hDivisor], a
+	ld b, 4
+	call Divide
 	ld a, 7
 	ldh [hDivisor], a
 	ld b, 4
@@ -89,6 +117,13 @@ GainExperience:
 	inc hl
 	inc hl
 	inc hl
+	ldh a, [hQuotient + 1]
+	and a
+	jr z, .notOver
+	ld a, $ff
+	ldh [hQuotient + 2], a
+	ldh [hQuotient + 3], a
+.notOver
 ; add the gained exp to the party mon's exp
 	ld b, [hl]
 	ldh a, [hQuotient + 3]
@@ -146,8 +181,8 @@ GainExperience:
 	ld a, [wWhichPokemon]
 	ld hl, wPartyMonNicks
 	call GetPartyMonName
-	ld hl, GainedText
-	call PrintText
+	;ld hl, GainedText
+	;call PrintText
 	xor a ; PLAYER_PARTY_DATA
 	ld [wMonDataLocation], a
 	call LoadMonData
@@ -160,6 +195,21 @@ GainExperience:
 	ld a, [hl] ; current level
 	cp d
 	jp z, .nextMon ; if level didn't change, go to next mon
+	push af
+	ld a, d
+	ld [wGainedLevel], a
+	pop af
+	ld [wIncLevel], a
+.loopLevelUp
+	push hl
+	ld a, [wWhichPokemon]
+	ld hl, wPartyMonNicks
+	call GetPartyMonName
+	pop hl
+	ld a, [wIncLevel]
+	inc a
+	ld [wIncLevel], a
+	ld d, a
 	ld a, [wCurEnemyLVL]
 	push af
 	push hl
@@ -268,6 +318,13 @@ GainExperience:
 	pop hl
 	pop af
 	ld [wCurEnemyLVL], a
+	ld a, [wIncLevel]
+	ld d, a
+	ld a, [wGainedLevel]
+	cp d
+	jr z, .nextMon
+	ld a, d
+	jp .loopLevelUp
 
 .nextMon
 	ld a, [wPartyCount]
@@ -378,5 +435,5 @@ ExpPointsText:
 
 GrewLevelText:
 	text_far _GrewLevelText
-	sound_level_up
+	;sound_level_up
 	text_end

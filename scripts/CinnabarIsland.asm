@@ -2,7 +2,7 @@ CinnabarIsland_Script:
 	call EnableAutoTextBoxDrawing
 	ld hl, wCurrentMapScriptFlags
 	set 5, [hl]
-	ResetEvent EVENT_MANSION_SWITCH_ON
+	; ResetEvent EVENT_MANSION_SWITCH_ON
 	ResetEvent EVENT_LAB_STILL_REVIVING_FOSSIL
 	ld hl, CinnabarIsland_ScriptPointers
 	ld a, [wCinnabarIslandCurScript]
@@ -13,17 +13,29 @@ CinnabarIsland_ScriptPointers:
 	dw CinnabarIslandScript1
 
 CinnabarIslandScript0:
-	ld b, SECRET_KEY
-	call IsItemInBag
-	ret nz
 	ld a, [wYCoord]
 	cp 4
 	ret nz
+	ld b, SECRET_KEY
+	call IsItemInBag
+	jr nz, .mansionKeyCheck
 	ld a, [wXCoord]
 	cp 18
+	jr z, .locked
+.mansionKeyCheck
+.Archipelago_Option_Extra_Key_Items_B_1
+	ld a, 0
+	and a
+	ret z
+	ld b, MANSION_KEY
+	call IsItemInBag
 	ret nz
-	ld a, PLAYER_DIR_UP
-	ld [wPlayerMovingDirection], a
+	ld a, [wXCoord]
+	cp 6
+	ret nz
+.locked
+	ld a, [wSpritePlayerStateData1FacingDirection]
+	ld [wCheckDir], a
 	ld a, $8
 	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID
@@ -32,6 +44,13 @@ CinnabarIslandScript0:
 	ld a, $1
 	ld [wSimulatedJoypadStatesIndex], a
 	ld a, D_DOWN
+	ld b, a
+	ld a, [wCheckDir]
+	cp SPRITE_FACING_DOWN
+	ld a, b
+	jr nz, .setMovement
+	ld a, D_UP
+.setMovement
 	ld [wSimulatedJoypadStatesEnd], a
 	call StartSimulatingJoypadStates
 	xor a

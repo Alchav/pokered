@@ -9,15 +9,10 @@ _ViridianMartText4::
 	done
 
 ViridianMartParcelQuestText::
-	text "You know PROF."
-	line "OAK, right?"
-
-	para "His order came in."
-	line "Will you take it"
-	cont "to him?"
-
-	para "<PLAYER> got"
-	line "OAK's PARCEL!@"
+	text "<PLAYER> got"
+	line "@"
+	text_ram wStringBuffer
+	text "!@"
 	text_end
 
 _ViridianMartText2::

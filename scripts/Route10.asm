@@ -8,9 +8,10 @@ Route10_Script:
 	ret
 
 Route10_ScriptPointers:
-	dw CheckFightingMapTrainers
+	dw Route10_Script0
 	dw DisplayEnemyTrainerTextAndStartBattle
 	dw EndTrainerBattle
+	dw Route10_Script3
 
 Route10_TextPointers:
 	dw Route10Text1
@@ -23,6 +24,54 @@ Route10_TextPointers:
 	dw PokeCenterSignText
 	dw Route10Text9
 	dw Route10Text10
+	dw Route10Text11
+
+Route10_Script0:
+	call CheckFightingMapTrainers
+
+.Archipelago_Option_Extra_Key_Items_D_1
+	ld a, 0
+	and a
+	ret z
+	ld b, PLANT_KEY
+	call IsItemInBag
+	ret nz
+	ld a, [wYCoord]
+	cp 40
+	ret nz
+	ld a, [wXCoord]
+	cp 6
+	ret nz
+	ld a, 11
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+	xor a
+	ldh [hJoyHeld], a
+	ld a, 1
+	ld [wSimulatedJoypadStatesIndex], a
+	ld a, [wSpritePlayerStateData1FacingDirection]
+	cp SPRITE_FACING_DOWN
+	ld a, D_UP
+	jr z, .gotDirection
+	ld a, D_DOWN
+.gotDirection
+	ld [wSimulatedJoypadStatesEnd], a
+	call StartSimulatingJoypadStates
+	xor a
+	ld [wSpritePlayerStateData1FacingDirection], a
+	ld [wJoyIgnore], a
+	ld a, 3
+	ld [wRoute10CurScript], a
+	ret
+
+Route10_Script3:
+	ld a, [wSimulatedJoypadStatesIndex]
+	and a
+	ret nz
+	call Delay3
+	xor a
+	ld [wRoute10CurScript], a
+	ret
 
 Route10TrainerHeaders:
 	def_trainers
@@ -155,4 +204,8 @@ Route10Text7:
 
 Route10Text10:
 	text_far _Route10Text10
+	text_end
+
+Route10Text11:
+	text_far _CinnabarIslandText8
 	text_end

@@ -62,10 +62,19 @@ VermilionGymLTSurgePostBattle:
 	ld [wJoyIgnore], a
 
 VermilionGymReceiveTM24:
-	ld a, $6
+	SetEvent EVENT_BEAT_LT_SURGE
+	CheckEvent EVENT_GOT_THUNDERBADGE
+	jr nz, .Archipelago_Event_Vermilion_Gym
+.Archipelago_Badge_Vermilion_Gym_2
+	lb bc, THUNDERBADGE, 1
+	call GiveItem
+	jr nc, .BagFull
+	ld a, $7
 	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID
-	SetEvent EVENT_BEAT_LT_SURGE
+	SetEvent EVENT_GOT_THUNDERBADGE
+.Archipelago_Event_Vermilion_Gym
+.Archipelago_Event_Vermillion_Gym
 	lb bc, TM_THUNDERBOLT, 1
 	call GiveItem
 	jr nc, .BagFull
@@ -79,13 +88,8 @@ VermilionGymReceiveTM24:
 	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID
 .gymVictory
-	ld hl, wObtainedBadges
-	set BIT_THUNDERBADGE, [hl]
 	ld hl, wBeatGymFlags
 	set BIT_THUNDERBADGE, [hl]
-
-	; deactivate gym trainers
-	SetEventRange EVENT_BEAT_VERMILION_GYM_TRAINER_0, EVENT_BEAT_VERMILION_GYM_TRAINER_2
 
 	jp VermilionGymResetScripts
 
@@ -113,6 +117,12 @@ LTSurgeText:
 	text_asm
 	CheckEvent EVENT_BEAT_LT_SURGE
 	jr z, .beforeBeat
+	CheckEventReuseA EVENT_GOT_THUNDERBADGE
+	jr nz, .checkTM
+	call VermilionGymReceiveTM24
+	call DisableWaitingAfterTextDisplay
+	jr .done
+.checkTM
 	CheckEventReuseA EVENT_GOT_TM24
 	jr nz, .afterBeat
 	call z, VermilionGymReceiveTM24
@@ -131,6 +141,8 @@ LTSurgeText:
 	ld hl, ReceivedThunderBadgeText
 	ld de, ReceivedThunderBadgeText
 	call SaveEndBattleTextPointers
+	xor a
+	ld [wEndBattleTrainersanityItem], a
 	ldh a, [hSpriteIndex]
 	ld [wSpriteIndex], a
 	call EngageMapTrainer
@@ -160,7 +172,6 @@ LTSurgeThunderBadgeInfoText:
 ReceivedTM24Text:
 	text_far _ReceivedTM24Text
 	sound_get_key_item
-	text_far _TM24ExplanationText
 	text_end
 
 TM24NoRoomText:

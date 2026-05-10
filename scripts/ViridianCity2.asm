@@ -9,9 +9,12 @@ ViridianCityText_f18c2:
 
 Func_f18c7::
 	ld hl, ViridianCityText_19127
-	ld a, [wObtainedBadges]
-	cp ~(1 << BIT_EARTHBADGE)
-	jr z, .done
+	ld hl, wObtainedBadges
+	ld b, 1
+	call CountSetBits
+	ld a, [wNumSetBits]
+	cp 7
+	jr nc, .done
 	CheckEvent EVENT_BEAT_VIRIDIAN_GYM_GIOVANNI
 	jr nz, .done
 	ld hl, ViridianCityText_19122
@@ -33,10 +36,10 @@ Func_f18e9::
 	call YesNoChoice
 	ld a, [wCurrentMenuItem]
 	and a
-	ld hl, ViridianCityText_f1907
-	jr nz, .no
 	ld hl, ViridianCityText_f190c
-.no
+	jr z, .yes
+	ld hl, ViridianCityText_f1907
+.yes
 	call PrintText
 	ret
 
@@ -54,7 +57,7 @@ ViridianCityText_f190c:
 
 Func_f1911::
 	ld hl, ViridianCityText_f1927
-	CheckEvent EVENT_GOT_POKEDEX
+	CheckEvent EVENT_OAK_GOT_PARCEL
 	jr nz, .gotPokedex
 	ld hl, ViridianCityText_f1922
 .gotPokedex
@@ -88,8 +91,7 @@ ViridianCityText_f1945:
 Func_f194a::
 	CheckEvent EVENT_GOT_TM42
 	jr nz, .got_item
-	ld hl, ViridianCityText_191ca
-	call PrintText
+.Archipelago_Event_Sleepy_Guy
 	lb bc, TM_DREAM_EATER, 1
 	call GiveItem
 	jr nc, .bag_full

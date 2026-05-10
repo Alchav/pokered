@@ -15,7 +15,9 @@ Route2_Object:
 	bg_event 11, 11, 4 ; Route2Text4
 
 	def_object_events
+.Archipelago_Missable_Route_2_Item_1
 	object_event 13, 54, SPRITE_POKE_BALL, STAY, NONE, 1, MOON_STONE
+.Archipelago_Missable_Route_2_Item_2
 	object_event 13, 45, SPRITE_POKE_BALL, STAY, NONE, 2, HP_UP
 
 	def_warps_to ROUTE_2

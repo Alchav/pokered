@@ -45,10 +45,19 @@ FuchsiaGymKogaPostBattle:
 	ld [wJoyIgnore], a
 ; fallthrough
 FuchsiaGymReceiveTM06:
-	ld a, $9
+	SetEvent EVENT_BEAT_KOGA
+	CheckEvent EVENT_GOT_SOULBADGE
+	jr nz, .Archipelago_Event_Fuchsia_Gym
+.Archipelago_Badge_Fuchsia_Gym_2
+	lb bc, SOULBADGE, 1
+	call GiveItem
+	jr nc, .BagFull
+	ld a, $a
 	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID
-	SetEvent EVENT_BEAT_KOGA
+	SetEvent EVENT_GOT_SOULBADGE
+.Archipelago_Event_Fuchsia_Gym
+.Archipelago_Event_Fuschia_Gym
 	lb bc, TM_TOXIC, 1
 	call GiveItem
 	jr nc, .BagFull
@@ -62,13 +71,8 @@ FuchsiaGymReceiveTM06:
 	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID
 .gymVictory
-	ld hl, wObtainedBadges
-	set BIT_SOULBADGE, [hl]
 	ld hl, wBeatGymFlags
 	set BIT_SOULBADGE, [hl]
-
-	; deactivate gym trainers
-	SetEventRange EVENT_BEAT_FUCHSIA_GYM_TRAINER_0, EVENT_BEAT_FUCHSIA_GYM_TRAINER_5
 
 	jp FuchsiaGymResetScripts
 
@@ -105,6 +109,12 @@ KogaText:
 	text_asm
 	CheckEvent EVENT_BEAT_KOGA
 	jr z, .beforeBeat
+	CheckEventReuseA EVENT_GOT_SOULBADGE
+	jr nz, .checkTM
+	call FuchsiaGymReceiveTM06
+	call DisableWaitingAfterTextDisplay
+	jr .done
+.checkTM
 	CheckEventReuseA EVENT_GOT_TM06
 	jr nz, .afterBeat
 	call z, FuchsiaGymReceiveTM06
@@ -123,6 +133,8 @@ KogaText:
 	ld hl, ReceivedSoulBadgeText
 	ld de, ReceivedSoulBadgeText
 	call SaveEndBattleTextPointers
+	xor a
+	ld [wEndBattleTrainersanityItem], a
 	ldh a, [hSpriteIndex]
 	ld [wSpriteIndex], a
 	call EngageMapTrainer
@@ -155,6 +167,7 @@ KogaSoulBadgeInfoText:
 ReceivedTM06Text:
 	text_far _ReceivedTM06Text
 	sound_get_key_item
+	text_end
 
 TM06ExplanationText:
 	text_far _TM06ExplanationText

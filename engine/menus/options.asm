@@ -34,10 +34,10 @@ OptionMenuJumpTable:
 	dw OptionsMenu_TextSpeed
 	dw OptionsMenu_BattleAnimations
 	dw OptionsMenu_BattleStyle
-	dw OptionsMenu_SpeakerSettings
+	dw OptionsMenu_AutoRun
 	dw OptionsMenu_GBPrinterBrightness
-	dw OptionsMenu_Dummy
-	dw OptionsMenu_Dummy
+	dw OptionsMenu_APItemText
+	dw OptionsMenu_SpeakerSettings
 	dw OptionsMenu_Cancel
 
 OptionsMenu_TextSpeed:
@@ -187,6 +187,32 @@ BattleStyleShiftText:
 BattleStyleSetText:
 	db "SET  @"
 
+OptionsMenu_AutoRun:
+	ldh a, [hJoy5]
+	and D_RIGHT | D_LEFT
+	jr z, .display
+	ld a, [wArchipelagoOptions]
+	xor 1 << BIT_AUTO_RUN_OFF
+	ld [wArchipelagoOptions], a
+.display
+	ld a, [wArchipelagoOptions]
+	and 1 << BIT_AUTO_RUN_OFF
+	ld c, 0
+	jr z, .gotIndex
+	inc c
+.gotIndex
+	ld b, 0
+	ld hl, AnimationOptionStringsPointerTable
+	add hl, bc
+	add hl, bc
+	ld e, [hl]
+	inc hl
+	ld d, [hl]
+	hlcoord 14, 8
+	call PlaceString
+	and a
+	ret
+
 OptionsMenu_SpeakerSettings:
 	ld a, [wOptions]
 	and $30
@@ -225,7 +251,7 @@ OptionsMenu_SpeakerSettings:
 	ld e, [hl]
 	inc hl
 	ld d, [hl]
-	hlcoord 8, 8
+	hlcoord 8, 14
 	call PlaceString
 	and a
 	ret
@@ -304,6 +330,32 @@ DarkerPrintText:
 DarkestPrintText:
 	db "DARKEST @"
 
+OptionsMenu_APItemText:
+	ldh a, [hJoy5]
+	and D_RIGHT | D_LEFT
+	jr z, .display
+	ld a, [wArchipelagoOptions]
+	xor 1 << BIT_AP_ITEM_TEXT_OFF
+	ld [wArchipelagoOptions], a
+.display
+	ld a, [wArchipelagoOptions]
+	and 1 << BIT_AP_ITEM_TEXT_OFF
+	ld c, 0
+	jr z, .gotIndex
+	inc c
+.gotIndex
+	ld b, 0
+	ld hl, AnimationOptionStringsPointerTable
+	add hl, bc
+	add hl, bc
+	ld e, [hl]
+	inc hl
+	ld d, [hl]
+	hlcoord 14, 12
+	call PlaceString
+	and a
+	ret
+
 Func_41e7b:
 	ld a, [wPrinterSettings]
 	and a
@@ -365,21 +417,11 @@ OptionsControl:
 	scf
 	ret
 .doNotWrapAround
-	cp $4
-	jr c, .regularIncrement
-	ld [hl], $6
-.regularIncrement
 	inc [hl]
 	scf
 	ret
 .pressedUp
 	ld a, [hl]
-	cp $7
-	jr nz, .doNotMoveCursorToPrintOption
-	ld [hl], $4
-	scf
-	ret
-.doNotMoveCursorToPrintOption
 	and a
 	jr nz, .regularDecrement
 	ld [hl], $8
@@ -416,7 +458,7 @@ InitOptionsMenu:
 	call PlaceString
 	xor a
 	ld [wOptionsCursorLocation], a
-	ld c, 5 ; the number of options to loop through
+	ld c, 7 ; the number of options to loop through
 .loop
 	push bc
 	call GetOptionPointer ; updates the next option
@@ -436,8 +478,10 @@ AllOptionsText:
 	db "TEXT SPEED :"
 	next "ANIMATION  :"
 	next "BATTLESTYLE:"
-	next "SOUND:"
-	next "PRINT:@"
+	next "AUTO RUN   :"
+	next "PRINT:"
+	next "AP TEXT    :"
+	next "SOUND:@"
 
 OptionMenuCancelText:
 	db "CANCEL@"

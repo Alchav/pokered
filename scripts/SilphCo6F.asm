@@ -73,10 +73,33 @@ SilphCo6Script_1a22f:
 
 SilphCo6Text1:
 	text_asm
+	ld hl, SplitKeyChecks
+	ld a, [hl]
+	and a
+	jr z, .noSplitKey
+	CheckEvent EVENT_SKC_6F
+	jr nz, .noSplitKey
+.Archipelago_Event_SKC6F
+	lb bc, CARD_KEY_6F, 1
+	call GiveItem
+	jr nc, .bagFull
+	ld hl, DisplayArchipelagoItem
+	call PrintText
+	SetEvent EVENT_SKC_6F
+	jp TextScriptEnd
+.bagFull
+	ld hl, SKC6NoRoomText
+	call PrintText
+	jp TextScriptEnd
+.noSplitKey
 	ld hl, SilphCo6Text_1a24a
 	ld de, SilphCo6Text_1a24f
 	call SilphCo6Script_1a22f
 	jp TextScriptEnd
+
+SKC6NoRoomText:
+	text_far _TM42NoRoomText
+	text_end
 
 SilphCo6Text_1a24a:
 	text_far _SilphCo6Text_1a24a

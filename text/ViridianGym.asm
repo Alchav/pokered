@@ -1,21 +1,6 @@
 _GiovanniPreBattleText::
 	text "Fwahahaha! This is"
 	line "my hideout!"
-
-	para "I planned to"
-	line "resurrect TEAM"
-	cont "ROCKET here!"
-
-	para "But, you have"
-	line "caught me again!"
-	cont "So be it! This"
-	cont "time, I'm not"
-	cont "holding back!"
-
-	para "Once more, you"
-	line "shall face"
-	cont "GIOVANNI, the"
-	cont "greatest trainer!"
 	done
 
 _ReceivedEarthBadgeText::
@@ -63,7 +48,9 @@ _GiovanniEarthBadgeInfoText::
 
 _ReceivedTM27Text::
 	text "<PLAYER> received"
-	line "TM27!@"
+	line "@"
+	text_ram wStringBuffer
+	text "!@"
 	text_end
 
 _TM27ExplanationText::

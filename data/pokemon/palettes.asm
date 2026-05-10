@@ -1,6 +1,7 @@
 MonsterPalettes:
 	table_width 1, MonsterPalettes
 	db PAL_MEWMON    ; MISSINGNO
+.Archipelago_Mon_Palettes
 	db PAL_GREENMON  ; BULBASAUR
 	db PAL_GREENMON  ; IVYSAUR
 	db PAL_GREENMON  ; VENUSAUR

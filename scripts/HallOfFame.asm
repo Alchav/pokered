@@ -94,9 +94,7 @@ HallofFameRoomScript1:
 	call DisplayTextID
 	ld a, $ff
 	ld [wJoyIgnore], a
-	ld a, HS_CERULEAN_CAVE_GUY
-	ld [wMissableObjectIndex], a
-	predef HideObject
+	SetEvent EVENT_BEATEN_GAME
 	ld a, $2
 	ld [wHallOfFameCurScript], a
 	ret

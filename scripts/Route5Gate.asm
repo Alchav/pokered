@@ -9,7 +9,14 @@ Route5Gate_ScriptPointers:
 	dw Route5GateScript1
 
 Route5GateScript_1df43:
+	ld a, [wCheckDir]
+	cp PLAYER_DIR_UP
+	jr nz, .goUp
+	ld a, D_DOWN
+	jr .gotDirection
+.goUp
 	ld a, D_UP
+.gotDirection
 	ld [wSimulatedJoypadStatesEnd], a
 	ld a, $1
 	ld [wSimulatedJoypadStatesIndex], a
@@ -22,6 +29,8 @@ Route5GateScript0:
 	ld hl, CoordsData_1df8f
 	call ArePlayerCoordsInArray
 	ret nc
+	ld a, [wPlayerMovingDirection]
+	ld [wCheckDir], a
 	ld a, PLAYER_DIR_LEFT
 	ld [wPlayerMovingDirection], a
 	xor a

@@ -1,5 +1,6 @@
 PokemonMansion2FWildMons:
 	def_grass_wildmons 10 ; encounter rate
+.Archipelago_Wild_PokemonMansion2F_0
 	db 37, RATTATA
 	db 37, RATICATE
 	db 26, GRIMER

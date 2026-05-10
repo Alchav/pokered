@@ -1,4 +1,26 @@
 Func_f1f77::
+.Archipelago_Option_Extra_Key_Items_A_1
+	ld a, 0
+	and a
+	jr nz, .pass
+	ld hl, .NoPassText
+	call PrintText
+	jr .enter
+.pass
+	ld b, SAFARI_PASS
+	call IsItemInBag
+	jr nz, .has_pass
+	ld hl, .NeedPassText
+	call PrintText
+	jp .deny_entry
+.has_pass
+	ld hl, .PassText
+	call PrintText
+.enter
+	ld a, 30
+	ld hl, 502
+	jr .poor_mans_discount
+
 	ld hl, .WelcomeText
 	call PrintText
 	ld a, MONEY_BOX
@@ -96,6 +118,27 @@ Func_f1f77::
 
 .NotEnoughMoneyText
 	text_far _SafariZoneEntranceText_7536a
+	text_end
+
+.NoPassText
+	text "Right this way!"
+
+	para "<PLAYER> received"
+	line "30 SAFARI BALLs!@"
+	text_end
+
+.NeedPassText
+	text "You need a"
+	line "SAFARI PASS to"
+	cont "enter."
+	prompt
+
+.PassText
+	text "Ah, a season pass!"
+	line "Right this way!"
+
+	para "<PLAYER> received"
+	line "30 SAFARI BALLs!@"
 	text_end
 
 Func_f203e::

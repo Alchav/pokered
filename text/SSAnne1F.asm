@@ -12,10 +12,10 @@ _SSAnne1Text1::
 	done
 
 _SSAnne1Text2::
-	text "The passengers"
-	line "are restless!"
+	text "I've been"
+	line "unloading ULDs by"
+	cont "hand all day."
 
-	para "You might be"
-	line "challenged by the"
-	cont "more bored ones!"
+	para "I have a lot of"
+	line "AKEs and pains!"
 	done

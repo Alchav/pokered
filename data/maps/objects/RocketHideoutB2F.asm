@@ -12,9 +12,13 @@ RocketHideoutB2F_Object:
 
 	def_object_events
 	object_event 20, 12, SPRITE_ROCKET, STAY, DOWN, 1, OPP_ROCKET, 13
+.Archipelago_Missable_Rocket_Hideout_B2F_Item_1
 	object_event  1, 11, SPRITE_POKE_BALL, STAY, NONE, 2, MOON_STONE
+.Archipelago_Missable_Rocket_Hideout_B2F_Item_2
 	object_event 16,  8, SPRITE_POKE_BALL, STAY, NONE, 3, NUGGET
+.Archipelago_Missable_Rocket_Hideout_B2F_Item_3
 	object_event  6, 12, SPRITE_POKE_BALL, STAY, NONE, 4, TM_HORN_DRILL
+.Archipelago_Missable_Rocket_Hideout_B2F_Item_4
 	object_event  3, 21, SPRITE_POKE_BALL, STAY, NONE, 5, SUPER_POTION
 
 	def_warps_to ROCKET_HIDEOUT_B2F

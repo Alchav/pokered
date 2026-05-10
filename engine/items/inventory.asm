@@ -5,6 +5,15 @@
 ; [wItemQuantity] = item quantity
 ; sets carry flag if successful, unsets carry flag if unsuccessful
 AddItemToInventory_::
+.Archipelago_Debug_SelectInvFull_0
+	jr .noSelect
+	ldh a, [hJoyLast]
+	bit BIT_SELECT, a
+	jr z, .noSelect
+	scf
+	ccf
+	ret
+.noSelect
 	ld a, [wItemQuantity] ; a = item quantity
 	push af
 	push bc
@@ -34,7 +43,7 @@ AddItemToInventory_::
 	cp b ; does the current item in the table match the item being added?
 	jp z, .increaseItemQuantity ; if so, increase the item's quantity
 	inc hl
-.addAnotherStackOfItem
+.checkIfEndOfInventory
 	ld a, [hl]
 	cp $ff ; is it the end of the table?
 	jr nz, .notAtEndOfInventory
@@ -74,7 +83,7 @@ AddItemToInventory_::
 ; if so, store 99 in the current slot and store the rest in a new slot
 	ld a, 99
 	ld [hli], a
-	jp .addAnotherStackOfItem
+	jp .checkIfEndOfInventory
 .increaseItemQuantityFailed
 	pop hl
 	and a

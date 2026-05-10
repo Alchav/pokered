@@ -86,6 +86,11 @@
 	const CRED_NAKAMICHI             ; 53
 	const CRED_YOSHIMURA             ; 54
 	const CRED_YAMAZAKI              ; 55
+	const CRED_MOD
+	const CRED_ALCHAV
+	const CRED_J_IM
+	const CRED_PRET
+	const CRED_DANNY
 DEF NUM_CRED_STRINGS EQU const_value
 
 	const_def -1, -1

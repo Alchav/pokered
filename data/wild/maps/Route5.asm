@@ -1,5 +1,6 @@
 Route5WildMons:
 	def_grass_wildmons 15 ; encounter rate
+.Archipelago_Wild_Route5_0
 	db 15, PIDGEY
 	db 14, RATTATA
 	db  7, ABRA

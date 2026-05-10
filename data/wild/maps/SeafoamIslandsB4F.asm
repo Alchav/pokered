@@ -1,5 +1,6 @@
 SeafoamIslandsB4FWildMons:
 	def_grass_wildmons 10 ; encounter rate
+.Archipelago_Wild_SeafoamIslandsB4F_0
 	db 36, GOLBAT
 	db 36, ZUBAT
 	db 30, KRABBY

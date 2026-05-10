@@ -2,6 +2,8 @@ CreditsOrder:
 ; subsequent credits elements will be displayed on separate lines.
 ; CRED_TEXT, CRED_TEXT_FADE, CRED_TEXT_MON, and CRED_TEXT_FADE_MON are
 ; commands that are used to go to the next set of credits texts.
+	db CRED_MOD, CRED_ALCHAV, CRED_TEXT_FADE
+	db CRED_SPECIAL_THANKS, CRED_J_IM, CRED_DANNY, CRED_PRET, CRED_TEXT_FADE
 	db CRED_POKEMON, CRED_VERSION, CRED_TEXT_FADE_MON
 	db CRED_DIRECTOR, CRED_TAJIRI, CRED_TEXT_FADE_MON
 	db CRED_PROGRAMMERS, CRED_OOTA, CRED_MORIMOTO, CRED_WATANABE, CRED_TEXT_FADE

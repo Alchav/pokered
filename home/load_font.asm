@@ -7,12 +7,21 @@ LoadFontTilePatterns::
 	ld de, vFont
 	ld bc, FontGraphicsEnd - FontGraphics
 	ld a, BANK(FontGraphics)
-	jp FarCopyDataDouble ; if LCD is off, transfer all at once
+	call FarCopyDataDouble ; if LCD is off, transfer all at once
+	ld hl, PokeballTileGraphics
+	ld de, vFont tile $40
+	ld bc, PokeballTileGraphicsEnd - PokeballTileGraphics
+	ld a, BANK(PokeballTileGraphics)
+	jp FarCopyData
 .on
 	ld de, FontGraphics
 	ld hl, vFont
 	lb bc, BANK(FontGraphics), (FontGraphicsEnd - FontGraphics) / $8
-	jp CopyVideoDataDouble ; if LCD is on, transfer during V-blank
+	call CopyVideoDataDouble ; if LCD is on, transfer during V-blank
+	ld hl, vFont tile $40
+	ld de, PokeballTileGraphics
+	lb bc, BANK(PokeballTileGraphics), (PokeballTileGraphicsEnd - PokeballTileGraphics) / $8
+	jp CopyVideoData
 
 LoadTextBoxTilePatterns::
 	ldh a, [rLCDC]

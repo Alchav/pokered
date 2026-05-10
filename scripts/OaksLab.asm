@@ -350,6 +350,7 @@ OaksLabScript13:
 	ld hl, OaksLabRivalDefeatedText
 	ld de, OaksLabRivalBeatYouText
 	call SaveEndBattleTextPointers
+	EventBattleTrainersanity EVENT_BATTLED_RIVAL_IN_OAKS_LAB_ITEM
 	ld hl, wd72d
 	set 6, [hl]
 	set 7, [hl]
@@ -579,7 +580,8 @@ OaksLabScript20:
 	ld a, $19
 	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID
-	SetEvent EVENT_GOT_POKEDEX
+	; Pokedex ownership is set by GiveItem when Oak's reward is POKEDEX.
+	; Randomized non-Pokedex rewards must not unlock Pokedex-gated checks.
 	ld a, $1
 	ld [wViridianCityCurScript], a
 	SetEvent EVENT_OAK_GOT_PARCEL
@@ -816,16 +818,16 @@ OaksLabText3:
 .asm_1c9ec
 	ld b, POKE_BALL
 	call IsItemInBag
-	jr nz, .asm_1ca69
+	jp nz, .asm_1ca69
 	ld hl, wPokedexOwned
 	ld b, wPokedexOwnedEnd - wPokedexOwned
 	call CountSetBits
 	ld a, [wNumSetBits]
 	cp 2
-	jr nc, .asm_1ca69
+	jp nc, .asm_1ca69
 	CheckEvent EVENT_BEAT_ROUTE22_RIVAL_1ST_BATTLE
 	jr nz, .asm_1ca52
-	CheckEvent EVENT_GOT_POKEDEX
+	CheckEvent EVENT_OAK_GOT_PARCEL
 	jr nz, .asm_1ca4a
 	CheckEventReuseA EVENT_BATTLED_RIVAL_IN_OAKS_LAB
 	jr nz, .asm_1ca2b
@@ -847,6 +849,14 @@ OaksLabText3:
 	call PrintText
 	jr .asm_1ca6f
 .asm_1ca3a
+.Archipelago_Event_Pokedex
+	lb bc, POKEDEX, 1
+	call GiveItem
+	jr c, .notBagFull
+	ld hl, OaksLabText28
+	call PrintText
+	jp TextScriptEnd
+.notBagFull
 	ld hl, OaksLabDeliverParcelText
 	call PrintText
 	call OaksLabScript_RemoveParcel
@@ -858,11 +868,18 @@ OaksLabText3:
 	call PrintText
 	jr .asm_1ca6f
 .asm_1ca52
-	CheckAndSetEvent EVENT_GOT_POKEBALLS_FROM_OAK
+	CheckEvent EVENT_GOT_POKEBALLS_FROM_OAK
 	jr nz, .asm_1ca69
-	lb bc, POKE_BALL, 5
+.Archipelago_Event_Oaks_Gift
+	lb bc, POKE_BALL, 1
 	call GiveItem
+	jr nc, .bagFull
 	ld hl, OaksLabGivePokeballsText
+	call PrintText
+	SetEvent EVENT_GOT_POKEBALLS_FROM_OAK
+	jr .asm_1ca6f
+.bagFull
+	ld hl, OaksLabText28
 	call PrintText
 	jr .asm_1ca6f
 .asm_1ca69
@@ -886,7 +903,7 @@ OaksLabText_1ca7c:
 OaksLabDeliverParcelText:
 	text_far _OaksLabDeliverParcelText1
 	sound_get_key_item
-	text_far _OaksLabDeliverParcelText2
+	; text_far _OaksLabDeliverParcelText2
 	text_end
 
 OaksLabAroundWorldText:
@@ -896,7 +913,7 @@ OaksLabAroundWorldText:
 OaksLabGivePokeballsText:
 	text_far _OaksLabGivePokeballsText1
 	sound_get_key_item
-	text_far _OaksLabGivePokeballsText2
+	; text_far _OaksLabGivePokeballsText2
 	text_end
 
 OaksLabPleaseVisitText:
@@ -905,6 +922,10 @@ OaksLabPleaseVisitText:
 
 OaksLabText_1ca9f:
 	text_far _OaksLabText_1d31d
+	text_end
+
+OaksLabText28:
+	text_far _OaksLabText28
 	text_end
 
 OaksLabText4:
@@ -1134,11 +1155,73 @@ OaksLabText25:
 	text_end
 
 OaksLabText8:
-OaksLabText9:
 	text_asm
+	ld a, [wRivalStarter]
+	and a
+	jr nz, .battleAsk
 	ld hl, OaksLabText_1c31d
 	call PrintText
 	jp TextScriptEnd
+.battleAsk
+	ld hl, OaksLabRefightRivalAskText
+	call PrintText
+	ld a, $1
+	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
+	hlcoord 14, 7
+	lb bc, 8, 15
+	ld a, TWO_OPTION_MENU
+	ld [wTextBoxID], a
+	call DisplayTextBoxID
+	ld a, [wMenuExitMethod]
+	cp CHOSE_SECOND_ITEM
+	jp z, TextScriptEnd
+	ld a, OPP_RIVAL1
+	ld [wCurOpponent], a
+	ld a, $1
+	ld [wTrainerNo], a
+	ld a, $1
+	ld [wSpriteIndex], a
+	call GetSpritePosition1
+	ld hl, OaksLabRivalDefeatedText
+	ld de, OaksLabRivalBeatYouText
+	call SaveEndBattleTextPointers
+	jp TextScriptEnd
+
+OaksLabRefightRivalAskText:
+	text "I can send you"
+	line "back in time to"
+	cont "battle your rival"
+	cont "again. Would you"
+	cont "like me to do so?"
+	done
+
+OaksLabText9:
+	text_asm
+	ld hl, OaksLabResetStaticsAskText
+	call PrintText
+	ld a, $1
+	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
+	hlcoord 14, 7
+	lb bc, 8, 15
+	ld a, TWO_OPTION_MENU
+	ld [wTextBoxID], a
+	call DisplayTextBoxID
+	ld a, [wMenuExitMethod]
+	cp CHOSE_SECOND_ITEM
+	jp z, TextScriptEnd
+	farcall ResetStaticPokemon
+	jp TextScriptEnd
+
+OaksLabResetStaticsAskText:
+	text "I can reset all"
+	line "one-time"
+	cont "encounters"
+	cont "of any #MON"
+	cont "you defeated but"
+	cont "have not caught."
+	para "Would you like me"
+	line "to do that?"
+	done
 
 OaksLabText_1c31d:
 	text_far _OaksLabText_1d405

@@ -1,20 +1,6 @@
 _BrockPreBattleText::
-	text "I'm BROCK!"
-	line "I'm PEWTER's GYM"
-	cont "LEADER!"
-
-	para "I believe in rock"
-	line "hard defense and"
-	cont "determination!"
-
-	para "That's why my"
-	line "#MON are all"
-	cont "the rock-type!"
-
-	para "Do you still want"
-	line "to challenge me?"
-	cont "Fine then! Show"
-	cont "me your best!"
+	text "Fine then! Show"
+	line "me your best!"
 	done
 
 _BrockPostBattleAdviceText::
@@ -45,7 +31,9 @@ _BeforeReceivedTM34Text::
 
 _ReceivedTM34Text::
 	text "<PLAYER> received"
-	line "TM34!@"
+	line "@"
+	text_ram wStringBuffer
+	text "!@"
 	text_end
 
 _TM34ExplanationText::
@@ -79,15 +67,8 @@ _TM34NoRoomText::
 
 _ReceivedBoulderBadgeText::
 	text "I took"
-	line "you for granted."
-
-	para "As proof of your"
-	line "victory, here's"
-	cont "the BOULDERBADGE!"
-
-	para "<PLAYER> received"
-	line "the BOULDERBADGE!@"
-	text_end
+	line "you for granted!"
+	prompt
 
 _BrockBoulerBadgeInfoText::
 	text_start

@@ -44,11 +44,8 @@ _MtMoon3Text_49f7f::
 	text_end
 
 _MtMoon3Text_49f85::
-	text "Hey, stop!"
-
-	para "I found these"
-	line "fossils! They're"
-	cont "both mine!"
+	text "I found these"
+	line "fossils!"
 	done
 
 _MtMoon3Text_49f8a::

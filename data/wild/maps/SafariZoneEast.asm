@@ -1,5 +1,6 @@
 SafariZoneEastWildMons:
 	def_grass_wildmons 30 ; encounter rate
+.Archipelago_Wild_SafariZoneEast_0
 	db 21, NIDORAN_M
 	db 29, NIDORAN_F
 	db 22, EXEGGCUTE

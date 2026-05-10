@@ -17,7 +17,7 @@ _Mansion1AfterBattleText2::
 _MansionSwitchText::
 	text "A secret switch!"
 
-	para "Press it?"
+	line "Press it?"
 	done
 
 _MansionSwitchPressedText::

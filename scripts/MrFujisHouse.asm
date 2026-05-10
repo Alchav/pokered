@@ -70,8 +70,9 @@ LavenderHouse1Text5:
 	text_asm
 	CheckEvent EVENT_GOT_POKE_FLUTE
 	jr nz, .got_item
-	ld hl, LavenderHouse1Text_1d94c
-	call PrintText
+	;ld hl, LavenderHouse1Text_1d94c
+	;call PrintText
+.Archipelago_Event_Fuji
 	lb bc, POKE_FLUTE, 1
 	call GiveItem
 	jr nc, .bag_full

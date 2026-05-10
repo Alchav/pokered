@@ -49,7 +49,7 @@ _LavenderHouse1Text_1d94c::
 
 _ReceivedFluteText::
 	text "<PLAYER> received"
-	line "a @"
+	line "@"
 	text_ram wStringBuffer
 	text "!@"
 	text_end

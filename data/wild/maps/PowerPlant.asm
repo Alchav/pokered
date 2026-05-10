@@ -1,5 +1,6 @@
 PowerPlantWildMons:
 	def_grass_wildmons 10 ; encounter rate
+.Archipelago_Wild_PowerPlant_0
 	db 30, MAGNEMITE
 	db 35, MAGNEMITE
 	db 33, MAGNETON

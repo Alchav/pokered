@@ -2837,15 +2837,17 @@ PlayApplyingAttackSound:
 	ld a, [wDamageMultipliers]
 	and $7f
 	ret z
-	cp 10
+	; cp 10
+	ld a, [wEffectiveMessage]
+	cp 1
 	ld a, $20
 	ld b, $30
 	ld c, SFX_DAMAGE
-	jr z, .playSound
+	jr c, .playSound
 	ld a, $e0
 	ld b, $ff
 	ld c, SFX_SUPER_EFFECTIVE
-	jr nc, .playSound
+	jr nz, .playSound
 	ld a, $50
 	ld b, $1
 	ld c, SFX_NOT_VERY_EFFECTIVE

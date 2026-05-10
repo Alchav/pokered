@@ -203,10 +203,18 @@ CinnabarGymBlainePostBattle:
 	ld [wJoyIgnore], a
 ; fallthrough
 CinnabarGymReceiveTM38:
-	ld a, $a
+	SetEvent EVENT_BEAT_BLAINE
+	CheckEvent EVENT_GOT_VOLCANOBADGE
+	jr nz, .Archipelago_Event_Cinnabar_Gym
+.Archipelago_Badge_Cinnabar_Gym_2
+	lb bc, VOLCANOBADGE, 1
+	call GiveItem
+	jr nc, .BagFull
+	ld a, $b
 	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID
-	SetEvent EVENT_BEAT_BLAINE
+	SetEvent EVENT_GOT_VOLCANOBADGE
+.Archipelago_Event_Cinnabar_Gym
 	lb bc, TM_FIRE_BLAST, 1
 	call GiveItem
 	jr nc, .BagFull
@@ -220,13 +228,8 @@ CinnabarGymReceiveTM38:
 	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID
 .gymVictory
-	ld hl, wObtainedBadges
-	set BIT_VOLCANOBADGE, [hl]
 	ld hl, wBeatGymFlags
 	set BIT_VOLCANOBADGE, [hl]
-
-	; deactivate gym trainers
-	SetEventRange EVENT_BEAT_CINNABAR_GYM_TRAINER_0, EVENT_BEAT_CINNABAR_GYM_TRAINER_6
 
 	ld hl, wCurrentMapScriptFlags
 	set 5, [hl]
@@ -271,6 +274,12 @@ BlaineText:
 	text_asm
 	CheckEvent EVENT_BEAT_BLAINE
 	jr z, .beforeBeat
+	CheckEventReuseA EVENT_GOT_VOLCANOBADGE
+	jr nz, .checkTM
+	call CinnabarGymReceiveTM38
+	call DisableWaitingAfterTextDisplay
+	jp TextScriptEnd
+.checkTM
 	CheckEventReuseA EVENT_GOT_TM38
 	jr nz, .afterBeat
 	call z, CinnabarGymReceiveTM38
@@ -286,6 +295,8 @@ BlaineText:
 	ld hl, ReceivedVolcanoBadgeText
 	ld de, ReceivedVolcanoBadgeText
 	call SaveEndBattleTextPointers
+	xor a
+	ld [wEndBattleTrainersanityItem], a
 	ld a, $7
 	ld [wGymLeaderNo], a
 	jp CinnabarGymScript_750c3
@@ -311,7 +322,6 @@ BlaineVolcanoBadgeInfoText:
 ReceivedTM38Text:
 	text_far _ReceivedTM38Text
 	sound_get_item_1
-	text_far _TM38ExplanationText
 	text_end
 
 TM38NoRoomText:
@@ -328,6 +338,7 @@ CinnabarGymTrainerText1:
 	ld hl, CinnabarGymEndBattleText2
 	ld de, CinnabarGymEndBattleText2
 	call SaveEndBattleTextPointers
+	EventBattleTrainersanity EVENT_BEAT_CINNABAR_GYM_TRAINER_0_ITEM
 	jp CinnabarGymScript_750c3
 .asm_46bb4
 	ld hl, CinnabarGymAfterBattleText2
@@ -364,6 +375,7 @@ CinnabarGymTrainerText2:
 	ld hl, CinnabarGymEndBattleText1
 	ld de, CinnabarGymEndBattleText1
 	call SaveEndBattleTextPointers
+	EventBattleTrainersanity EVENT_BEAT_CINNABAR_GYM_TRAINER_1_ITEM
 	jp CinnabarGymScript_750c3
 
 .asm_751a8
@@ -401,6 +413,7 @@ CinnabarGymTrainerText3:
 	ld hl, CinnabarGymEndBattleText3
 	ld de, CinnabarGymEndBattleText3
 	call SaveEndBattleTextPointers
+	EventBattleTrainersanity EVENT_BEAT_CINNABAR_GYM_TRAINER_2_ITEM
 	jp CinnabarGymScript_750c3
 .afterBeat
 	ld hl, CinnabarGymAfterBattleText3
@@ -437,6 +450,7 @@ CinnabarGymTrainerText4:
 	ld hl, CinnabarGymEndBattleText4
 	ld de, CinnabarGymEndBattleText4
 	call SaveEndBattleTextPointers
+	EventBattleTrainersanity EVENT_BEAT_CINNABAR_GYM_TRAINER_3_ITEM
 	jp CinnabarGymScript_750c3
 .afterBeat
 	ld hl, CinnabarGymAfterBattleText4
@@ -473,6 +487,7 @@ CinnabarGymTrainerText5:
 	ld hl, CinnabarGymEndBattleText5
 	ld de, CinnabarGymEndBattleText5
 	call SaveEndBattleTextPointers
+	EventBattleTrainersanity EVENT_BEAT_CINNABAR_GYM_TRAINER_4_ITEM
 	jp CinnabarGymScript_750c3
 .afterBeat
 	ld hl, CinnabarGymAfterBattleText5
@@ -509,6 +524,7 @@ CinnabarGymTrainerText6:
 	ld hl, CinnabarGymEndBattleText6
 	ld de, CinnabarGymEndBattleText6
 	call SaveEndBattleTextPointers
+	EventBattleTrainersanity EVENT_BEAT_CINNABAR_GYM_TRAINER_5_ITEM
 	jp CinnabarGymScript_750c3
 .afterBeat
 	ld hl, CinnabarGymAfterBattleText6
@@ -545,6 +561,7 @@ CinnabarGymTrainerText7:
 	ld hl, CinnabarGymEndBattleText7
 	ld de, CinnabarGymEndBattleText7
 	call SaveEndBattleTextPointers
+	EventBattleTrainersanity EVENT_BEAT_CINNABAR_GYM_TRAINER_6_ITEM
 	jp CinnabarGymScript_750c3
 .afterBeat
 	ld hl, CinnabarGymAfterBattleText7

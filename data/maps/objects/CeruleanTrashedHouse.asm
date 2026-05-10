@@ -2,9 +2,9 @@ CeruleanTrashedHouse_Object:
 	db $a ; border block
 
 	def_warp_events
-	warp_event  2,  7, LAST_MAP, 1
-	warp_event  3,  7, LAST_MAP, 1
-	warp_event  3,  0, LAST_MAP, 8
+	warp_event  2,  7, CERULEAN_CITY, 1
+	warp_event  3,  7, CERULEAN_CITY, 1
+	warp_event  3,  0, CERULEAN_CITY, 8
 
 	def_bg_events
 	bg_event  3,  0, 3 ; CeruleanHouseTrashedText3

@@ -4,6 +4,15 @@ CinnabarLabFossilRoom_Script:
 CinnabarLabFossilRoom_TextPointers:
 	dw Lab4Text1
 	dw Lab4Text2
+	dw ShopPC
+	dw HelixShop
+	dw DomeShop
+	dw HelixDomeShop
+	dw AmberShop
+	dw HelixAmberShop
+	dw DomeAmberShop
+	dw AllFossilsShop
+	dw NoFossils
 
 Lab4Script_GetFossilsInBag:
 ; construct a list of all fossils in the player's bag
@@ -48,6 +57,19 @@ FossilsList:
 
 Lab4Text1:
 	text_asm
+	ld a, [wFossilsRevived]
+.Archipelago_Fossils_Needed_For_Second_Item_1
+	cp 3
+	jr c, .proceed
+	CheckEvent EVENT_GOT_HELIX_FOSSIL
+	jr z, .checkDome
+	CheckEvent EVENT_GOT_DOME_FOSSIL
+	jr nz, .proceed
+	jr .Archipelago_Event_Dome_Fossil_B
+.checkDome
+	CheckEvent EVENT_GOT_DOME_FOSSIL
+	jp nz, .Archipelago_Event_Helix_Fossil_B
+.proceed
 	CheckEvent EVENT_GAVE_FOSSIL_TO_LAB
 	jr nz, .asm_75d96
 	ld hl, Lab4Text_75dc6
@@ -76,11 +98,51 @@ Lab4Text1:
 	SetEvent EVENT_LAB_HANDING_OVER_FOSSIL_MON
 	ld a, [wFossilMon]
 	ld b, a
+.Archipelago_Fossil_Level_1
 	ld c, 30
 	call GivePokemon
 	jr nc, .asm_75d93
 	ResetEvents EVENT_GAVE_FOSSIL_TO_LAB, EVENT_LAB_STILL_REVIVING_FOSSIL, EVENT_LAB_HANDING_OVER_FOSSIL_MON
+	ld a, [wFossilsRevived]
+	inc a
+	ld [wFossilsRevived], a
 	jr .asm_75d93
+.Archipelago_Event_Dome_Fossil_B
+	lb bc, DOME_FOSSIL, 1
+	call GiveItem
+	jr c, .notFullDome
+	ld hl, LabBagFull
+	call PrintText
+	jp TextScriptEnd
+.notFullDome
+	ld hl, LabRecItem
+	call PrintText
+	SetEvent EVENT_GOT_DOME_FOSSIL
+	jp TextScriptEnd
+.Archipelago_Event_Helix_Fossil_B
+	lb bc, HELIX_FOSSIL, 1
+	call GiveItem
+	jr c, .notFullHelix
+	ld hl, LabBagFull
+	call PrintText
+	jp TextScriptEnd
+.notFullHelix
+	ld hl, LabRecItem
+	call PrintText
+	SetEvent EVENT_GOT_HELIX_FOSSIL
+	jp TextScriptEnd
+
+LabRecItem:
+	text "<PLAYER> received"
+	line "@"
+	text_ram wStringBuffer
+	text "!@"
+	text_end
+
+LabBagFull:
+	text "You can't carry"
+	line "any more items."
+	done
 
 Lab4Text_75dc6:
 	text_far _Lab4Text_75dc6
@@ -107,3 +169,53 @@ Lab4Text2:
 
 LoadFossilItemAndMonNameBank1D:
 	farjp LoadFossilItemAndMonName
+
+ShopPC:
+	text_asm
+	ld b, 0
+	CheckEvent EVENT_GAVE_OLD_AMBER, 1
+	rl b
+	CheckEvent EVENT_GAVE_DOME_FOSSIL, 1
+	rl b
+	CheckEvent EVENT_GAVE_HELIX_FOSSIL, 1
+	rl b
+	ld a, b
+	add 3
+	cp 3
+	jr z, .zero
+.continue
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+	call DisableWaitingAfterTextDisplay
+	jp TextScriptEnd
+.zero
+	ld a, 11
+	jr .continue
+
+HelixShop:
+	script_mart HELIX_FOSSIL
+
+DomeShop:
+	script_mart DOME_FOSSIL
+
+HelixDomeShop:
+	script_mart HELIX_FOSSIL, DOME_FOSSIL
+
+AmberShop:
+	script_mart OLD_AMBER
+
+HelixAmberShop:
+	script_mart HELIX_FOSSIL, OLD_AMBER
+
+DomeAmberShop:
+	script_mart DOME_FOSSIL, OLD_AMBER
+
+AllFossilsShop:
+	script_mart HELIX_FOSSIL, DOME_FOSSIL, OLD_AMBER
+
+NoFossils:
+	text "I can duplicate"
+	line "fossils after"
+	cont "you provide us"
+	cont "with them!"
+	done

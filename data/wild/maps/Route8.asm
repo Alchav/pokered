@@ -1,5 +1,6 @@
 Route8WildMons:
 	def_grass_wildmons 15 ; encounter rate
+.Archipelago_Wild_Route8_0
 	db 20, PIDGEY
 	db 22, PIDGEY
 	db 20, RATTATA

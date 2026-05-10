@@ -29,7 +29,7 @@ IsSurfingAllowed:
 	jr nz, .forcedToRideBike
 	ld a, [wCurMap]
 	cp SEAFOAM_ISLANDS_B4F
-	ret nz
+	jr nz, .check3F
 	CheckBothEventsSet EVENT_SEAFOAM4_BOULDER1_DOWN_HOLE, EVENT_SEAFOAM4_BOULDER2_DOWN_HOLE
 	ret z
 	ld hl, CoordsData_cdf7
@@ -44,6 +44,22 @@ IsSurfingAllowed:
 	res 1, [hl]
 	ld hl, CyclingIsFunText
 	jp PrintText
+.check3F
+	cp SEAFOAM_ISLANDS_B3F
+	ret nz
+	CheckBothEventsSet EVENT_SEAFOAM3_BOULDER1_DOWN_HOLE, EVENT_SEAFOAM3_BOULDER2_DOWN_HOLE
+	ret z
+	ld hl, CoordsData_2
+	call ArePlayerCoordsInArray
+	ret nc
+	ld hl, wd728
+	res 1, [hl]
+	ld hl, CurrentTooFastText
+	jp PrintText
+
+CoordsData_2:
+	dbmapcoord 23, 9
+	db -1
 
 CoordsData_cdf7:
 	dbmapcoord  7, 11

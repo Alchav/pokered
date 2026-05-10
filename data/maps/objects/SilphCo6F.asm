@@ -19,7 +19,9 @@ SilphCo6F_Object:
 	object_event 17,  3, SPRITE_ROCKET, STAY, RIGHT, 6, OPP_ROCKET, 30
 	object_event  7,  8, SPRITE_SCIENTIST, STAY, DOWN, 7, OPP_SCIENTIST, 7
 	object_event 14, 15, SPRITE_ROCKET, STAY, LEFT, 8, OPP_ROCKET, 31
+.Archipelago_Missable_Silph_Co_6F_Item_1
 	object_event  3, 12, SPRITE_POKE_BALL, STAY, NONE, 9, HP_UP
+.Archipelago_Missable_Silph_Co_6F_Item_2
 	object_event  2, 15, SPRITE_POKE_BALL, STAY, NONE, 10, X_ACCURACY
 
 	def_warps_to SILPH_CO_6F

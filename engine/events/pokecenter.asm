@@ -12,18 +12,9 @@ DisplayPokemonCenterDialogue_::
 	ld hl, PokemonCenterWelcomeText
 	call PrintText
 	ld hl, wd72e
-	bit 2, [hl]
 	set 1, [hl]
 	set 2, [hl]
-	jr nz, .skipShallWeHealYourPokemon
-	ld hl, ShallWeHealYourPokemonText
-	call PrintText
-.skipShallWeHealYourPokemon
-	call YesNoChoicePokeCenter ; yes/no menu
 	call UpdateSprites
-	ld a, [wCurrentMenuItem]
-	and a
-	jp nz, .declinedHealing ; if the player chose No
 	call SetLastBlackoutMap
 	callfar IsStarterPikachuInOurParty
 	jr nc, .notHealingPlayerPikachu
@@ -34,8 +25,6 @@ DisplayPokemonCenterDialogue_::
 	call UpdateSprites
 	callfar PikachuWalksToNurseJoy ; todo
 .notHealingPlayerPikachu
-	ld hl, NeedYourPokemonText
-	call PrintText
 	ld c, 64
 	call DelayFrames
 	call CheckPikachuFollowingPlayer
@@ -68,8 +57,6 @@ DisplayPokemonCenterDialogue_::
 .doNotReturnPikachu
 	lb bc, 1, 0
 	call Func_6ebb
-	ld hl, PokemonFightingFitText
-	call PrintText
 	callfar IsStarterPikachuInOurParty
 	jr nc, .notInParty
 	lb bc, 15, 0
@@ -88,12 +75,7 @@ DisplayPokemonCenterDialogue_::
 	call DelayFrames
 	call UpdateSprites
 	call LoadFontTilePatterns
-	jr .done
-.declinedHealing
-	call LoadScreenTilesFromBuffer1 ; restore screen
 .done
-	ld hl, PokemonCenterFarewellText
-	call PrintText
 	call UpdateSprites
 	ret
 

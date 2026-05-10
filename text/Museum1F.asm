@@ -82,7 +82,9 @@ _Museum1FText_5c28e::
 
 _ReceivedOldAmberText::
 	text "<PLAYER> received"
-	line "OLD AMBER!@"
+	line "@"
+	text_ram wStringBuffer
+	text "!@"
 	text_end
 
 _Museum1FText_5c299::

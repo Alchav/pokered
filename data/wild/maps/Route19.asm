@@ -3,6 +3,7 @@ Route19WildMons:
 	end_grass_wildmons
 
 	def_water_wildmons 5 ; encounter rate
+.Archipelago_Wild_Surf_Route19_0
 	db  5, TENTACOOL
 	db 10, TENTACOOL
 	db 15, TENTACOOL

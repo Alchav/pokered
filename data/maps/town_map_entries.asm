@@ -55,6 +55,7 @@ ENDM
 
 ; the appearance of buildings and dungeons in the town map
 InternalMapEntries:
+.Archipelago_Town_Map_Coords
 	; maximum map id subject to this rule, x, y, name
 	internal_map OAKS_LAB,                       2, 11, PalletTownName
 	internal_map VIRIDIAN_GYM,                   2,  8, ViridianCityName

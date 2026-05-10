@@ -12,6 +12,7 @@ CeladonMansion5Text1:
 
 CeladonMansion5Text2:
 	text_asm
+.Archipelago_Gift_Eevee_2
 	lb bc, EEVEE, 25
 	call GivePokemon
 	jr nc, .party_full

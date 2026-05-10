@@ -43,10 +43,18 @@ CeladonGymErikaPostBattle:
 	ld [wJoyIgnore], a
 
 CeladonGymReceiveTM21:
-	ld a, $9
+	SetEvent EVENT_BEAT_ERIKA
+	CheckEvent EVENT_GOT_RAINBOWBADGE
+	jr nz, .Archipelago_Event_Celadon_Gym
+.Archipelago_Badge_Celadon_Gym_2
+	lb bc, RAINBOWBADGE, 1
+	call GiveItem
+	jr nc, .BagFull
+	ld a, $a
 	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID
-	SetEvent EVENT_BEAT_ERIKA
+	SetEvent EVENT_GOT_RAINBOWBADGE
+.Archipelago_Event_Celadon_Gym
 	lb bc, TM_MEGA_DRAIN, 1
 	call GiveItem
 	jr nc, .BagFull
@@ -60,13 +68,8 @@ CeladonGymReceiveTM21:
 	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID
 .gymVictory
-	ld hl, wObtainedBadges
-	set BIT_RAINBOWBADGE, [hl]
 	ld hl, wBeatGymFlags
 	set BIT_RAINBOWBADGE, [hl]
-
-	; deactivate gym trainers
-	SetEventRange EVENT_BEAT_CELADON_GYM_TRAINER_0, EVENT_BEAT_CELADON_GYM_TRAINER_6
 
 	jp CeladonGymResetScripts
 
@@ -105,6 +108,12 @@ ErikaText:
 	text_asm
 	CheckEvent EVENT_BEAT_ERIKA
 	jr z, .beforeBeat
+	CheckEventReuseA EVENT_GOT_RAINBOWBADGE
+	jr nz, .checkTM
+	call CeladonGymReceiveTM21
+	call DisableWaitingAfterTextDisplay
+	jr .done
+.checkTM
 	CheckEventReuseA EVENT_GOT_TM21
 	jr nz, .afterBeat
 	call z, CeladonGymReceiveTM21
@@ -123,6 +132,8 @@ ErikaText:
 	ld hl, ReceivedRainbowBadgeText
 	ld de, ReceivedRainbowBadgeText
 	call SaveEndBattleTextPointers
+	xor a
+	ld [wEndBattleTrainersanityItem], a
 	ldh a, [hSpriteIndex]
 	ld [wSpriteIndex], a
 	call EngageMapTrainer
@@ -154,7 +165,6 @@ ErikaRainbowBadgeInfoText:
 ReceivedTM21Text:
 	text_far _ReceivedTM21Text
 	sound_get_item_1
-	text_far _TM21ExplanationText
 	text_end
 
 TM21NoRoomText:

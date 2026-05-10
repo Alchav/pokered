@@ -137,6 +137,7 @@ PlayerPCDeposit:
 	jp .loop
 
 PlayerPCWithdraw:
+	SetEvent EVENT_CHECKED_PC
 	xor a
 	ld [wCurrentMenuItem], a
 	ld [wListScrollOffset], a

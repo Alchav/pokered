@@ -44,10 +44,18 @@ PewterGymBrockPostBattle:
 	ld [wJoyIgnore], a
 ; fallthrough
 PewterGymScriptReceiveTM34:
-	ld a, $4
+	SetEvent EVENT_BEAT_BROCK
+	CheckEvent EVENT_GOT_BOULDERBADGE
+	jr nz, .Archipelago_Event_Pewter_Gym
+.Archipelago_Badge_Pewter_Gym_2
+	lb bc, BOULDERBADGE, 1
+	call GiveItem
+	jr nc, .BagFull
+	ld a, $5
 	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID
-	SetEvent EVENT_BEAT_BROCK
+	SetEvent EVENT_GOT_BOULDERBADGE
+.Archipelago_Event_Pewter_Gym
 	lb bc, TM_BIDE, 1
 	call GiveItem
 	jr nc, .BagFull
@@ -61,22 +69,8 @@ PewterGymScriptReceiveTM34:
 	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID
 .gymVictory
-	ld hl, wObtainedBadges
-	set BIT_BOULDERBADGE, [hl]
 	ld hl, wBeatGymFlags
 	set BIT_BOULDERBADGE, [hl]
-
-	ld a, HS_GYM_GUY
-	ld [wMissableObjectIndex], a
-	predef HideObject
-	ld a, HS_ROUTE_22_RIVAL_1
-	ld [wMissableObjectIndex], a
-	predef HideObject
-
-	ResetEvents EVENT_1ST_ROUTE22_RIVAL_BATTLE, EVENT_ROUTE22_RIVAL_WANTS_BATTLE
-
-	; deactivate gym trainers
-	SetEvent EVENT_BEAT_PEWTER_GYM_TRAINER_0
 
 	jp PewterGymResetScripts
 
@@ -98,6 +92,12 @@ BrockText:
 	text_asm
 	CheckEvent EVENT_BEAT_BROCK
 	jr z, .beforeBeat
+	CheckEventReuseA EVENT_GOT_BOULDERBADGE
+	jr nz, .checkTM
+	call PewterGymScriptReceiveTM34
+	call DisableWaitingAfterTextDisplay
+	jr .done
+.checkTM
 	CheckEventReuseA EVENT_GOT_TM34
 	jr nz, .afterBeat
 	call z, PewterGymScriptReceiveTM34
@@ -116,6 +116,8 @@ BrockText:
 	ld hl, ReceivedBoulderBadgeText
 	ld de, ReceivedBoulderBadgeText
 	call SaveEndBattleTextPointers
+	xor a
+	ld [wEndBattleTrainersanityItem], a
 	ldh a, [hSpriteIndex]
 	ld [wSpriteIndex], a
 	call EngageMapTrainer
@@ -145,7 +147,6 @@ BeforeReceivedTM34Text:
 ReceivedTM34Text:
 	text_far _ReceivedTM34Text
 	sound_get_item_1
-	text_far _TM34ExplanationText
 	text_end
 
 TM34NoRoomText:
@@ -154,8 +155,6 @@ TM34NoRoomText:
 
 ReceivedBoulderBadgeText:
 	text_far _ReceivedBoulderBadgeText
-	sound_get_item_1
-	text_far _BrockBoulerBadgeInfoText ; Text to tell that the flash technique can be used
 	text_end
 
 PewterGymTrainerText1:

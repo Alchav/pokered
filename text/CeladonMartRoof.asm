@@ -73,7 +73,9 @@ _CeladonMartRoofText_48515::
 
 _ReceivedTM49Text::
 	text "<PLAYER> received"
-	line "TM49!@"
+	line "@"
+	text_ram wStringBuffer
+	text "!@"
 	text_end
 
 _CeladonMartRoofText_48520::

@@ -18,10 +18,11 @@ SSAnne7Text1:
 	text_asm
 	CheckEvent EVENT_GOT_HM01
 	jr nz, .got_item
-	ld hl, SSAnne7RubText
-	call PrintText
-	ld hl, ReceivingHM01Text
-	call PrintText
+	;ld hl, SSAnne7RubText
+	;call PrintText
+	;ld hl, ReceivingHM01Text
+	;call PrintText
+.Archipelago_Event_SS_Anne_Captain
 	lb bc, HM_CUT, 1
 	call GiveItem
 	jr nc, .bag_full

@@ -13,7 +13,7 @@ _Route24Text_51515::
 
 _Route24Text_5151a::
 	text "<PLAYER> received"
-	line "a @"
+	line "@"
 	text_ram wStringBuffer
 	text "!@"
 	text_end
@@ -24,27 +24,7 @@ _Route24Text_51521::
 	done
 
 _Route24Text_51526::
-	text "By the way, would"
-	line "you like to join"
-	cont "TEAM ROCKET?"
-
-	para "We're a group"
-	line "dedicated to evil"
-	cont "using #MON!"
-
-	para "Want to join?"
-
-	para "Are you sure?"
-
-	para "Come on, join us!"
-
-	para "I'm telling you"
-	line "to join!"
-
-	para "OK, you need"
-	line "convincing!"
-
-	para "I'll make you an"
+	text "I'll make you an"
 	line "offer you can't"
 	cont "refuse!"
 	done

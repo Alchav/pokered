@@ -1,19 +1,6 @@
 _SabrinaPreBattleText::
 	text "I had a vision of"
 	line "your arrival!"
-
-	para "I have had psychic"
-	line "powers since I"
-	cont "was a child."
-
-	para "I first learned"
-	line "to bend spoons"
-	cont "with my mind."
-
-	para "I dislike fight-"
-	line "ing, but if you"
-	cont "wish, I will show"
-	cont "you my powers!"
 	done
 
 _ReceivedMarshBadgeText::
@@ -57,7 +44,9 @@ _KogaMarshBadgeInfoText::
 
 _ReceivedTM46Text::
 	text "<PLAYER> received"
-	line "TM46!@"
+	line "@"
+	text_ram wStringBuffer
+	text "!@"
 	text_end
 
 _TM46ExplanationText::

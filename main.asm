@@ -88,6 +88,24 @@ INCLUDE "engine/battle/move_effects/recoil.asm"
 INCLUDE "engine/battle/move_effects/conversion.asm"
 INCLUDE "engine/battle/move_effects/haze.asm"
 
+RunSpeed::
+	ld a, [wArchipelagoOptions]
+	bit BIT_AUTO_RUN_OFF, a
+	jr z, .AutoRun
+	ldh a, [hJoyHeld]
+	bit BIT_B_BUTTON, a
+	ret z
+	jr .noAutoRun
+.AutoRun
+	ldh a, [hJoyHeld]
+	bit BIT_B_BUTTON, a
+	ret nz
+.noAutoRun
+	call IsPlayerCharacterBeingControlledByGame
+	ret nz
+	call AdvancePlayerSprite
+	ret
+
 
 SECTION "bank5", ROMX
 
@@ -369,6 +387,334 @@ SECTION "Hidden Objects Core", ROMX
 
 INCLUDE "engine/overworld/hidden_objects.asm"
 INCLUDE "engine/events/hidden_objects/vermilion_gym_trash2.asm"
+
+
+SECTION "Archipelago Core", ROMX
+
+checkDeathLink_::
+	ld a, [wArchipelagoDeathLink]
+	cp 1
+	ret nz
+	CheckEvent EVENT_IN_SAFARI_ZONE
+	jr z, .noSafari
+	xor a
+	ld [wSafariSteps], a
+	ld [wSafariSteps + 1], a
+	ld [wArchipelagoDeathLink], a
+	ret
+.noSafari
+	xor a
+	ld [wPartyMon1HP], a
+	ld [wPartyMon2HP], a
+	ld [wPartyMon3HP], a
+	ld [wPartyMon4HP], a
+	ld [wPartyMon5HP], a
+	ld [wPartyMon6HP], a
+	ld [wPartyMon1HP + 1], a
+	ld [wPartyMon2HP + 1], a
+	ld [wPartyMon3HP + 1], a
+	ld [wPartyMon4HP + 1], a
+	ld [wPartyMon5HP + 1], a
+	ld [wPartyMon6HP + 1], a
+	ld [wBattleMonHP], a
+	ld [wBattleMonHP + 1], a
+	ret
+
+receiveArchipelagoItem_::
+	ld a, [wArchipelagoItemReceived]
+	and a
+	ret z
+	ld b, a
+	ld c, 1
+	call GiveItem
+	ret nc
+	ld a, [wArchipelagoItemsReceivedCount]
+	ld c, a
+	ld a, [wArchipelagoItemsReceivedCount + 1]
+	ld b, a
+	inc bc
+	ld a, c
+	ld [wArchipelagoItemsReceivedCount], a
+	ld a, b
+	ld [wArchipelagoItemsReceivedCount + 1], a
+	xor a
+	ld [wArchipelagoItemReceived], a
+
+	ld a, [wArchipelagoOptions]
+	bit BIT_AP_ITEM_TEXT_OFF, a
+	jr nz, .playSoundOnly
+
+	ld a, [wIsInBattle]
+	and a
+	jr z, .notInBattle
+
+	ld hl, DisplayArchipelagoItem
+	call PrintText
+	farcall PrintEmptyString
+	ld a, BATTLE_MENU_TEMPLATE
+	ld [wTextBoxID], a
+	call DisplayTextBoxID
+	call PlaceMenuCursor
+	ret
+.notInBattle
+	ld a, TEXT_RECEIVED_ITEM
+	ldh [hSpriteIndexOrTextID], a
+	jp DisplayTextID
+.playSoundOnly
+	ld a, SFX_GET_ITEM_1
+	call PlaySound
+	ret
+
+FillStartInventory::
+	ld hl, StartInventoryTable + 254
+	ld b, 255
+.loop
+	ld a, [hld]
+	dec b
+	ret z
+	and a
+	jr z, .loop
+	ld c, a
+	push hl
+	push bc
+	call GiveItem
+	pop bc
+	pop hl
+	jr .loop
+
+StartInventoryTable:
+.Archipelago_Start_Inventory_0
+	ds 256, $00
+
+ParalyzeTrap::
+	ld a, (1 << PAR)
+	call ApplyTrap
+	ld a, [wIsInBattle]
+	and a
+	ret z
+	farcall QuarterSpeedDueToParalysis
+	ret
+
+IceTrap::
+	ld a, (1 << FRZ)
+	jr ApplyTrap
+
+FireTrap::
+	ld a, (1 << BRN)
+	call ApplyTrap
+	ld a, [wIsInBattle]
+	and a
+	ret z
+	farcall HalveAttackDueToBurn
+	ret
+
+PoisonTrap::
+	ld a, (1 << PSN)
+	jr ApplyTrap
+
+SleepTrap::
+	call Random
+	and $7
+	jr z, SleepTrap
+	jr ApplyTrap
+
+MACRO applytrap
+	ld a, [\1HP]
+	and a
+	jr nz, .\1apply
+	ld a, [\1HP + 1]
+	and a
+	jr z, .\1skip
+.\1apply
+	ld a, b
+	ld [\1Status], a
+.\1skip
+ENDM
+
+ApplyTrap:
+	ld b, a
+	applytrap wBattleMon
+	applytrap wPartyMon1
+	applytrap wPartyMon2
+	applytrap wPartyMon3
+	applytrap wPartyMon4
+	applytrap wPartyMon5
+	applytrap wPartyMon6
+	ret
+
+TenCoins::
+	ld a, $10
+	ldh [hCoins + 1], a
+	jr addCoins
+
+TwentyCoins::
+	ld a, $20
+	ldh [hCoins + 1], a
+	jr addCoins
+
+HundredCoins::
+	xor a
+	ldh [hCoins + 1], a
+	ld a, $01
+	ldh [hCoins], a
+	jr addCoins2
+
+addCoins:
+	xor a
+	ldh [hCoins], a
+addCoins2:
+	xor a
+	ldh [hUnusedCoinsByte], a
+	ld de, wPlayerCoins + 1
+	ld hl, hCoins + 1
+	ld c, $2
+	predef AddBCDPredef
+	ret
+
+_GiveItem::
+	ld a, [wcf91]
+	ld b, a
+	cp AP_ITEM
+	jp z, .apitem
+	cp PROGRESSIVE_CARD_KEY
+	jr nz, .noProgCardKey
+	ld a, [wArchipelagoProgressiveKeys]
+	inc a
+	cp 11
+	jr c, .noCap
+	ld a, 10
+.noCap
+	ld [wArchipelagoProgressiveKeys], a
+	add CARD_KEY_2F - 1
+	ld b, a
+	ld [wcf91], a
+	ld [wd11e], a
+	jp .continue
+.noProgCardKey
+	cp TOWN_MAP
+	jr nz, .noTownMap
+.Archipelago_Map_Fly_Location_1
+	ld a, $00
+	ld c, a
+	ld b, FLAG_SET
+	ld hl, wTownVisitedFlag
+	predef FlagActionPredef
+	jp .continue
+.noTownMap
+	cp TEN_COINS
+	jr nz, .no10coins
+	farcall TenCoins
+	jp .apitem
+.no10coins
+	cp TWENTY_COINS
+	jr nz, .no20coins
+	farcall TwentyCoins
+	jp .apitem
+.no20coins
+	cp HUNDRED_COINS
+	jr nz, .no100coins
+	farcall HundredCoins
+	jp .apitem
+.no100coins
+	cp POKEDEX
+	jr nz, .noPokedex
+	SetEvent EVENT_GOT_POKEDEX
+	jp .apitem
+.noPokedex
+	cp POISON_TRAP
+	jr nz, .noPoisonTrap
+	farcall PoisonTrap
+	jp .apitem
+.noPoisonTrap
+	cp PARALYZE_TRAP
+	jr nz, .noParalyzeTrap
+	farcall ParalyzeTrap
+	jp .apitem
+.noParalyzeTrap
+	cp FIRE_TRAP
+	jr nz, .noFireTrap
+	farcall FireTrap
+	jp .apitem
+.noFireTrap
+	cp ICE_TRAP
+	jr nz, .noIceTrap
+	farcall IceTrap
+	jp .apitem
+.noIceTrap
+	cp SLEEP_TRAP
+	jr nz, .noSleepTrap
+	farcall SleepTrap
+	jp .apitem
+.noSleepTrap
+	ld a, BOULDERBADGE - 1
+.badgeLoop
+	cp EARTHBADGE
+	jr z, .continue
+	inc a
+	cp b
+	jr nz, .badgeLoop
+	ld c, 1
+	ld a, b
+	sub BOULDERBADGE
+	jr .shiftBadgeBit
+.shiftBadgeBitLoop
+	sla c
+	dec a
+.shiftBadgeBit
+	and a
+	jr nz, .shiftBadgeBitLoop
+	ld a, [wObtainedBadges]
+	or c
+	ld [wObtainedBadges], a
+	jr .apitem
+.continue
+	ld hl, wNumBagItems
+	call AddItemToInventory
+	ret nc
+.apitem
+	call GetItemName
+	call CopyToStringBuffer
+	scf
+	ret
+
+MACRO ResetBattle
+.Archipelago_Reset_\4_1
+	ld a, \1
+	ld [wd11e], a
+	predef IndexToPokedex
+	ld a, [wd11e]
+	dec a
+	ld c, a
+	ld b, FLAG_TEST
+	ld hl, wPokedexOwned
+	predef FlagActionPredef
+	ld a, c
+	and a
+	jr nz, .noReset\4
+	ResetEvent \2
+	ld a, \3
+	ld [wMissableObjectIndex], a
+	predef ShowObject
+.noReset\4
+ENDM
+
+ResetStaticPokemon::
+	ResetBattle SNORLAX, EVENT_BEAT_ROUTE12_SNORLAX, HS_ROUTE_12_SNORLAX, A
+	ResetBattle SNORLAX, EVENT_BEAT_ROUTE16_SNORLAX, HS_ROUTE_16_SNORLAX, B
+	ResetBattle VOLTORB, EVENT_BEAT_POWER_PLANT_VOLTORB_0, HS_VOLTORB_1, C
+	ResetBattle VOLTORB, EVENT_BEAT_POWER_PLANT_VOLTORB_1, HS_VOLTORB_2, D
+	ResetBattle VOLTORB, EVENT_BEAT_POWER_PLANT_VOLTORB_2, HS_VOLTORB_3, E
+	ResetBattle ELECTRODE, EVENT_BEAT_POWER_PLANT_VOLTORB_3, HS_ELECTRODE_1, F
+	ResetBattle VOLTORB, EVENT_BEAT_POWER_PLANT_VOLTORB_4, HS_VOLTORB_4, G
+	ResetBattle VOLTORB, EVENT_BEAT_POWER_PLANT_VOLTORB_5, HS_VOLTORB_5, H
+	ResetBattle ELECTRODE, EVENT_BEAT_POWER_PLANT_VOLTORB_6, HS_ELECTRODE_2, I
+	ResetBattle VOLTORB, EVENT_BEAT_POWER_PLANT_VOLTORB_7, HS_VOLTORB_6, J
+	ResetBattle ZAPDOS, EVENT_BEAT_ZAPDOS, HS_ZAPDOS, K
+	ResetBattle ARTICUNO, EVENT_BEAT_ARTICUNO, HS_ARTICUNO, L
+	ResetBattle MOLTRES, EVENT_BEAT_MOLTRES, HS_MOLTRES, M
+	ResetBattle MEWTWO, EVENT_BEAT_MEWTWO, HS_MEWTWO, N
+	ResetBattle MEW, EVENT_BEAT_MEW, HS_MEW, O
+	ret
 
 
 SECTION "Battle Engine 8", ROMX

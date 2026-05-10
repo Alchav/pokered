@@ -1,5 +1,6 @@
 PokemonTower7FWildMons:
 	def_grass_wildmons 20 ; encounter rate
+.Archipelago_Wild_PokemonTower7F_0
 	db 24, GASTLY
 	db 25, GASTLY
 	db 26, GASTLY

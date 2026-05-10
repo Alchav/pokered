@@ -21,7 +21,9 @@ SilphCo7F_Object:
 	object_event 20,  2, SPRITE_ROCKET, STAY, LEFT, 7, OPP_ROCKET, 33
 	object_event 19, 14, SPRITE_ROCKET, STAY, RIGHT, 8, OPP_ROCKET, 34
 	object_event  3,  7, SPRITE_BLUE, STAY, UP, 9 ; person
+.Archipelago_Missable_Silph_Co_7F_Item_1
 	object_event  1,  9, SPRITE_POKE_BALL, STAY, NONE, 10, CALCIUM
+.Archipelago_Missable_Silph_Co_7F_Item_2
 	object_event 24, 11, SPRITE_POKE_BALL, STAY, NONE, 11, TM_SWORDS_DANCE
 
 	def_warps_to SILPH_CO_7F

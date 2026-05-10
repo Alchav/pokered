@@ -1,5 +1,6 @@
 Route21WildMons:
 	def_grass_wildmons 25 ; encounter rate
+.Archipelago_Wild_Route21_0
 	db 15, PIDGEY
 	db 13, RATTATA
 	db 13, PIDGEY
@@ -13,6 +14,7 @@ Route21WildMons:
 	end_grass_wildmons
 
 	def_water_wildmons 5 ; encounter rate
+.Archipelago_Wild_Surf_Route21_0
 	db  5, TENTACOOL
 	db 10, TENTACOOL
 	db 15, TENTACOOL

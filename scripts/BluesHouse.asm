@@ -25,7 +25,7 @@ BluesHouseDaisySittingText:
 	text_asm
 	CheckEvent EVENT_GOT_TOWN_MAP
 	jr nz, .got_town_map
-	CheckEvent EVENT_GOT_POKEDEX
+	CheckEvent EVENT_OAK_GOT_PARCEL
 	jr nz, .give_town_map
 	ld hl, DaisyInitialText
 	call PrintText
@@ -34,6 +34,7 @@ BluesHouseDaisySittingText:
 .give_town_map
 	ld hl, DaisyOfferMapText
 	call PrintText
+.Archipelago_Event_Rivals_Sister
 	lb bc, TOWN_MAP, 1
 	call GiveItem
 	jr nc, .bag_full

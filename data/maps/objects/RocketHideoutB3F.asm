@@ -10,7 +10,9 @@ RocketHideoutB3F_Object:
 	def_object_events
 	object_event 10, 22, SPRITE_ROCKET, STAY, RIGHT, 1, OPP_ROCKET, 14
 	object_event 26, 12, SPRITE_ROCKET, STAY, UP, 2, OPP_ROCKET, 15
+.Archipelago_Missable_Rocket_Hideout_B3F_Item_1
 	object_event 26, 17, SPRITE_POKE_BALL, STAY, NONE, 3, TM_DOUBLE_EDGE
+.Archipelago_Missable_Rocket_Hideout_B3F_Item_2
 	object_event 20, 14, SPRITE_POKE_BALL, STAY, NONE, 4, RARE_CANDY
 
 	def_warps_to ROCKET_HIDEOUT_B3F

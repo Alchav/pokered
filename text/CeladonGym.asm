@@ -1,27 +1,5 @@
 _ErikaPreBattleText::
-	text "Hello. Lovely"
-	line "weather isn't it?"
-	cont "It's so pleasant."
-
-	para "...Oh dear..."
-	line "I must have dozed"
-	cont "off. Welcome."
-
-	para "My name is ERIKA."
-	line "I am the LEADER"
-	cont "of CELADON GYM."
-
-	para "I teach the art of"
-	line "flower arranging."
-	cont "My #MON are of"
-	cont "the grass-type."
-
-	para "Oh, I'm sorry, I"
-	line "had no idea that"
-	cont "you wished to"
-	cont "challenge me."
-
-	para "Very well, but I"
+	text "Very well, but I"
 	line "shall not lose."
 	done
 

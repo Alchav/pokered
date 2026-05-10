@@ -79,7 +79,7 @@ _OaksAideHiText::
 	text_start
 	line "kinds of #MON,"
 	cont "I'm supposed to"
-	cont "give you an"
+	cont "give you this"
 	cont "@"
 	text_ram wOaksAideRewardItemName
 	text "!"
@@ -107,6 +107,12 @@ _OaksAideUhOhText::
 	cont "@"
 	text_ram wOaksAideRewardItemName
 	text "."
+	done
+
+_OaksAideNoDexText::
+	text "Oh, you don't"
+	line "even have a"
+	cont "POKéDEX?"
 	done
 
 _OaksAideComeBackText::

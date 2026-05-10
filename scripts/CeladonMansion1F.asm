@@ -18,6 +18,25 @@ CeladonMansion1Text1:
 
 CeladonMansion1Text2:
 	text_asm
+.Archipelago_Option_Tea_1
+	ld a, 0
+	and a
+	jr z, .proceed
+	CheckEvent EVENT_GOT_TEA
+	jr nz, .proceed
+.Archipelago_Event_Mansion_Lady
+	lb bc, TEA, 1
+	call GiveItem
+	jr nc, .bagFull
+	ld hl, CeladonMansion1ReceivedTeaText
+	call PrintText
+	SetEvent EVENT_GOT_TEA
+	jp TextScriptEnd
+.bagFull
+	ld hl, CeladonMansion1TextNoRoom
+	call PrintText
+	jp TextScriptEnd
+.proceed
 	farcall Func_f1e70
 	ld a, [wPikachuHappiness]
 	cp 251
@@ -28,6 +47,15 @@ CeladonMansion1Text2:
 	callfar PlayPikachuSoundClip
 .asm_485d9
 	jp TextScriptEnd
+
+CeladonMansion1ReceivedTeaText:
+	text_far _ReceivedTM27Text
+	sound_get_item_1
+	text_end
+
+CeladonMansion1TextNoRoom:
+	text_far _FuchsiaHouse3Text_5621c
+	text_end
 
 CeladonMansion1Text3:
 	text_far _CeladonMansion1Text3

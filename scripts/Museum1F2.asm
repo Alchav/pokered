@@ -153,8 +153,7 @@ Museum1FText_f1d31:
 Func_f1d36::
 	CheckEvent EVENT_GOT_OLD_AMBER
 	jr nz, .got_item
-	ld hl, Museum1FText_5c28e
-	call PrintText
+.Archipelago_Event_Museum
 	lb bc, OLD_AMBER, 1
 	call GiveItem
 	jr nc, .bag_full

@@ -3,8 +3,8 @@ VictoryRoad2F_Object:
 
 	def_warp_events
 	warp_event  0,  8, VICTORY_ROAD_1F, 3
-	warp_event 29,  7, LAST_MAP, 4
-	warp_event 29,  8, LAST_MAP, 4
+	warp_event 29,  7, ROUTE_23, 4
+	warp_event 29,  8, ROUTE_23, 4
 	warp_event 23,  7, VICTORY_ROAD_3F, 1
 	warp_event 25, 14, VICTORY_ROAD_3F, 3
 	warp_event 27,  7, VICTORY_ROAD_3F, 2
@@ -18,10 +18,15 @@ VictoryRoad2F_Object:
 	object_event 19,  8, SPRITE_COOLTRAINER_M, STAY, DOWN, 3, OPP_TAMER, 5
 	object_event  4,  2, SPRITE_SUPER_NERD, STAY, DOWN, 4, OPP_POKEMANIAC, 6
 	object_event 26,  3, SPRITE_SUPER_NERD, STAY, LEFT, 5, OPP_JUGGLER, 5
+.Archipelago_Static_Encounter_Moltres_6
 	object_event 11,  5, SPRITE_BIRD, STAY, UP, 6, MOLTRES, 50
+.Archipelago_Missable_Victory_Road_2F_Item_1
 	object_event 27,  5, SPRITE_POKE_BALL, STAY, NONE, 7, TM_SUBMISSION
+.Archipelago_Missable_Victory_Road_2F_Item_2
 	object_event 18,  9, SPRITE_POKE_BALL, STAY, NONE, 8, FULL_HEAL
+.Archipelago_Missable_Victory_Road_2F_Item_3
 	object_event  9, 11, SPRITE_POKE_BALL, STAY, NONE, 9, TM_MEGA_KICK
+.Archipelago_Missable_Victory_Road_2F_Item_4
 	object_event 11,  0, SPRITE_POKE_BALL, STAY, NONE, 10, GUARD_SPEC
 	object_event  4, 14, SPRITE_BOULDER, STAY, BOULDER_MOVEMENT_BYTE_2, 11 ; person
 	object_event  5,  5, SPRITE_BOULDER, STAY, BOULDER_MOVEMENT_BYTE_2, 12 ; person

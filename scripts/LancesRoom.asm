@@ -138,6 +138,7 @@ LanceText1:
 	text_asm
 	ld hl, LancesRoomTrainerHeader0
 	call TalkToTrainer
+	SetEvent EVENT_BEAT_LANCE
 	jp TextScriptEnd
 
 LanceBeforeBattleText:

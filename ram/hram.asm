@@ -9,7 +9,6 @@ hSoftReset:: db
 UNION
 hBaseTileID:: ; base tile ID to which offsets are added
 hDexWeight::
-hWarpDestinationMap::
 hOAMTile::
 hROMBankTemp::
 hPreviousTileset::
@@ -391,8 +390,9 @@ hWhoseTurn:: db ; 0 on player's turn, 1 on enemy's turn
 hLCDCPointer:: db
 
 hJoyInput:: db
+hWarpDestinationMap:: db
 
-	ds 2
+	ds 1
 
 hDisableJoypadPolling:: db
 

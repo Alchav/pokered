@@ -47,7 +47,7 @@ _SSAnne6Text_61807::
 	prompt
 
 _SSAnne6Text_6180c::
-	text "Salade de Salmon!"
+	text "Basculin du Salad!"
 
 	para "Les guests may"
 	line "gripe it's fish"
@@ -55,14 +55,16 @@ _SSAnne6Text_6180c::
 	done
 
 _SSAnne6Text_61811::
-	text "Eels au Barbecue!"
+	text "Eelektrik au"
+	line "Barbecue!"
 
 	para "Les guests will"
 	line "mutiny, I fear."
 	done
 
 _SSAnne6Text_61816::
-	text "Prime Beef Steak!"
+	text "Prime Miltank"
+	line "Steak!"
 
 	para "But, have I enough"
 	line "fillets du beef?"

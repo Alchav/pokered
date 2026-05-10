@@ -10,13 +10,7 @@ _MomWakeUpText::
 	done
 
 _MomHealText1::
-	text "MOM: <PLAYER>, if"
-	line "you drive your"
-	cont "#MON too hard,"
-	cont "they'll dislike"
-	cont "you."
-
-	para "You should take a"
+	text "You should take a"
 	line "rest."
 	prompt
 
@@ -28,13 +22,21 @@ _MomHealText2::
 	cont "Take care now!"
 	done
 
-_StandByMeText::
-	text "There's a movie"
-	line "on TV. Four boys"
-	cont "are walking on"
-	cont "railroad tracks."
+_MomHealText3::
+	text "Have you seen Mr."
+	line "Shwadchuck"
+	cont "around?"
 
-	para "I better go too."
+	para "I was supposed to"
+	line "buy him a hot dog."
+	done
+
+_StandByMeText::
+	text "There's a movie on"
+	line "TV. A pilot is"
+	cont "asking a kid if"
+	cont "he likes"
+	cont "gladiator movies"
 	done
 
 _TVWrongSideText::

@@ -15,7 +15,7 @@ _PokemonFaintedText::
 
 _PlayerBlackedOutText::
 	text "<PLAYER> is out of"
-	line "useable #MON!"
+	line "usable #MON!"
 
 	para "<PLAYER> blacked"
 	line "out!"
@@ -24,6 +24,13 @@ _PlayerBlackedOutText::
 _RepelWoreOffText::
 	text "REPEL's effect"
 	line "wore off."
+	done
+
+_DisplayArchipelagoItem::
+	text "<PLAYER> received"
+	line "@"
+	text_ram wStringBuffer
+	text "!"
 	done
 
 _PokemartBuyingGreetingText::
@@ -122,15 +129,8 @@ _TryingToLearnText::
 	text_ram wStringBuffer
 	text "!"
 
-	para "But, @"
-	text_ram wLearnMoveMonName
-	text_start
-	line "can't learn more"
-	cont "than 4 moves!"
-
-	para "Delete an older"
-	line "move to make room"
-	cont "for @"
+	para "Delete a move"
+	line "for @"
 	text_ram wStringBuffer
 	text "?"
 	done
@@ -157,7 +157,10 @@ _ForgotAndText::
 
 _HMCantDeleteText::
 	text "HM techniques"
-	line "can't be deleted!"
+	line "can't be deleted"
+	cont "unless you have"
+	cont "the HM in your"
+	cont "bag!"
 	prompt
 
 _PokemonCenterWelcomeText::

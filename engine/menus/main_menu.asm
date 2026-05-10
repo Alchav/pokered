@@ -48,6 +48,9 @@ MainMenu:
 	ld de, NewGameText
 	call PlaceString
 .next2
+	hlcoord 0, 9
+	ld de, BottomText
+	call PlaceString
 	ld hl, wd730
 	res 6, [hl]
 	call UpdateSprites
@@ -125,8 +128,12 @@ MainMenu:
 InitOptions:
 	ld a, 1 ; no delay
 	ld [wLetterPrintingDelayFlags], a
+.Archipelago_Options_1
 	ld a, 3 ; medium speed
 	ld [wOptions], a
+.Archipelago_AP_Options_1
+	ld a, 0 ; Auto Run on, AP item text on
+	ld [wArchipelagoOptions], a
 	ld a, 64 ; audio?
 	ld [wPrinterSettings], a
 	ret
@@ -180,6 +187,14 @@ ContinueText:
 NewGameText:
 	db   "NEW GAME"
 	next "OPTION@"
+
+BottomText:
+	db "MULTIWORLD SEED:"
+.Archipelago_Title_Seed_1
+	next "(NOT RANDOMIZED)    "
+	next "SLOT NAME:"
+.Archipelago_Title_Slot_Name_1
+	next "(NOT RANDOMIZED)@"
 
 DisplayContinueGameInfo:
 	xor a

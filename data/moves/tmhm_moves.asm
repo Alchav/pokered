@@ -3,6 +3,7 @@
 
 TechnicalMachines:
 	table_width 1, TechnicalMachines
+.Archipelago_TM_Moves
 
 FOR n, 1, NUM_TMS + 1
 	db TM{02d:n}_MOVE

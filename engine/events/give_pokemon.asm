@@ -64,8 +64,10 @@ SetPokedexOwnedFlag:
 	ld hl, wPokedexOwned
 	ld b, FLAG_SET
 	predef FlagActionPredef
+	farcall registerDexSanity
 	pop af
 	ld [wd11e], a
+	ld [wcf91], a
 	call GetMonName
 	ld hl, GotMonText
 	jp PrintText

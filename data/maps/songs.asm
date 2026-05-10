@@ -1,4 +1,5 @@
 MapSongBanks::
+.Archipelago_Map_Songs_0
 	table_width 2, MapSongBanks
 	db MUSIC_PALLET_TOWN, BANK(Music_PalletTown) ; PALLET_TOWN
 	db MUSIC_CITIES1, BANK(Music_Cities1) ; VIRIDIAN_CITY

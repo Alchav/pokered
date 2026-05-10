@@ -12,6 +12,7 @@ MarowakAnim:
 	xor a
 	ldh [hAutoBGTransferEnabled], a ; disable BG transfer so we don't see the Marowak too soon
 ; replace ghost pic with Marowak in BG
+.Archipelago_Ghost_Battle4_1
 	ld a, RESTLESS_SOUL
 	ld [wChangeMonPicEnemyTurnSpecies], a
 	ld a, $1

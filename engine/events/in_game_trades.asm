@@ -126,6 +126,10 @@ InGameTrade_DoTrade:
 	ld [wMonDataLocation], a
 	call AddPartyMon
 	call InGameTrade_CopyDataToReceivedMon
+	ld a, [wcf91]
+	ld [wd11e], a
+	predef IndexToPokedex
+	farcall registerDexSanity
 	call InGameTrade_CheckForTradeEvo
 	call ClearScreen
 	call InGameTrade_RestoreScreen

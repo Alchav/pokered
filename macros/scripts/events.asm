@@ -507,3 +507,61 @@ MACRO AdjustEventBit
 		add ((\1) % 8) - (\2)
 	ENDC
 ENDM
+
+MACRO EventBattleTrainersanityData
+	dw wEventFlags + (\2 / 8)
+	db (\2 % 8)
+Trainersanity_\1::
+.Archipelago_Trainersanity_\1_0
+	db NO_ITEM
+	dw wEventFlags + (\1 / 8)
+	db (\1 % 8)
+ENDM
+
+MACRO EventBattleTrainersanityDataAlias
+	dw wEventFlags + (\2 / 8)
+	db (\2 % 8)
+Trainersanity_\1::
+.Archipelago_Trainersanity_\1_0
+.Archipelago_Trainersanity_\3_0
+	db NO_ITEM
+	dw wEventFlags + (\1 / 8)
+	db (\1 % 8)
+ENDM
+
+MACRO EventBattleTrainersanity
+	ld hl, Trainersanity_\1
+	farcall LoadEventBattleTrainersanityData
+ENDM
+
+MACRO ScriptCheckTrainersanity
+	EventBattleTrainersanity \1
+	farcall CheckForTrainersanityItem
+ENDM
+
+MACRO CinnabarGymTrainersanity
+	ld a, [.Archipelago_Trainersanity_EVENT_BEAT_CINNABAR_GYM_TRAINER_\1_ITEM_1 + 1]
+	ld [wEndBattleTrainersanityItem], a
+	ld hl, wEventFlags + (EVENT_BEAT_CINNABAR_GYM_TRAINER_\2_ITEM / 8)
+	ld a, l
+	ld [wEndBattleTrainersanityFlagByte], a
+	ld a, h
+	ld [wEndBattleTrainersanityFlagByte + 1], a
+	ld a, (EVENT_BEAT_CINNABAR_GYM_TRAINER_\2_ITEM % 8)
+	ld [wEndBattleTrainersanityFlagBit], a
+ENDM
+
+MACRO CheckItemOrEvent
+	CheckEvent \2
+	jr z, .no\1
+	inc c
+	jr .after\1
+.no\1
+	ld b, \1
+	push bc
+	call IsItemInBag
+	pop bc
+	jr z, .after\1
+	inc c
+.after\1
+ENDM

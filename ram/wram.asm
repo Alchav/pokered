@@ -75,7 +75,17 @@ wTempoModifier:: db
 
 wc0f3:: dw
 
-	ds 11
+wArchipelagoDeathLink:: db
+wCheckDir:: db
+wArchipelagoItemReceived:: db
+wArchipelagoGameStarted:: db
+wArchipelagoForfeitCollect:: db
+wArchipelagoFieldMoveItemUsed:: db
+wOldDamage:: ds 2
+wEffectiveMessage:: db
+wArchipelagoReceiveItemsInMenuAllowed:: db
+
+	ds 1
 
 
 SECTION "Sprite State Data", WRAM0
@@ -1233,11 +1243,14 @@ NEXTU
 wPartyHPBarAttributes:: ds PARTY_LENGTH
 ENDU
 
+UNION
+wItemList:: ds 33
+
+NEXTU
 wGymCityName:: ds 17
+ENDU
 
 wGymLeaderName:: ds NAME_LENGTH
-
-wItemList:: ds 16
 
 wListPointer:: dw
 
@@ -1589,9 +1602,17 @@ wSubAnimTransform::
 	db
 ENDU
 
+UNION
 wEndBattleWinTextPointer:: dw
 wEndBattleLoseTextPointer:: dw
-	ds 2
+
+NEXTU
+wEndBattleTrainersanityItem:: db
+wEndBattleTrainersanityFlagByte:: dw
+wEndBattleTrainersanityFlagBit:: db
+ENDU
+wIncLevel:: db
+wGainedLevel:: db
 wEndBattleTextRomBank:: db
 
 	ds 1
@@ -1719,7 +1740,8 @@ wSavedTileAnimations:: db
 
 wDamage:: dw
 
-	ds 2
+wDontConsumeRepel:: db
+wRepelItemUsed:: db
 
 wRepelRemainingSteps:: db
 
@@ -1929,6 +1951,11 @@ wRivalName:: ds NAME_LENGTH
 ; bit 6 = battle style
 ; 0: Shift
 ; 1: Set
+; bits 4-5 = sound
+; 0: Mono
+; 1: Earphone 1
+; 2: Earphone 2
+; 3: Earphone 3
 ; bits 0-3 = text speed (number of frames to delay after printing a letter)
 ; 1: Fast
 ; 3: Medium
@@ -1937,7 +1964,7 @@ wOptions:: db
 
 wObtainedBadges:: flag_array NUM_BADGES
 
-	ds 1
+wFossilsRevived:: db
 
 ; bit 0: If 0, limit the delay to 1 frame. Note that this has no effect if
 ;        the delay has been disabled entirely through bit 1 of this variable
@@ -2155,7 +2182,8 @@ wCurrentBoxNum:: dw
 ; number of HOF teams
 wNumHoFTeams:: db
 
-wUnusedD5A3:: db
+wUnusedD5A3::
+CrashCheck2:: db
 
 wPlayerCoins:: ds 2 ; BCD
 
@@ -2284,7 +2312,7 @@ wBillsHouseCurScript:: db
 wRoute5GateCurScript:: db
 wPowerPlantCurScript:: ; overload
 wRoute7GateCurScript:: db
-	ds 1
+wVermilionDockScript:: db
 wSSAnne2FCurScript:: db
 wSeafoamIslandsB3FCurScript:: db
 wRoute23CurScript:: db
@@ -2293,7 +2321,15 @@ wRoute18Gate1FCurScript:: db
 	ds 78
 wGameProgressFlagsEnd::
 
-	ds 56
+wArchipelagoItemsReceivedCount:: ds 2
+wArchipelagoProgressiveKeys:: db
+wDexSanity:: flag_array NUM_POKEMON
+
+; bit 1 = Auto Run off
+; bit 0 = AP item received text off
+wArchipelagoOptions:: db
+
+	ds 33
 
 wObtainedHiddenItemsFlags:: flag_array 112
 
@@ -2442,7 +2478,7 @@ wFlags_D733:: db
 ; the game uses this to tell when Elite 4 events need to be reset
 wBeatLorelei:: db
 
-	ds 1
+wExpDisabled:: db
 
 ; bit 0: check if the player is standing on a door and make him walk down a step if so
 ; bit 1: the player is currently stepping down from a door

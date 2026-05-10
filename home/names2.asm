@@ -15,7 +15,16 @@ GetName::
 ; [wPredefBank] = bank of list
 ;
 ; returns pointer to name in de
+	ld a, [wNameListType]
+	cp ITEM_NAME
 	ld a, [wd0b5]
+	jr nz, .gotNameID
+	cp PROGRESSIVE_CARD_KEY
+	jr nz, .gotNameID
+	ld a, [wArchipelagoProgressiveKeys]
+	add PROGRESSIVE_CARD_KEY - 10
+	ld [wd0b5], a
+.gotNameID
 	ld [wd11e], a
 
 	; TM names are separate from item names.

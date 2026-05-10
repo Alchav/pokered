@@ -54,7 +54,7 @@ GaryScript2:
 	xor a
 	ld [wJoyIgnore], a
 	ld hl, wOptions
-	res 7, [hl]  ; Turn on battle animations to make the battle feel more epic.
+	; res 7, [hl]  ; Turn on battle animations to make the battle feel more epic.
 	ld a, $1
 	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID
@@ -62,9 +62,8 @@ GaryScript2:
 	ld hl, wd72d
 	set 6, [hl]
 	set 7, [hl]
-	ld hl, GaryDefeatedText
-	ld de, GaryVictoryText
-	call SaveEndBattleTextPointers
+	xor a
+	ld [wEndBattleTrainersanityItem], a
 	ld a, OPP_RIVAL3
 	ld [wCurOpponent], a
 
@@ -85,6 +84,7 @@ GaryScript3:
 	jp z, ResetGaryScript
 	call UpdateSprites
 	SetEvent EVENT_BEAT_CHAMPION_RIVAL
+	SetEvent EVENT_VICTORY
 	ld a, $f0
 	ld [wJoyIgnore], a
 	ld a, $1
@@ -150,12 +150,37 @@ GaryScript5:
 GaryScript6:
 	ld a, $2
 	ldh [hSpriteIndex], a
-	ld a, SPRITE_FACING_RIGHT
+	ld a, SPRITE_FACING_DOWN
 	ldh [hSpriteFacingDirection], a
 	call SetSpriteFacingDirectionAndDelay
+	xor a
+	ld [wJoyIgnore], a
+	ld a, [wArchipelagoForfeitCollect]
+	ld c, a
+	bit 0, c
+	jr z, .checkCollect
 	ld a, $4
 	ldh [hSpriteIndexOrTextID], a
-	call GaryScript_760c8
+	call DisplayTextID
+	ld a, [wCurrentMenuItem]
+	and a
+	jr nz, .checkCollect
+	set 2, c
+.checkCollect
+	bit 1, c
+	jr z, .donePrompts
+	ld a, $6
+	ldh [hSpriteIndexOrTextID], a
+	call DisplayTextID
+	ld a, [wCurrentMenuItem]
+	and a
+	jr nz, .donePrompts
+	set 3, c
+.donePrompts
+	ld a, c
+	ld [wArchipelagoForfeitCollect], a
+	ld a, $ff
+	ld [wJoyIgnore], a
 	ld a, $7
 	ld [wChampionsRoomCurScript], a
 	ret
@@ -235,6 +260,7 @@ ChampionsRoom_TextPointers:
 	dw GaryText3
 	dw GaryText4
 	dw GaryText5
+	dw GaryText4b
 
 GaryText1:
 	text_asm
@@ -280,7 +306,29 @@ GaryText_76120:
 	text_end
 
 GaryText4:
-	text_far _GaryText_76125
+	text_asm
+	ld hl, GaryText4Prompt
+	call PrintText
+	call YesNoChoice
+	jp TextScriptEnd
+
+GaryText4Prompt:
+	text "OAK: Would you"
+	line "like to release"
+	cont "the remaining"
+	cont "items in your"
+	cont "world?@"
+	text_end
+
+GaryText4b:
+	text_asm
+	ld hl, GaryText4bPrompt
+	call PrintText
+	call YesNoChoice
+	jp TextScriptEnd
+
+GaryText4bPrompt:
+	text_far _GaryText_76125b
 	text_end
 
 GaryText5:

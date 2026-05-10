@@ -49,6 +49,7 @@ PrintBeginningBattleText:
 	call IsItemInBag
 	ld a, [wEnemyMonSpecies2]
 	ld [wcf91], a
+.Archipelago_Ghost_Battle6_1
 	cp RESTLESS_SOUL
 	jr z, .isMarowak
 	ld a, b

@@ -35,19 +35,7 @@ _RocketHideout4Text_4557f::
 	prompt
 
 _RocketHideout4Text_45584::
-	text "I see that you"
-	line "raise #MON"
-	cont "with utmost care."
-
-	para "A child like you"
-	line "would never"
-	cont "understand what I"
-	cont "hope to achieve."
-
-	para "I shall step"
-	line "aside this time!"
-
-	para "I hope we meet"
+	text "I hope we meet"
 	line "again..."
 	done
 

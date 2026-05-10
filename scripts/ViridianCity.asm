@@ -32,9 +32,13 @@ ViridianCityScript2:
 ViridianCityScript_1905b:
 	CheckEvent EVENT_VIRIDIAN_GYM_OPEN
 	ret nz
-	ld a, [wObtainedBadges]
-	cp ~(1 << BIT_EARTHBADGE)
-	jr nz, .gym_closed
+	ld hl, wObtainedBadges
+	ld b, 1
+	call CountSetBits
+	ld a, [wNumSetBits]
+.Archipelago_Option_Viridian_Gym_Badges_1
+	cp 7
+	jr c, .gym_closed
 	SetEvent EVENT_VIRIDIAN_GYM_OPEN
 	ret
 .gym_closed
@@ -44,6 +48,8 @@ ViridianCityScript_1905b:
 	ld a, [wXCoord]
 	cp 32
 	ret nz
+	ld a, [wSpritePlayerStateData1FacingDirection]
+	ld [wCheckDir], a
 	ld a, $f
 	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID
@@ -51,6 +57,13 @@ ViridianCityScript_1905b:
 	ld a, $1
 	ld [wSimulatedJoypadStatesIndex], a
 	ld a, D_DOWN
+	ld b, a
+	ld a, [wCheckDir]
+	cp SPRITE_FACING_DOWN
+	ld a, b
+	jr nz, .setGymDoorMovement
+	ld a, D_UP
+.setGymDoorMovement
 	ld [wSimulatedJoypadStatesEnd], a
 	xor a
 	ld [wSpritePlayerStateData1FacingDirection], a
@@ -70,6 +83,11 @@ ViridianCityScript6:
 	ret
 
 ViridianCityScript_190ab:
+	CheckEvent EVENT_OAK_GOT_PARCEL
+	ret nz
+	ld a, [wMissableObjectFlags]
+	bit 1, a
+	ret nz
 	ld a, [wYCoord]
 	cp 9
 	ret nz
@@ -158,6 +176,13 @@ ViridianCityScript_1914d:
 	ld a, $1
 	ld [wSimulatedJoypadStatesIndex], a
 	ld a, D_DOWN
+	ld b, a
+	ld a, [wSpritePlayerStateData1FacingDirection]
+	cp SPRITE_FACING_DOWN
+	ld a, b
+	jr nz, .setMovement
+	ld a, D_UP
+.setMovement
 	ld [wSimulatedJoypadStatesEnd], a
 	xor a
 	ld [wSpritePlayerStateData1FacingDirection], a

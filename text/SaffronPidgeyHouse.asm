@@ -15,13 +15,17 @@ _SaffronHouse1Text3::
 	text "The COPYCAT is"
 	line "cute! I'm getting"
 	cont "her a # DOLL!"
+	para "Hope no one else"
+	line "gets her one"
+	cont "first and ruins"
+	cont "it!"
 	done
 
 _SaffronHouse1Text4::
 	text "I was given a PP"
 	line "UP as a gift."
 
-	para "It's used for"
-	line "increasing the PP"
-	cont "of techniques!"
+	para "Could they be"
+	line "hinting at"
+	cont "something?"
 	done

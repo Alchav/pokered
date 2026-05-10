@@ -1,8 +1,7 @@
 Func_f1e30::
 	CheckEvent EVENT_GOT_TM18
 	jr nz, .got_item
-	ld hl, TM18PreReceiveText
-	call PrintText
+.Archipelago_Event_Counter
 	lb bc, TM_COUNTER, 1
 	call GiveItem
 	jr nc, .bag_full

@@ -1,22 +1,6 @@
 _MistyPreBattleText::
 	text "Hi, you're a new"
 	line "face!"
-
-	para "What's your policy"
-	line "on #MON? What"
-	cont "is your approach?"
-
-	para "My policy is an"
-	line "all-out offensive"
-	cont "with water-type"
-	cont "#MON!"
-
-	para "MISTY, the world-"
-	line "famous beauty, is"
-	cont "your host!"
-
-	para "Are you ready,"
-	line "sweetie?"
 	done
 
 _TM11ExplanationText::
@@ -49,7 +33,9 @@ _MistyCascadeBadgeInfoText::
 
 _ReceivedTM11Text::
 	text "<PLAYER> received"
-	line "TM11!@"
+	line "@"
+	text_ram wStringBuffer
+	text "!@"
 	text_end
 
 _TM11NoRoomText::
@@ -59,14 +45,8 @@ _TM11NoRoomText::
 
 _ReceivedCascadeBadgeText::
 	text "I can't"
-	line "believe I lost!"
-
-	para "All right!"
-
-	para "You can have the"
-	line "CASCADEBADGE to"
-	cont "show you beat me!"
-	prompt
+	line "believe I lost!@"
+	text_end
 
 _CeruleanGymBattleText1::
 	text "I'm more than good"

@@ -29,9 +29,13 @@ UsedCut:
 	ld [wCutTile], a
 	ld a, 1
 	ld [wActionResultOrTookBattleTurn], a ; used cut
+	ld a, [wArchipelagoFieldMoveItemUsed]
+	and a
+	jr nz, .notItem
 	ld a, [wWhichPokemon]
 	ld hl, wPartyMonNicks
 	call GetPartyMonName
+.notItem
 	ld hl, wd730
 	set 6, [hl]
 	call GBPalWhiteOutWithDelay3

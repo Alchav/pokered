@@ -43,7 +43,7 @@ _CeladonDinerText_491a7::
 
 _ReceivedCoinCaseText::
 	text "<PLAYER> received"
-	line "a @"
+	line "@"
 	text_ram wStringBuffer
 	text "!@"
 	text_end

@@ -141,6 +141,25 @@ SilphCo9TrainerHeader2:
 
 SilphCo9Text1:
 	text_asm
+	ld hl, SplitKeyChecks
+	ld a, [hl]
+	and a
+	jr z, .noSplitKey
+	CheckEvent EVENT_SKC_9F
+	jr nz, .noSplitKey
+.Archipelago_Event_SKC9F
+	lb bc, CARD_KEY_9F, 1
+	call GiveItem
+	jr nc, .bagFull
+	ld hl, DisplayArchipelagoItem
+	call PrintText
+	SetEvent EVENT_SKC_9F
+	jp TextScriptEnd
+.bagFull
+	ld hl, SKC9NoRoomText
+	call PrintText
+	jp TextScriptEnd
+.noSplitKey
 	CheckEvent EVENT_BEAT_SILPH_CO_GIOVANNI
 	jr nz, .asm_5d8dc
 	ld hl, SilphCo9Text_5d8e5
@@ -157,6 +176,10 @@ SilphCo9Text1:
 	call PrintText
 .asm_5d8e2
 	jp TextScriptEnd
+
+SKC9NoRoomText:
+	text_far _TM42NoRoomText
+	text_end
 
 SilphCo9Text_5d8e5:
 	text_far _SilphCo9Text_5d8e5

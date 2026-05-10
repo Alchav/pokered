@@ -207,6 +207,7 @@ SilphCo11Script4:
 	ld hl, SilphCo10Text_62528
 	ld de, SilphCo10Text_62528
 	call SaveEndBattleTextPointers
+	EventBattleTrainersanity EVENT_BEAT_SILPH_CO_GIOVANNI_ITEM
 	ldh a, [hSpriteIndex]
 	ld [wSpriteIndex], a
 	call EngageMapTrainer
@@ -387,6 +388,7 @@ SilphCo11Script11:
 	ld hl, SilphCo11Text_624c2
 	ld de, SilphCo11Text_624c2
 	call SaveEndBattleTextPointers
+	EventBattleTrainersanity EVENT_BEAT_SILPH_CO_11F_TRAINER_0_ITEM
 	ld a, OPP_ROCKET
 	ld [wCurOpponent], a
 	ld a, $2d
@@ -522,8 +524,9 @@ SilphCo11Text1:
 	text_asm
 	CheckEvent EVENT_GOT_MASTER_BALL
 	jp nz, .got_item
-	ld hl, SilphCoPresidentText
-	call PrintText
+	;ld hl, SilphCoPresidentText
+	;call PrintText
+.Archipelago_Event_Silph_Co_President
 	lb bc, MASTER_BALL, 1
 	call GiveItem
 	jr nc, .bag_full
@@ -559,7 +562,36 @@ SilphCoMasterBallNoRoomText:
 	text_end
 
 SilphCo11Text2:
+	text_asm
+	ld hl, SplitKeyChecks
+	ld a, [hl]
+	and a
+	jr z, .noSplitKey
+	CheckEvent EVENT_SKC_11F
+	jr nz, .noSplitKey
+.Archipelago_Event_SKC11F
+	lb bc, CARD_KEY_11F, 1
+	call GiveItem
+	jr nc, .bagFull
+	ld hl, DisplayArchipelagoItem
+	call PrintText
+	SetEvent EVENT_SKC_11F
+	jp TextScriptEnd
+.bagFull
+	ld hl, SKC11NoRoomText
+	call PrintText
+	jp TextScriptEnd
+.noSplitKey
+	ld hl, SilphCo11Text2b
+	call PrintText
+	jp TextScriptEnd
+
+SilphCo11Text2b:
 	text_far _SilphCo11Text2
+	text_end
+
+SKC11NoRoomText:
+	text_far _TM42NoRoomText
 	text_end
 
 SilphCo11Text3:

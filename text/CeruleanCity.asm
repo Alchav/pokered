@@ -1,19 +1,6 @@
 _CeruleanCityText_19668::
-	text "<RIVAL>: Yo!"
-	line "<PLAYER>!"
-
-	para "You're still"
-	line "struggling along"
-	cont "back here?"
-
-	para "I'm doing great!"
-	line "I caught a bunch"
-	cont "of strong and"
-	cont "smart #MON!"
-
-	para "Here, let me see"
-	line "what you caught,"
-	cont "<PLAYER>!"
+	text "Here, let me see"
+	line "what you caught!"
 	done
 
 _CeruleanCityText_1966d::
@@ -29,48 +16,20 @@ _CeruleanCityText_19672::
 	prompt
 
 _CeruleanCityText_19677::
-	text "<RIVAL>: Hey,"
-	line "guess what?"
-
-	para "I went to BILL's"
-	line "and got him to"
-	cont "show me his rare"
-	cont "#MON!"
-
-	para "That added a lot"
-	line "of pages to my"
-	cont "#DEX!"
-
-	para "After all, BILL's"
-	line "world famous as a"
-	cont "#MANIAC!"
-
-	para "He invented the"
-	line "#MON Storage"
-	cont "System on PC!"
-
-	para "Since you're using"
-	line "his system, go"
-	cont "thank him!"
-
-	para "Well, I better"
-	line "get rolling!"
-	cont "Smell ya later!"
+	text "Smell ya later!"
 	done
 
 _CeruleanCityText_196d9::
-	text "Hey! Stay out!"
-	line "It's not your"
-	cont "yard! Huh? Me?"
-
-	para "I'm an innocent"
+	text "I'm an innocent"
 	line "bystander! Don't"
 	cont "you believe me?"
 	done
 
 _ReceivedTM28Text::
 	text "<PLAYER> recovered"
-	line "TM28!@"
+	line "@"
+	text_ram wStringBuffer
+	text "!@"
 	text_end
 
 _ReceivedTM28Text2::
@@ -96,7 +55,7 @@ _CeruleanCityText_196ee::
 
 _CeruleanCityText_196f3::
 	text "OK! I'll return"
-	line "the TM I stole!"
+	line "the item I stole!"
 	prompt
 
 _CeruleanCityText3::

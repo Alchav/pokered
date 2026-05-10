@@ -31,7 +31,7 @@ LoadTilesetHeader:
 	ld b, a
 	ldh a, [hPreviousTileset]
 	cp b
-	jr z, .done
+	; jr z, .done
 .notDungeonTileset
 	ld a, [wDestinationWarpID]
 	cp $ff

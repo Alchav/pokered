@@ -1,5 +1,6 @@
 Route12WildMons:
 	def_grass_wildmons 15 ; encounter rate
+.Archipelago_Wild_Route12_0
 	db 25, ODDISH
 	db 25, BELLSPROUT
 	db 28, PIDGEY

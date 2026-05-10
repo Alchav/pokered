@@ -31,6 +31,8 @@ DisplayTextID::
 	dict TEXT_MON_FAINTED,      DisplayPokemonFaintedText
 	dict TEXT_BLACKED_OUT,      DisplayPlayerBlackedOutText
 	dict TEXT_REPEL_WORE_OFF,   DisplayRepelWoreOffText
+	dict TEXT_RECEIVED_ITEM,    DisplayArchipelagoItemScript
+	dict TEXT_USE_REPEL,        DisplayUseRepelText
 
 	ld a, [wNumSprites]
 	ld e, a
@@ -210,6 +212,10 @@ PlayerBlackedOutText::
 	text_far _PlayerBlackedOutText
 	text_end
 
+DisplayUseRepelText::
+	farcall DisplayUseRepelText_
+	jp CloseTextDisplay
+
 DisplayRepelWoreOffText::
 	ld hl, RepelWoreOffText
 	call PrintText
@@ -217,6 +223,16 @@ DisplayRepelWoreOffText::
 
 RepelWoreOffText::
 	text_far _RepelWoreOffText
+	text_end
+
+DisplayArchipelagoItemScript::
+	ld hl, DisplayArchipelagoItem
+	call PrintText
+	jp AfterDisplayingTextID
+
+DisplayArchipelagoItem::
+	text_far _DisplayArchipelagoItem
+	sound_get_item_1
 	text_end
 
 DisplayPikachuEmotion::

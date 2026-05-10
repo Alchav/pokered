@@ -53,8 +53,9 @@ CeladonCityText5:
 	text_asm
 	CheckEvent EVENT_GOT_TM41
 	jr nz, .asm_7053f
-	ld hl, TM41PreText
-	call PrintText
+	;ld hl, TM41PreText
+	;call PrintText
+.Archipelago_Event_Stranded_Man
 	lb bc, TM_SOFTBOILED, 1
 	call GiveItem
 	jr c, .Success

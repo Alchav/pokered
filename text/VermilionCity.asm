@@ -29,9 +29,6 @@ _SSAnneWelcomeText4::
 _SSAnneWelcomeText9::
 	text "Welcome to S.S."
 	line "ANNE!"
-
-	para "Excuse me, do you"
-	line "have a ticket?"
 	prompt
 
 _SSAnneFlashedTicketText::
@@ -43,13 +40,7 @@ _SSAnneFlashedTicketText::
 	done
 
 _SSAnneNoTicketText::
-	text "<PLAYER> doesn't"
-	line "have the needed"
-	cont "S.S.TICKET."
-
-	para "Sorry!"
-
-	para "You need a ticket"
+	text "You need a ticket"
 	line "to get aboard."
 	done
 

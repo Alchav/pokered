@@ -43,10 +43,18 @@ CeruleanGymMistyPostBattle:
 	ld [wJoyIgnore], a
 
 CeruleanGymReceiveTM11:
-	ld a, $5
+	SetEvent EVENT_BEAT_MISTY
+	CheckEvent EVENT_GOT_CASCADEBADGE
+	jr nz, .Archipelago_Event_Cerulean_Gym
+.Archipelago_Badge_Cerulean_Gym_2
+	lb bc, CASCADEBADGE, 1
+	call GiveItem
+	jr nc, .BagFull
+	ld a, $6
 	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID
-	SetEvent EVENT_BEAT_MISTY
+	SetEvent EVENT_GOT_CASCADEBADGE
+.Archipelago_Event_Cerulean_Gym
 	lb bc, TM_BUBBLEBEAM, 1
 	call GiveItem
 	jr nc, .BagFull
@@ -60,13 +68,8 @@ CeruleanGymReceiveTM11:
 	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID
 .gymVictory
-	ld hl, wObtainedBadges
-	set BIT_CASCADEBADGE, [hl]
 	ld hl, wBeatGymFlags
 	set BIT_CASCADEBADGE, [hl]
-
-	; deactivate gym trainers
-	SetEvents EVENT_BEAT_CERULEAN_GYM_TRAINER_0, EVENT_BEAT_CERULEAN_GYM_TRAINER_1
 
 	jp CeruleanGymResetScripts
 
@@ -91,6 +94,12 @@ MistyText:
 	text_asm
 	CheckEvent EVENT_BEAT_MISTY
 	jr z, .beforeBeat
+	CheckEventReuseA EVENT_GOT_CASCADEBADGE
+	jr nz, .checkTM
+	call CeruleanGymReceiveTM11
+	call DisableWaitingAfterTextDisplay
+	jr .done
+.checkTM
 	CheckEventReuseA EVENT_GOT_TM11
 	jr nz, .afterBeat
 	call z, CeruleanGymReceiveTM11
@@ -109,6 +118,8 @@ MistyText:
 	ld hl, ReceivedCascadeBadgeText
 	ld de, ReceivedCascadeBadgeText
 	call SaveEndBattleTextPointers
+	xor a
+	ld [wEndBattleTrainersanityItem], a
 	ldh a, [hSpriteIndex]
 	ld [wSpriteIndex], a
 	call EngageMapTrainer

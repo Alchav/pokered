@@ -66,7 +66,20 @@ CeladonMartElevator_TextPointers:
 
 CeladonMartElevatorText1:
 	text_asm
+	ld b, LIFT_KEY
+	call IsItemInBag
+.Archipelago_Option_Locked_Elevator_Celadon_0
+	jr .key
+	ld hl, CeladonElevatorKeyText
+	call PrintText
+	jp TextScriptEnd
+.key
 	call CeladonMartElevatorScript_48631
 	ld hl, CeladonMartElevatorWarpMaps
 	predef DisplayElevatorFloorMenu
 	jp TextScriptEnd
+
+CeladonElevatorKeyText:
+	text "It appears to"
+	line "need a key."
+	prompt

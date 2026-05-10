@@ -3,7 +3,8 @@
 ; Pallet Town events
 	const_def
 	const EVENT_FOLLOWED_OAK_INTO_LAB
-	const_skip 2
+	const EVENT_CHECKED_PC
+	const EVENT_GOT_TEA
 	const EVENT_HALL_OF_FAME_DEX_RATING
 	const_skip
 	const EVENT_PLAYER_AT_RIGHT_EXIT_TO_PALLET_TOWN
@@ -26,7 +27,8 @@
 	const_next $28
 	const EVENT_VIRIDIAN_GYM_OPEN
 	const EVENT_GOT_TM42
-	const_skip 2
+	const EVENT_GOT_EARTHBADGE
+	const_skip
 	const EVENT_02C
 	const EVENT_02D
 	const EVENT_02E
@@ -50,7 +52,8 @@
 	const_next $68
 	const EVENT_BOUGHT_MUSEUM_TICKET
 	const EVENT_GOT_OLD_AMBER
-	const_skip 8
+	const EVENT_GOT_BOULDERBADGE
+	const_skip 7
 	const EVENT_BEAT_PEWTER_GYM_TRAINER_0
 	const_skip 3
 	const EVENT_GOT_TM34
@@ -59,7 +62,8 @@
 ; Cerulean City events
 	const_next $98
 	const EVENT_BEAT_CERULEAN_RIVAL
-	const_skip 14
+	const EVENT_GOT_CASCADEBADGE
+	const_skip 13
 	const EVENT_BEAT_CERULEAN_ROCKET_THIEF
 	const EVENT_GOT_BULBASAUR_IN_CERULEAN
 	const_skip 17
@@ -108,7 +112,7 @@
 
 ; Vermilion City events
 	const_next $150
-	const_skip
+	const EVENT_GOT_THUNDERBADGE
 	const EVENT_GOT_BIKE_VOUCHER
 	const EVENT_152
 	const_skip 3
@@ -127,7 +131,8 @@
 ; Celadon City events
 	const_next $180
 	const EVENT_GOT_TM41
-	const_skip 11
+	const EVENT_GOT_RAINBOWBADGE
+	const_skip 10
 	const EVENT_GOT_TM13
 	const EVENT_GOT_TM48
 	const EVENT_GOT_TM49
@@ -150,14 +155,24 @@
 	const EVENT_GOT_20_COINS_2
 	const_skip 2
 	const EVENT_1BF ; ???
-	const_skip 32
+	const EVENT_SKC_1F
+	const EVENT_SKC_4F
+	const EVENT_SKC_5F
+	const EVENT_SKC_6F
+	const EVENT_SKC_7F
+	const EVENT_SKC_8F
+	const EVENT_SKC_9F
+	const EVENT_SKC_10F
+	const EVENT_SKC_11F
+	const_skip 23
 	const EVENT_GOT_COIN_CASE
 
 ; Fuchsia City events
 	const_next $238
 	const EVENT_GOT_HM04
 	const EVENT_GAVE_GOLD_TEETH
-	const_skip 20
+	const EVENT_GOT_SOULBADGE
+	const_skip 19
 	const EVENT_SAFARI_GAME_OVER
 	const EVENT_IN_SAFARI_ZONE
 	const_skip 8
@@ -173,7 +188,8 @@
 ; Cinnabar Island events
 	const_next $278
 	const EVENT_MANSION_SWITCH_ON
-	const_skip 16
+	const EVENT_GOT_VOLCANOBADGE
+	const_skip 15
 	const EVENT_BEAT_MANSION_1_TRAINER_0
 	const_skip 14
 	const EVENT_GOT_TM38
@@ -204,7 +220,8 @@
 ; Saffron City events
 	const_next $340
 	const EVENT_GOT_TM31
-	const_skip 15
+	const EVENT_GOT_MARSHBADGE
+	const_skip 14
 	const EVENT_DEFEATED_FIGHTING_DOJO
 	const EVENT_BEAT_KARATE_MASTER
 	const EVENT_BEAT_FIGHTING_DOJO_TRAINER_0
@@ -561,10 +578,14 @@
 	const EVENT_BEAT_MT_MOON_3_TRAINER_3
 	const EVENT_57E
 	const EVENT_GOT_HELIX_FOSSIL
+	const EVENT_GAVE_DOME_FOSSIL
+	const EVENT_GAVE_HELIX_FOSSIL
+	const EVENT_GAVE_OLD_AMBER
 
 ; S.S. Anne events
 	const_next $5C0
-	const_skip 4
+	const EVENT_BEAT_RIVAL_SS_ANNE
+	const_skip 3
 	const EVENT_BEAT_SS_ANNE_5_TRAINER_0
 	const EVENT_BEAT_SS_ANNE_5_TRAINER_1
 	const_skip 26
@@ -619,7 +640,11 @@
 	const_skip 15
 	const EVENT_BEAT_ROCKET_HIDEOUT_3_TRAINER_0
 	const EVENT_BEAT_ROCKET_HIDEOUT_3_TRAINER_1
-	const_skip 13
+	const_skip 7
+	const EVENT_PRIZE_A
+	const EVENT_PRIZE_B
+	const EVENT_PRIZE_C
+	const_skip 3
 	const EVENT_6A0
 	const_skip
 	const EVENT_BEAT_ROCKET_HIDEOUT_4_TRAINER_0
@@ -731,6 +756,10 @@
 	const_next $8C0
 	const_skip
 	const EVENT_BEAT_MEWTWO
+	const_skip 6
+	const EVENT_SEENTPRIZES
+	const EVENT_BEAT_MEW
+	const EVENT_SEENTBIKESHOP
 
 ; Indigo Plateau events
 	const_next $8E0
