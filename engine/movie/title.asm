@@ -253,7 +253,7 @@ LoadCopyrightTiles:
 	ld hl, vChars2 tile $60
 	lb bc, BANK(NintendoCopyrightLogoGraphics), (TextBoxGraphics + $10 - NintendoCopyrightLogoGraphics) / $10 ; bug: overflows into text box graphics and copies the "A" tile
 	call CopyVideoData
-	hlcoord 2, 7
+	hlcoord 2, 8
 	ld de, CopyrightTextString
 	jp PlaceString
 
