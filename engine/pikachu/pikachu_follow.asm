@@ -370,7 +370,7 @@ SpawnPikachu_::
 	jp nz, Func_fc76a
 	ld a, [hl]
 	and $7f
-	cp $a
+	cp $b
 	jr c, .valid
 	xor a
 .valid
@@ -395,7 +395,7 @@ PointerTable_fc710:
 	dw asm_fc904
 	dw asm_fc937
 	dw asm_fc969
-	dw .nop
+	dw asm_FastPikachuLedgeFollow
 
 .nop:
 	ret
@@ -873,6 +873,8 @@ asm_fc9ee:
 	ret
 
 Func_fca0a:
+	call IsPlayerRunning
+	jr c, FastPikachuLedgeFollow
 	ld hl, wSpritePikachuStateData2WalkAnimationCounter - wSpritePikachuStateData1
 	add hl, bc
 	ld [hl], $8
@@ -882,6 +884,31 @@ Func_fca0a:
 	call AddPikachuStepVector
 	call AddPikachuStepVector
 asm_fca1c:
+	call DoubleAddPikachuStepVectorToScreenPixelCoords
+	call GetPikachuWalkingAnimationSpeed
+	call UpdatePikachuWalkingSprite
+	ld hl, wSpritePikachuStateData2WalkAnimationCounter - wSpritePikachuStateData1
+	add hl, bc
+	dec [hl]
+	ret nz
+	call ResetPikachuStepVector
+	call ComputePikachuFacingDirection
+	ld hl, wSpritePikachuStateData1MovementStatus - wSpritePikachuStateData1
+	add hl, bc
+	ld [hl], $1
+	ret
+
+FastPikachuLedgeFollow:
+	ld hl, wSpritePikachuStateData2WalkAnimationCounter - wSpritePikachuStateData1
+	add hl, bc
+	ld [hl], $4
+	ld hl, wSpritePikachuStateData1MovementStatus - wSpritePikachuStateData1
+	add hl, bc
+	ld [hl], $a
+	call AddPikachuStepVector
+	call AddPikachuStepVector
+asm_FastPikachuLedgeFollow:
+	call DoubleAddPikachuStepVectorToScreenPixelCoords
 	call DoubleAddPikachuStepVectorToScreenPixelCoords
 	call GetPikachuWalkingAnimationSpeed
 	call UpdatePikachuWalkingSprite
