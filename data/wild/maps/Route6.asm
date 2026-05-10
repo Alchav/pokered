@@ -14,6 +14,7 @@ Route6WildMons:
 	end_grass_wildmons
 
 	def_water_wildmons 3 ; encounter rate
+.Archipelago_Wild_Surf_Route6_0
 	db 15, PSYDUCK
 	db 15, PSYDUCK
 	db 15, PSYDUCK

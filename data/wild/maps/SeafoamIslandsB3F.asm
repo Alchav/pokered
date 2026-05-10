@@ -14,6 +14,7 @@ SeafoamIslandsB3FWildMons:
 	end_grass_wildmons
 
 	def_water_wildmons 5 ; encounter rate
+.Archipelago_Wild_Surf_SeafoamIslandsB3F_0
 	db 25, TENTACOOL
 	db 30, TENTACOOL
 	db 20, TENTACOOL

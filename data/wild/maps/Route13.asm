@@ -14,6 +14,7 @@ Route13WildMons:
 	end_grass_wildmons
 
 	def_water_wildmons 3 ; encounter rate
+.Archipelago_Wild_Surf_Route13_0
 	db 15, SLOWPOKE
 	db 15, SLOWPOKE
 	db 15, SLOWPOKE

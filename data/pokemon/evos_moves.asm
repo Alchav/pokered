@@ -1595,6 +1595,7 @@ MetapodEvosMoves:
 	db EV_LEVEL, 10, BUTTERFREE
 	db 0
 ; Learnset
+.Archipelago_Learnset_Metapod_0
 	db 7, HARDEN
 	db 0
 
