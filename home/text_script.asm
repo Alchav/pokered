@@ -174,8 +174,10 @@ DisplayPokemonCenterDialogue::
 	ldh [hItemPrice + 2], a
 
 	inc hl
-	homecall DisplayPokemonCenterDialogue_
-	jp AfterDisplayingTextID
+	homecall_sf DisplayPokemonCenterDialogue_
+	jp c, AfterDisplayingTextID
+	jp CloseTextDisplay
+	;ret ;
 
 DisplaySafariGameOverText::
 	callfar PrintSafariGameOverText

@@ -6,6 +6,7 @@ DisplayPokemonCenterDialogue_::
 	jr z, .regularCenter
 	ld hl, LooksContentText ; if pikachu is sleeping, don't heal
 	call PrintText
+	scf
 	ret
 .regularCenter
 	call SaveScreenTilesToBuffer1 ; save screen
@@ -76,7 +77,10 @@ DisplayPokemonCenterDialogue_::
 	call UpdateSprites
 	call LoadFontTilePatterns
 .done
+	ld a, PLAYER_DIR_DOWN
+	ld [wPlayerMovingDirection], a
 	call UpdateSprites
+	xor a
 	ret
 
 Func_6eaa:

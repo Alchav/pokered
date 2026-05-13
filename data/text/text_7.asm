@@ -164,12 +164,7 @@ _HMCantDeleteText::
 	prompt
 
 _PokemonCenterWelcomeText::
-	text "Welcome to our"
-	line "#MON CENTER!"
-
-	para "We heal your"
-	line "#MON back to"
-	cont "perfect health!"
+	text "I'm on it!"
 	prompt
 
 _ShallWeHealYourPokemonText::
