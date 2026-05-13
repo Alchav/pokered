@@ -79,12 +79,16 @@ MainMenu:
 ; If there's no save file, increment the current menu item so that the numbers
 ; are the same whether or not there's a save file.
 	inc b
+	inc b
 .skipInc
 	ld a, b
 	and a
 	jr z, .choseContinue
-	cp 1
+	cp 2
 	jp z, StartNewGame
+	cp 1
+	jp z, .choseContinue
+	call ClearScreen
 	call DisplayOptionMenu
 	ld a, 1
 	ld [wOptionsInitialized], a
@@ -112,14 +116,23 @@ MainMenu:
 	ld [wPlayerDirection], a
 	ld c, 10
 	call DelayFrames
+	ld a, [wCurrentMenuItem]
+	and a
+	jr z, .dontGoHome
+	CheckEvent EVENT_IN_SAFARI_ZONE
+	jr z, .goHome
+.dontGoHome
 	ld a, [wNumHoFTeams]
 	and a
 	jp z, SpecialEnterMap
 	ld a, [wCurMap] ; map ID
 	cp HALL_OF_FAME
 	jp nz, SpecialEnterMap
+.goHome
 	xor a
 	ld [wDestinationMap], a
+	ld hl, wd72e
+	res 4, [hl] ; reset "no battles" bit
 	ld hl, wd732
 	set 2, [hl] ; fly warp or dungeon warp
 	call SpecialWarpIn
@@ -181,8 +194,8 @@ SpecialEnterMap::
 
 ContinueText:
 	db "CONTINUE"
-	next ""
-	; fallthrough
+	next "PALLET WARP"
+	next "NEW GAME@"
 
 NewGameText:
 	db   "NEW GAME"
