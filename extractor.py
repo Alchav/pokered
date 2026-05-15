@@ -6,6 +6,8 @@ world_addr = "/home/alchav/PycharmProjects/Archipelago/worlds/pokemon_rb/"
 # build pokered so that the baseroms are created along with the .sym files
 # run this script
 
+import subprocess
+
 
 def parse_rom_address(address):
     bank, offset = address.split(":")
@@ -36,6 +38,40 @@ def parse_archipelago_label(symbol, address, address_space):
     if separator and suffix.isdigit():
         return prefix, address + int(suffix)
     return key, address
+
+
+def load_repo_file(ref, path):
+    return subprocess.run(
+        ["git", "-C", pokered_addr, "show", f"{ref}:{path}"],
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout
+
+
+def extract_missable_flags(ref):
+    flags = {}
+    current_value = None
+    for line in load_repo_file(ref, "constants/hide_show_constants.asm").splitlines():
+        stripped = line.strip()
+        if stripped.startswith("const_def"):
+            current_value = 0
+            continue
+        if current_value is None or not stripped.startswith("const "):
+            continue
+
+        parts = stripped.split()
+        if len(parts) < 2:
+            continue
+
+        symbol = parts[1]
+        if not symbol.startswith("HS_"):
+            continue
+
+        flags[symbol] = current_value
+        current_value += 1
+
+    return flags
 
 
 def extract_rom_addresses(sym_file):
@@ -81,6 +117,8 @@ def write_address_dict(file, name, addresses):
 red_addresses, red_wram_addresses = extract_rom_addresses("pokered.sym")
 blue_addresses, blue_wram_addresses = extract_rom_addresses("pokeblue.sym")
 yellow_addresses, yellow_wram_addresses = extract_rom_addresses("pokeyellow.sym")
+red_missable_flags = extract_missable_flags("pokemon-archipelago")
+yellow_missable_flags = extract_missable_flags("yellow-archipelago")
 blue_differences = {
     key: address
     for key, address in blue_addresses.items()
@@ -112,6 +150,10 @@ with open(world_addr + "rom_addresses.py", "w") as file:
         file.write("}\n")
     file.write("\n\n")
     write_address_dict(file, "wram_addresses_yellow", yellow_wram_addresses)
+    file.write("\n\n")
+    write_address_dict(file, "missable_flags_red", red_missable_flags)
+    file.write("\nmissable_flags_blue = missable_flags_red.copy()\n\n")
+    write_address_dict(file, "missable_flags_yellow", yellow_missable_flags)
 
 
 with open(pokered_addr + "pokeblue_orig.gbc", "br") as file:
