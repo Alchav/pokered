@@ -75,9 +75,13 @@ wTempoModifier:: db
 
 	ds 10
 
-wArchipelagoDeathLink:: db
+wArchipelagoDeathLink::
+.Archipelago_Deathlink_0
+	db
 wCheckDir:: db
-wArchipelagoItemReceived:: db
+wArchipelagoItemReceived::
+.Archipelago_APItem_0
+	db
 
 SECTION "Sprite State Data", WRAM0
 
@@ -835,6 +839,7 @@ wSwappedMenuItem::
 ; 1 = bite
 ; 2 = no fish on map
 wRodResponse::
+.Archipelago_Rod_0
 	db
 ENDU
 
@@ -1750,7 +1755,9 @@ wNumBagItems:: db
 ; item, quantity
 wBagItems:: ds BAG_ITEM_CAPACITY * 2 + 1
 
-wPlayerMoney:: ds 3 ; BCD
+wPlayerMoney::
+.Archipelago_Money_0
+	ds 3 ; BCD
 
 wRivalName:: ds NAME_LENGTH
 
@@ -1787,7 +1794,9 @@ wMapMusicROMBank:: db
 ; normally, it is 0. it is 6 when Flash is needed, causing FadePal2 to be used instead of FadePal4
 wMapPalOffset:: db
 
-wCurMap:: db
+wCurMap::
+.Archipelago_CurrentMap_0
+	db
 
 ; pointer to the upper left corner of the current view in the tile block map
 wCurrentTileBlockMapViewPointer:: dw
@@ -1910,12 +1919,16 @@ wCurrentBoxNum:: dw
 ; number of HOF teams
 wNumHoFTeams:: db
 
-CrashCheck2:: db
+CrashCheck2::
+.Archipelago_CrashCheck2_0
+	db
 
 wPlayerCoins:: ds 2 ; BCD
 
 ; bit array of missable objects. set = removed
-wMissableObjectFlags:: flag_array $100
+wMissableObjectFlags::
+.Archipelago_Missable_0
+	flag_array $100
 wMissableObjectFlagsEnd::
 
 	ds 7
@@ -2044,10 +2057,14 @@ wSSAnne2FCurScript:: db
 wSeafoamIslandsB3FCurScript:: db
 wRoute23CurScript:: db
 wSeafoamIslandsB4FCurScript:: db
-wRoute18Gate1FCurScript:: db
+wRoute18Gate1FCurScript::
+	.Archipelago_CrashCheck4_0
+	db
 wGameProgressFlagsEnd::
 
-wObtainedHiddenItemsFlags:: flag_array 112
+wObtainedHiddenItemsFlags::
+.Archipelago_Hidden_0
+	flag_array 112
 
 wObtainedHiddenCoinsFlags:: flag_array 16
 
@@ -2212,12 +2229,16 @@ wCardKeyDoorX:: db
 
 	ds 2
 
-wFirstLockTrashCanIndex:: db
+wFirstLockTrashCanIndex::
+.Archipelago_CrashCheck1_0
+	db
 wSecondLockTrashCanIndex:: db
 
 	ds 2
 
-wEventFlags:: flag_array NUM_EVENTS
+wEventFlags::
+.Archipelago_EventFlag_0
+	flag_array NUM_EVENTS
 
 UNION
 wGrassRate:: db
@@ -2298,14 +2319,22 @@ wDayCareMonOT::   ds NAME_LENGTH
 wDayCareMon:: box_struct wDayCareMon
 
 ;wArchipelagoMaxBadges:: db
-wArchipelagoItemsReceivedCount:: ds 2
-wArchipelagoProgressiveKeys:: db
+wArchipelagoItemsReceivedCount::
+	.Archipelago_ItemIndex_0
+	ds 2
+wArchipelagoProgressiveKeys::
+	.Archipelago_CrashCheck3_0
+	db
 
-wDexSanity:: flag_array NUM_POKEMON
+wDexSanity::
+	.Archipelago_DexSanityFlag_0
+	flag_array NUM_POKEMON
 
 wMainDataEnd::
 
-wArchipelagoGameStarted:: db
+wArchipelagoGameStarted::
+	.Archipelago_GameStatus_0
+	db
 wArchipelagoForfeitCollect:: db
 wArchipelagoFieldMoveItemUsed:: db
 wOldDamage:: ds 2

@@ -19392,8 +19392,10 @@
 00:c0f1 wFrequencyModifier
 00:c0f2 wTempoModifier
 00:c0fd wArchipelagoDeathLink
+00:c0fd wArchipelagoDeathLink.Archipelago_Deathlink_0
 00:c0fe wCheckDir
 00:c0ff wArchipelagoItemReceived
+00:c0ff wArchipelagoItemReceived.Archipelago_APItem_0
 00:c100 wSpriteStateData1
 00:c100 wSpriteDataStart
 00:c100 wSpritePlayerStateData1
@@ -20208,6 +20210,7 @@
 00:cd3d wTrainerInfoTextBoxWidthPlus1
 00:cd3d wStoppingWhichSlotMachineWheel
 00:cd3d wDexMaxSeenMon
+00:cd3d wRodResponse.Archipelago_Rod_0
 00:cd3d wTempSCX
 00:cd3d wPlayerCharacterOAMTile
 00:cd3d wChangeBoxSavedMapTextPointer
@@ -20877,6 +20880,7 @@
 00:d31d wPokedexSeenEnd
 00:d31e wBagItems
 00:d41f wPlayerMoney
+00:d41f wPlayerMoney.Archipelago_Money_0
 00:d422 wRivalName
 00:d42d wOptions
 00:d42e wObtainedBadges
@@ -20886,6 +20890,7 @@
 00:d433 wMapMusicSoundID
 00:d434 wMapMusicROMBank
 00:d435 wMapPalOffset
+00:d436 wCurMap.Archipelago_CurrentMap_0
 00:d436 wCurMap
 00:d437 wCurrentTileBlockMapViewPointer
 00:d439 wYCoord
@@ -20969,8 +20974,10 @@
 00:d614 wCurrentBoxNum
 00:d616 wNumHoFTeams
 00:d617 CrashCheck2
+00:d617 CrashCheck2.Archipelago_CrashCheck2_0
 00:d618 wPlayerCoins
 00:d61a wMissableObjectFlags
+00:d61a wMissableObjectFlags.Archipelago_Missable_0
 00:d63a wMissableObjectFlagsEnd
 00:d641 wd5cd
 00:d642 wMissableObjectList
@@ -21074,6 +21081,8 @@
 00:d6db wRoute23CurScript
 00:d6dc wSeafoamIslandsB4FCurScript
 00:d6dd wRoute18Gate1FCurScript
+00:d6dd wRoute18Gate1FCurScript.Archipelago_CrashCheck4_0
+00:d6de wObtainedHiddenItemsFlags.Archipelago_Hidden_0
 00:d6de wObtainedHiddenItemsFlags
 00:d6de wGameProgressFlagsEnd
 00:d6ec wObtainedHiddenCoinsFlags
@@ -21110,9 +21119,11 @@
 00:d72a wWarpedFromWhichMap
 00:d72d wCardKeyDoorY
 00:d72e wCardKeyDoorX
+00:d731 wFirstLockTrashCanIndex.Archipelago_CrashCheck1_0
 00:d731 wFirstLockTrashCanIndex
 00:d732 wSecondLockTrashCanIndex
 00:d735 wEventFlags
+00:d735 wEventFlags.Archipelago_EventFlag_0
 00:d875 wLinkEnemyTrainerName
 00:d875 wGrassRate
 00:d876 wGrassMons
@@ -21325,9 +21336,13 @@
 00:da66 wDayCareMonSpecialExp
 00:da68 wDayCareMonDVs
 00:da6a wDayCareMonPP
+00:da6e wArchipelagoItemsReceivedCount.Archipelago_ItemIndex_0
 00:da6e wArchipelagoItemsReceivedCount
+00:da70 wArchipelagoProgressiveKeys.Archipelago_CrashCheck3_0
 00:da70 wArchipelagoProgressiveKeys
 00:da71 wDexSanity
+00:da71 wDexSanity.Archipelago_DexSanityFlag_0
+00:da84 wArchipelagoGameStarted.Archipelago_GameStatus_0
 00:da84 wArchipelagoGameStarted
 00:da84 wMainDataEnd
 00:da85 wArchipelagoForfeitCollect
