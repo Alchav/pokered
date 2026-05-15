@@ -169,7 +169,7 @@ SilphCo11Script3:
 	ld [wJoyIgnore], a
 	ld a, $7
 	ldh [hSpriteIndexOrTextID], a
-	call DisplayTextID
+	;call DisplayTextID
 	call GBFadeOutToBlack
 	farcall SaffronCityHideRocketsShowCitizens
 	call UpdateSprites
@@ -204,9 +204,9 @@ SilphCo11Script4:
 	ld hl, wd72d
 	set 6, [hl]
 	set 7, [hl]
-	ld hl, SilphCo10Text_62528
-	ld de, SilphCo10Text_62528
-	call SaveEndBattleTextPointers
+	;ld hl, SilphCo10Text_62528
+	;ld de, SilphCo10Text_62528
+	;call SaveEndBattleTextPointers
 	EventBattleTrainersanity EVENT_BEAT_SILPH_CO_GIOVANNI_ITEM
 	ldh a, [hSpriteIndex]
 	ld [wSpriteIndex], a

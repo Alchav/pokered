@@ -173,14 +173,14 @@ SilphCo7Script3:
 	ld [wJoyIgnore], a
 	ld a, $d
 	ldh [hSpriteIndexOrTextID], a
-	call DisplayTextID
+	;call DisplayTextID
 	call Delay3
 	ld hl, wd72d
 	set 6, [hl]
 	set 7, [hl]
-	ld hl, SilphCo7Text14
-	ld de, SilphCo7Text_51ecd
-	call SaveEndBattleTextPointers
+	;ld hl, SilphCo7Text14
+	;ld de, SilphCo7Text_51ecd
+	;call SaveEndBattleTextPointers
 	EventBattleTrainersanity EVENT_BEAT_SILPH_CO_RIVAL_ITEM
 	ld a, OPP_RIVAL2
 	ld [wCurOpponent], a
@@ -290,8 +290,8 @@ SilphCo7Text1:
 	call PrintText
 	jr .done
 .givelapras
-	ld hl, .MeetLaprasGuyText
-	call PrintText
+	;ld hl, .MeetLaprasGuyText
+	;call PrintText
 .Archipelago_Gift_Lapras_2
 	lb bc, LAPRAS, 15
 	call GivePokemon
@@ -300,8 +300,8 @@ SilphCo7Text1:
 	and a
 	call z, WaitForTextScrollButtonPress
 	call EnableAutoTextBoxDrawing
-	ld hl, .HeresYourLaprasText
-	call PrintText
+	;ld hl, .HeresYourLaprasText
+	;call PrintText
 	ld hl, wd72e
 	set 0, [hl]
 	jr .done
