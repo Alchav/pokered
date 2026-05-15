@@ -75,10 +75,16 @@ wTempoModifier:: db
 
 wc0f3:: dw
 
-wArchipelagoDeathLink:: db
+wArchipelagoDeathLink::
+.Archipelago_Deathlink_0
+	db
 wCheckDir:: db
-wArchipelagoItemReceived:: db
-wArchipelagoGameStarted:: db
+wArchipelagoItemReceived::
+.Archipelago_APItem_0
+	db
+wArchipelagoGameStarted::
+.Archipelago_GameStatus_0
+	db
 wArchipelagoForfeitCollect:: db
 wArchipelagoFieldMoveItemUsed:: db
 wOldDamage:: ds 2
@@ -1012,6 +1018,7 @@ wSwappedMenuItem::
 ; 1 = bite
 ; 2 = no fish on map
 wRodResponse::
+.Archipelago_Rod_0
 wOptionsCursorLocation::
 	db
 
@@ -1941,7 +1948,9 @@ wNumBagItems:: db
 ; item, quantity
 wBagItems:: ds BAG_ITEM_CAPACITY * 2 + 1
 
-wPlayerMoney:: ds 3 ; BCD
+wPlayerMoney::
+.Archipelago_Money_0
+	ds 3 ; BCD
 
 wRivalName:: ds NAME_LENGTH
 
@@ -1981,7 +1990,9 @@ wMapMusicROMBank:: db
 ; normally, it is 0. it is 6 when Flash is needed, causing FadePal2 to be used instead of FadePal4
 wMapPalOffset:: db
 
-wCurMap:: db
+wCurMap::
+.Archipelago_CurrentMap_0
+	db
 
 ; pointer to the upper left corner of the current view in the tile block map
 wCurrentTileBlockMapViewPointer:: dw
@@ -2183,12 +2194,16 @@ wCurrentBoxNum:: dw
 wNumHoFTeams:: db
 
 wUnusedD5A3::
-CrashCheck2:: db
+CrashCheck2::
+.Archipelago_CrashCheck2_0
+	db
 
 wPlayerCoins:: ds 2 ; BCD
 
 ; bit array of missable objects. set = removed
-wMissableObjectFlags:: flag_array $100
+wMissableObjectFlags::
+.Archipelago_Missable_0
+	flag_array $100
 wMissableObjectFlagsEnd::
 
 	ds 7
@@ -2321,17 +2336,28 @@ wRoute18Gate1FCurScript:: db
 	ds 78
 wGameProgressFlagsEnd::
 
-wArchipelagoItemsReceivedCount:: ds 2
-wArchipelagoProgressiveKeys:: db
-wDexSanity:: flag_array NUM_POKEMON
+wArchipelagoItemsReceivedCount::
+.Archipelago_ItemIndex_0
+	ds 2
+wArchipelagoProgressiveKeys::
+.Archipelago_CrashCheck3_0
+	db
+wDexSanity::
+.Archipelago_DexSanityFlag_0
+	flag_array NUM_POKEMON
 
 ; bit 1 = Auto Run off
 ; bit 0 = AP item received text off
 wArchipelagoOptions:: db
 
-	ds 33
+	ds 32
 
-wObtainedHiddenItemsFlags:: flag_array 112
+	.Archipelago_CrashCheck4_0
+	db
+
+wObtainedHiddenItemsFlags::
+.Archipelago_Hidden_0
+	flag_array 112
 
 wObtainedHiddenCoinsFlags:: flag_array 16
 
@@ -2501,12 +2527,16 @@ wCardKeyDoorX:: db
 
 	ds 2
 
-wFirstLockTrashCanIndex:: db
+wFirstLockTrashCanIndex::
+.Archipelago_CrashCheck1_0
+	db
 wSecondLockTrashCanIndex:: db
 
 	ds 2
 
-wEventFlags:: flag_array NUM_EVENTS
+wEventFlags::
+.Archipelago_EventFlag_0
+	flag_array NUM_EVENTS
 
 
 UNION
