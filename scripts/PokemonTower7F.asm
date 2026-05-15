@@ -62,9 +62,10 @@ PokemonTower7Script_60d2a:
 	call PokemonTower7Script_60eaf
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
-	ld a, $4
-	ldh [hSpriteIndexOrTextID], a
-	call DisplayTextID
+	;ld a, $4
+	;ldh [hSpriteIndexOrTextID], a
+	;call DisplayTextID
+	call PokemonTower7Text4asm
 	ld a, $ff
 	ld [wJoyIgnore], a
 	ld a, $1
@@ -145,7 +146,7 @@ PokemonTower7Script6:
 	ld [wJoyIgnore], a
 	ld a, $5
 	ldh [hSpriteIndexOrTextID], a
-	call DisplayTextID
+	;call DisplayTextID
 PokemonTower7Script7:
 	ld hl, wd72d
 	set 6, [hl]
@@ -183,7 +184,7 @@ PokemonTower7Script8:
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	ld a, $6
 	ldh [hSpriteIndexOrTextID], a
-	call DisplayTextID
+	;call DisplayTextID
 	xor a
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	call StopAllMusic
@@ -282,6 +283,7 @@ PokemonTower7Text2:
 PokemonTower7Text4:
 	text_far _PokemonTowerJessieJamesText1
 	text_asm
+PokemonTower7Text4asm:
 	ld c, 10
 	call DelayFrames
 	ld a, PLAYER_DIR_UP

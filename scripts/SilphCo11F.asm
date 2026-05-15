@@ -121,7 +121,7 @@ SilphCo11Script_621c5:
 	ld [wJoyIgnore], a
 	ld a, $3
 	ldh [hSpriteIndexOrTextID], a
-	call DisplayTextID
+	;call DisplayTextID
 	ld a, $3
 	ldh [hSpriteIndex], a
 	call SetSpriteMovementBytesToFF
@@ -245,7 +245,7 @@ SilphCo11Script_6229c:
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	ld a, $8
 	ldh [hSpriteIndexOrTextID], a
-	call DisplayTextID
+	call SilphCo11Text8
 	xor a
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	ld a, $ff
@@ -380,7 +380,7 @@ SilphCo11Script10:
 	call Delay3
 	ld a, $9
 	ldh [hSpriteIndexOrTextID], a
-	call DisplayTextID
+	;call DisplayTextID
 SilphCo11Script11:
 	ld hl, wd72d
 	set 6, [hl]
@@ -418,7 +418,7 @@ SilphCo11Script12:
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	ld a, $a
 	ldh [hSpriteIndexOrTextID], a
-	call DisplayTextID
+	;call DisplayTextID
 	xor a
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	call StopAllMusic
@@ -490,8 +490,8 @@ SilphCo11TrainerHeader0:
 SilphCo11Text4:
 SilphCo11Text6:
 SilphCo11Text8:
-	text_far _SilphCoJessieJamesText1
-	text_asm
+	;text_far _SilphCoJessieJamesText1
+	;text_asm
 	ld c, 10
 	call DelayFrames
 	ld a, $4
@@ -503,7 +503,7 @@ SilphCo11Text8:
 	predef EmotionBubble
 	ld c, 20
 	call DelayFrames
-	jp TextScriptEnd
+	ret ;jp TextScriptEnd
 
 SilphCo11Text9:
 	text_far _SilphCoJessieJamesText2

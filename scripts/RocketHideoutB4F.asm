@@ -108,7 +108,7 @@ RocketHideout4Script_455a5:
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	ld a, $b
 	ldh [hSpriteIndexOrTextID], a
-	call DisplayTextID
+	;call DisplayTextID
 	xor a
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	ld a, $ff
@@ -199,7 +199,7 @@ RocketHideout4Script9:
 	call Delay3
 	ld a, $c
 	ldh [hSpriteIndexOrTextID], a
-	call DisplayTextID
+	;call DisplayTextID
 RocketHideout4Script10:
 	ld hl, wd72d
 	set 6, [hl]
@@ -238,7 +238,7 @@ RocketHideout4Script11:
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	ld a, $d
 	ldh [hSpriteIndexOrTextID], a
-	call DisplayTextID
+	;call DisplayTextID
 	xor a
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	call StopAllMusic
@@ -314,7 +314,7 @@ RocketHideout4Text2:
 	text_end
 
 RocketHideout4Text10:
-	text_far _RocketHideoutJessieJamesText1
+	;text_far _RocketHideoutJessieJamesText1
 	text_asm
 	ld c, 10
 	call DelayFrames

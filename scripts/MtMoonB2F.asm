@@ -244,7 +244,7 @@ MtMoon3Script_49e15:
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	ld a, $c
 	ldh [hSpriteIndexOrTextID], a
-	call DisplayTextID
+	;call DisplayTextID
 	xor a
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	ld a, $1
@@ -323,7 +323,7 @@ MtMoon3Script11:
 	ld [wJoyIgnore], a
 	ld a, $d
 	ldh [hSpriteIndexOrTextID], a
-	call DisplayTextID
+	;call DisplayTextID
 MtMoon3Script12:
 	ld hl, wd72d
 	set 6, [hl]
@@ -362,7 +362,7 @@ MtMoon3Script13:
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	ld a, $e
 	ldh [hSpriteIndexOrTextID], a
-	call DisplayTextID
+	;call DisplayTextID
 	xor a
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	call StopAllMusic
