@@ -217,8 +217,6 @@ _OaksLabPikachuDislikesPokeballsText1::
 _OaksLabPikachuDislikesPokeballsText2::
 	text "OAK: It dislikes"
 	line "# BALLs."
-
-	para "Keep it with you."
 	done
 
 _OaksLabText21::

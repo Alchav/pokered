@@ -134,7 +134,7 @@ OaksLabScript5:
 	ld [wJoyIgnore], a
 	ld a, $d
 	ldh [hSpriteIndexOrTextID], a
-	call DisplayTextID
+	;call DisplayTextID
 	call Delay3
 	ld a, $e
 	ldh [hSpriteIndexOrTextID], a
@@ -146,11 +146,11 @@ OaksLabScript5:
 	ld [wSprite01StateData1FacingDirection], a
 	ld a, $f
 	ldh [hSpriteIndexOrTextID], a
-	call DisplayTextID
+	;call DisplayTextID
 	call Delay3
 	ld a, $10
 	ldh [hSpriteIndexOrTextID], a
-	call DisplayTextID
+	;call DisplayTextID
 	xor a
 	ld [wJoyIgnore], a
 
@@ -317,7 +317,7 @@ OaksLabScript12:
 	call PlayMusic
 	ld a, $b
 	ldh [hSpriteIndexOrTextID], a
-	call DisplayTextID
+	;call DisplayTextID
 	ld a, $1
 	ldh [hNPCPlayerRelativePosPerspective], a
 	ld a, $1
@@ -468,6 +468,7 @@ OaksLabScript16:
 
 OaksLabScript17:
 ; Pikachu comes out
+
 	ld a, SPRITE_FACING_UP
 	ld [wSpritePlayerStateData1FacingDirection], a
 	ld a, $2
@@ -484,7 +485,7 @@ OaksLabScript17:
 OaksLabScript18:
 	ld a, $1b
 	ldh [hSpriteIndexOrTextID], a
-	call DisplayTextID
+	;call DisplayTextID
 	xor a
 	ld [wJoyIgnore], a
 	ld a, $16
@@ -995,16 +996,16 @@ OaksLabBePatientText:
 
 OaksLabText17:
 	text_asm
-	ld hl, OaksLabRivalTakesText1
-	call PrintText
+	;ld hl, OaksLabRivalTakesText1
+	;call PrintText
 	ld hl, OaksLabRivalTakesText2
 	call PrintText
-	ld hl, OaksLabRivalTakesText3
-	call PrintText
-	ld hl, OaksLabRivalTakesText4
-	call PrintText
-	ld hl, OaksLabRivalTakesText5
-	call PrintText
+	;ld hl, OaksLabRivalTakesText3
+	;call PrintText
+	;ld hl, OaksLabRivalTakesText4
+	;call PrintText
+	;ld hl, OaksLabRivalTakesText5
+	;call PrintText
 	jp TextScriptEnd
 
 OaksLabRivalTakesText1:
@@ -1036,8 +1037,8 @@ OaksLabText18:
 	call GetMonName
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
-	ld hl, OaksLabOakGivesText
-	call PrintText
+	;ld hl, OaksLabOakGivesText
+	;call PrintText
 	ld hl, OaksLabRecievedText
 	call PrintText
 	xor a
@@ -1107,7 +1108,7 @@ OaksLabText26:
 	text_asm
 	ldpikacry e, PikachuCry2
 	callfar PlayPikachuSoundClip
-	ld hl, OaksLabPikachuDislikesPokeballsText1
+	ld hl, OaksLabPikachuDislikesPokeballsText2
 	call PrintText
 	jp TextScriptEnd
 

@@ -156,7 +156,7 @@ PalletTownScript5:
 	ld [wcf0d], a
 	ld a, $1
 	ldh [hSpriteIndexOrTextID], a
-	call DisplayTextID
+	;call DisplayTextID
 	ld a, $2
 	ld [wSprite01StateData1MovementStatus], a
 	ld a, SPRITE_FACING_UP
