@@ -1,5 +1,5 @@
 pokered_addr = "/home/alchav/PycharmProjects/pokered/"
-world_addr = "/home/alchav/PycharmProjects/Archipelago/worlds/pokemon_rb/"
+world_addr = "/home/alchav/PycharmProjects/Archipelago/worlds/pokemon_rby/"
 
 # change to the correct folders on your machine
 # put original pokemon files in pokered folder as "pokered_orig.gbc" and "pokeblue_orig.gbc"
