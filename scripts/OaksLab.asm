@@ -946,13 +946,36 @@ OaksLabText6:
 
 OaksLabText7:
 	text_asm
-	ld hl, OaksLabText_1cac2
+	ld a, [wRivalStarter]
+	and a
+	jr nz, .battleAsk
+	ld hl, OaksLabText_1c31d
 	call PrintText
 	jp TextScriptEnd
-
-OaksLabText_1cac2:
-	text_far _OaksLabText_1d340
-	text_end
+.battleAsk
+	ld hl, OaksLabRefightRivalAskText
+	call PrintText
+	ld a, $1
+	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
+	hlcoord 14, 7
+	lb bc, 8, 15
+	ld a, TWO_OPTION_MENU
+	ld [wTextBoxID], a
+	call DisplayTextBoxID
+	ld a, [wMenuExitMethod]
+	cp CHOSE_SECOND_ITEM
+	jp z, TextScriptEnd
+	ld a, OPP_RIVAL1
+	ld [wCurOpponent], a
+	ld a, $1
+	ld [wTrainerNo], a
+	ld a, $1
+	ld [wSpriteIndex], a
+	call GetSpritePosition1
+	ld hl, OaksLabRivalDefeatedText
+	ld de, OaksLabRivalBeatYouText
+	call SaveEndBattleTextPointers
+	jp TextScriptEnd
 
 OaksLabText13:
 	text_asm
@@ -1157,14 +1180,12 @@ OaksLabText25:
 
 OaksLabText8:
 	text_asm
-	ld a, [wRivalStarter]
+	ld a, [wExpDisabled]
 	and a
-	jr nz, .battleAsk
-	ld hl, OaksLabText_1c31d
-	call PrintText
-	jp TextScriptEnd
-.battleAsk
-	ld hl, OaksLabRefightRivalAskText
+	ld hl, OaksLabToggleExpAskTextDisabled
+	jr nz, .printAsk
+	ld hl, OaksLabToggleExpAskText
+.printAsk
 	call PrintText
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
@@ -1175,17 +1196,12 @@ OaksLabText8:
 	call DisplayTextBoxID
 	ld a, [wMenuExitMethod]
 	cp CHOSE_SECOND_ITEM
-	jp z, TextScriptEnd
-	ld a, OPP_RIVAL1
-	ld [wCurOpponent], a
-	ld a, $1
-	ld [wTrainerNo], a
-	ld a, $1
-	ld [wSpriteIndex], a
-	call GetSpritePosition1
-	ld hl, OaksLabRivalDefeatedText
-	ld de, OaksLabRivalBeatYouText
-	call SaveEndBattleTextPointers
+	ld a, [wExpDisabled]
+	jr z, .no
+	ld a, [wExpDisabled]
+	xor 1
+	ld [wExpDisabled], a
+.no
 	jp TextScriptEnd
 
 OaksLabRefightRivalAskText:
@@ -1194,6 +1210,20 @@ OaksLabRefightRivalAskText:
 	cont "battle your rival"
 	cont "again. Would you"
 	cont "like me to do so?"
+	done
+
+OaksLabToggleExpAskText:
+	text "Would you like"
+	line "to have all"
+	cont "experience gains"
+	cont "disabled?"
+	done
+
+OaksLabToggleExpAskTextDisabled:
+	text "Would you like"
+	line "to have"
+	cont "experience gains"
+	cont "re-enabled?"
 	done
 
 OaksLabText9:
