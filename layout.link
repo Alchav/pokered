@@ -233,6 +233,7 @@ WRAM0
 	org $c300
 	"OAM Buffer"
 	"Tilemap"
+	org $c6e8
 	"Overworld Map"
 	"WRAM"
 	"Party Data"

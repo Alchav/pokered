@@ -266,7 +266,7 @@ wYellowIntroAnimatedObjectStructPointer:: db
 wSurfingMinigameDataEnd::
 ENDU
 
-	ds 80
+ds 80
 
 
 SECTION "Overworld Map", WRAM0
@@ -301,7 +301,9 @@ wPrinterStatusReceived:: db
 
 wc6f2:: db
 wc6f3:: db
-	ds 12
+
+
+	ds 12 ; wLYOverrides must be at xx00
 wLYOverrides:: ds $100
 wLYOverridesEnd::
 wLYOverridesBuffer:: ds $100
@@ -2079,7 +2081,7 @@ wPikachuMovementXOffset:: db
 wPikachuMovementYOffset:: db
 wPikachuStepTimer:: db
 wPikachuStepSubtimer:: db
-	ds 5
+	;ds 5 yoink
 wCurPikaMovementDataEnd::
 
 NEXTU
@@ -2101,29 +2103,29 @@ wCurPikaPicAnimObjectFrameTimer:: db
 	ds 1
 wCurPikaPicAnimObjectEnd::
 
-	ds 18
+	ds 13 ; 18 yoink
 ENDU
 
 wPikachuHappiness:: db
 wPikachuMood:: db
 wd472:: db
 wd473:: db
-	ds 1
+	;ds 1 yoink
 wd475:: db
-	ds 4
+	;ds 4 yoink
 wd47a:: db
-	ds 24
+	;ds 24 yoink
 wd492:: db
-	ds 1
+	;ds 1 yoink
 wSurfingMinigameHiScore:: dw ; little-endian BCD
-	ds 1
+	;ds 1 yoink
 wPrinterSettings:: db
 wUnknownSerialFlag_d499:: db
 wPrinterConnectionOpen:: db
 wPrinterOpcode:: db
 wd49c:: db
 
-	ds 19
+	;ds 19
 
 ; number of signs in the current map (up to 16)
 wNumSigns:: db
@@ -2313,7 +2315,7 @@ wCeruleanCaveB1FCurScript:: db
 wVictoryRoad1FCurScript:: db
 	ds 1
 wLancesRoomCurScript:: db
-	ds 4
+	;ds 4 yoink
 wSilphCo10FCurScript:: db
 wSilphCo11FCurScript:: db
 	ds 1
@@ -2333,7 +2335,7 @@ wSeafoamIslandsB3FCurScript:: db
 wRoute23CurScript:: db
 wSeafoamIslandsB4FCurScript:: db
 wRoute18Gate1FCurScript:: db
-	ds 78
+;	ds 78 ; yoink
 wGameProgressFlagsEnd::
 
 wArchipelagoItemsReceivedCount::
@@ -2350,7 +2352,7 @@ wDexSanity::
 ; bit 0 = AP item received text off
 wArchipelagoOptions:: db
 
-	ds 32
+;	ds 32 ; yoink
 
 	.Archipelago_CrashCheck4_0
 	db
@@ -2366,7 +2368,7 @@ wObtainedHiddenCoinsFlags:: flag_array 16
 ; $02 = surfing
 wWalkBikeSurfState:: db
 
-	ds 10
+;	ds 10 ; yoink
 
 wTownVisitedFlag:: flag_array NUM_CITY_MAPS
 
@@ -2378,7 +2380,7 @@ wFossilItem:: db
 ; mon that will result from the item
 wFossilMon:: db
 
-	ds 2
+;	ds 2 ; yoink
 
 ; trainer classes start at OPP_ID_OFFSET
 wEnemyMonOrTrainerClass:: db
@@ -2418,7 +2420,7 @@ wWhichDungeonWarp:: db
 
 wUnusedD71F:: db
 
-	ds 8
+	;ds 8 yoink
 
 ; bit 0: using Strength outside of battle
 ; bit 1: set by IsSurfingAllowed when surfing's allowed, but the caller resets it after checking the result
@@ -2515,24 +2517,24 @@ wd736:: db
 
 wCompletedInGameTradeFlags:: dw
 
-	ds 2
+	;ds 2 yoink
 
 wWarpedFromWhichWarp:: db
 wWarpedFromWhichMap:: db
 
-	ds 2
+	;ds 2 yoink
 
 wCardKeyDoorY:: db
 wCardKeyDoorX:: db
 
-	ds 2
+	;ds 2 yoink
 
 wFirstLockTrashCanIndex::
 .Archipelago_CrashCheck1_0
 	db
 wSecondLockTrashCanIndex:: db
 
-	ds 2
+	;ds 2 yoink
 
 wEventFlags::
 .Archipelago_EventFlag_0
@@ -2543,7 +2545,7 @@ UNION
 wGrassRate:: db
 wGrassMons:: ds 10 * 2
 
-	ds 8
+	;ds 8 yoink
 
 wWaterRate:: db
 wWaterMons:: ds 10 * 2
@@ -2556,7 +2558,7 @@ wLinkEnemyTrainerName:: ds NAME_LENGTH
 
 wSerialEnemyDataBlock:: ; ds $1a8
 
-	ds 9
+	ds 1 ;9 yoink
 
 wEnemyPartyCount:: ds 1
 wEnemyPartySpecies:: ds PARTY_LENGTH + 1
@@ -2584,7 +2586,7 @@ ENDU
 
 wTrainerHeaderPtr:: dw
 
-	ds 6
+	;ds 6 yoink
 
 ; the trainer the player must face after getting a wrong answer in the Cinnabar
 ; gym quiz
@@ -2595,7 +2597,7 @@ wUnusedDA38:: db
 ; mostly copied from map-specific map script pointer and written back later
 wCurMapScript:: db
 
-	ds 7
+	;ds 7 yoink
 
 wPlayTimeHours:: db
 wPlayTimeMaxed:: db
