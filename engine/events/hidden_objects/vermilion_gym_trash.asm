@@ -25,7 +25,8 @@ GymTrashScript:
 	ld b, a
 	ld a, [wGymTrashCanIndex]
 	cp b
-	jr z, .openFirstLock
+	;jr z, .openFirstLock
+	jr z, .openSecondLock
 
 	tx_pre_id VermilionGymTrashText
 	jr .done
