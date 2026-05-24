@@ -77,7 +77,7 @@ WRAM_SYMBOL_KEYS = {
     "wArchipelagoDeathLink": "Deathlink",
     "wArchipelagoItemReceived": "APItem",
     "wArchipelagoGameStarted": "GameStatus",
-    "wRodResponse": "Rod",
+    "wd728": "Rod",
     "wPlayerMoney": "Money",
     "wCurMap": "CurrentMap",
     "CrashCheck2": "CrashCheck2",
