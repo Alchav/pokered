@@ -1,5 +1,5 @@
 pokered_addr = "/home/alchav/PycharmProjects/pokered/"
-world_addr = "/home/alchav/PycharmProjects/Archipelago/worlds/pokemon_rb/"
+world_addr = "/home/alchav/PycharmProjects/Archipelago/worlds/pokemon_rby/"
 
 # change to the correct folders on your machine
 # put original pokemon files in pokered folder as "pokered_orig.gbc" and "pokeblue_orig.gbc"
@@ -8,8 +8,6 @@ world_addr = "/home/alchav/PycharmProjects/Archipelago/worlds/pokemon_rb/"
 
 import os
 import subprocess
-
-
 def parse_rom_address(address):
     bank, offset = address.split(":")
     if int(bank, 16) == 0:
@@ -79,7 +77,7 @@ WRAM_SYMBOL_KEYS = {
     "wArchipelagoDeathLink": "Deathlink",
     "wArchipelagoItemReceived": "APItem",
     "wArchipelagoGameStarted": "GameStatus",
-    "wRodResponse": "Rod",
+    "wd728": "Rod",
     "wPlayerMoney": "Money",
     "wCurMap": "CurrentMap",
     "CrashCheck2": "CrashCheck2",
@@ -90,6 +88,29 @@ WRAM_SYMBOL_KEYS = {
     "wObtainedHiddenItemsFlags": "Hidden",
     "wFirstLockTrashCanIndex": "CrashCheck1",
     "wEventFlags": "EventFlag",
+}
+
+
+# These hooks are emitted by generic macros but do not correspond to AP location checks:
+# alias labels that share a canonical hook, and static encounter trainer headers that already
+# have dedicated Static_Encounter locations.
+IGNORED_ROM_HOOKS = {
+    "Trainersanity_EVENT_BATTLED_RIVAL_IN_OAKS_LAB_ITEM",
+    "Trainersanity_EVENT_FOUND_ROCKET_HIDEOUT_ITEM",
+    "Trainersanity_EVENT_GOT_NUGGET_ITEM",
+    "Trainersanity_EVENT_BEAT_ARTICUNO_ITEM",
+    "Trainersanity_EVENT_BEAT_MEWTWO_ITEM",
+    "Trainersanity_EVENT_BEAT_MEW_ITEM",
+    "Trainersanity_EVENT_BEAT_MOLTRES_ITEM",
+    "Trainersanity_EVENT_BEAT_POWER_PLANT_VOLTORB_0_ITEM",
+    "Trainersanity_EVENT_BEAT_POWER_PLANT_VOLTORB_1_ITEM",
+    "Trainersanity_EVENT_BEAT_POWER_PLANT_VOLTORB_2_ITEM",
+    "Trainersanity_EVENT_BEAT_POWER_PLANT_VOLTORB_3_ITEM",
+    "Trainersanity_EVENT_BEAT_POWER_PLANT_VOLTORB_4_ITEM",
+    "Trainersanity_EVENT_BEAT_POWER_PLANT_VOLTORB_5_ITEM",
+    "Trainersanity_EVENT_BEAT_POWER_PLANT_VOLTORB_6_ITEM",
+    "Trainersanity_EVENT_BEAT_POWER_PLANT_VOLTORB_7_ITEM",
+    "Trainersanity_EVENT_BEAT_ZAPDOS_ITEM",
 }
 
 
@@ -114,7 +135,7 @@ def extract_rom_addresses(sym_file):
                 key, address = parse_archipelago_label(symbol, address, address_space)
                 if address_space == "WRAM":
                     wram_addresses[key] = address
-                else:
+                elif key not in IGNORED_ROM_HOOKS:
                     rom_addresses[key] = address
             elif address_space == "WRAM" and symbol in WRAM_SYMBOL_KEYS:
                 wram_addresses[WRAM_SYMBOL_KEYS[symbol]] = address
