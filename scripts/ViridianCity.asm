@@ -24,7 +24,7 @@ ViridianCityScript0:
 	ret
 
 ViridianCityScript1:
-	call ViridianCityScript_19162
+	ret
 ViridianCityScript2:
 	call ViridianCityScript_1905b
 	ret
@@ -117,9 +117,11 @@ ViridianCityScript_190db:
 	ld [wListScrollOffset], a
 	ld a, BATTLE_TYPE_OLD_MAN
 	ld [wBattleType], a
+.Archipelago_Old_Man_Encounter_Mon_Level_1
 	ld a, 5
 	ld [wCurEnemyLVL], a
-	ld a, RATTATA
+.Archipelago_Old_Man_Encounter_Mon_1
+	ld a, WEEDLE
 	ld [wCurOpponent], a
 	ret
 

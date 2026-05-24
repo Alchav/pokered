@@ -114,21 +114,13 @@ _TM42NoRoomText::
 	line "stuff already."
 	done
 
-_OldManAgainText1::
-	text "Hmm? You want me"
-	line "to show you how"
-	cont "to catch #MON"
-	cont "again?"
+_ViridianCityText_1920f::
+	text "I'll show you"
+	line "how to then."
 	done
 
-_OldManAgainText2::
-	text "Dandy! Watch what"
-	line "I do closely now!"
-	done
-
-_OldManAgainText3::
-	text "Oh... I'm not good"
-	line "enough for you."
+_ViridianCityText_19214::
+	text "No refunds."
 	done
 
 _ViridianCityText8::

@@ -146,15 +146,15 @@ Func_f198e::
 	ret
 
 ViridianCityText_f19b6:
-	text_far _OldManAgainText1
+	text_far _ViridianCityText_1920a
 	text_end
 
 ViridianCityText_f19bb:
-	text_far _OldManAgainText2
+	text_far _ViridianCityText_1920f
 	text_end
 
 ViridianCityText_f19c0:
-	text_far _OldManAgainText3
+	text_far _ViridianCityText_19214
 	text_end
 
 Func_f19c5::

@@ -86,7 +86,7 @@ _levelOrangeText:
 	text "Status:"
 	line "Level Orange."
 
-	para "Yikes!"
+	para "¥▲♀ぉ!"
 	done
 
 levelRedText:
@@ -97,7 +97,7 @@ _levelRedText:
 	text "Status:"
 	line "Level Red."
 
-	para "Oh no!"
+	para "Oh ♂ぁ▼¥!"
 	done
 
 levelCriticalText:
@@ -111,4 +111,5 @@ _levelCriticalText:
 	para "Red alert!"
 
 	para "Red alert!"
+	para "Son of a ♀¥ぅ▷♂!"
 	done

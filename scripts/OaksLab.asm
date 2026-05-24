@@ -132,10 +132,10 @@ OaksLabScript5:
 	SetEvent EVENT_OAK_ASKED_TO_CHOOSE_MON
 	ld a, $fc
 	ld [wJoyIgnore], a
-	ld a, $d
-	ldh [hSpriteIndexOrTextID], a
+	;ld a, $d
+	;ldh [hSpriteIndexOrTextID], a
 	;call DisplayTextID
-	call Delay3
+	;call Delay3
 	ld a, $e
 	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID
@@ -500,7 +500,7 @@ OaksLabScript19:
 	farcall Music_RivalAlternateStart
 	ld a, $13
 	ldh [hSpriteIndexOrTextID], a
-	call DisplayTextID
+	;call DisplayTextID
 	callfar Func_f1be0
 	call OaksLabScript_1c8b9
 	ld a, HS_OAKS_LAB_RIVAL
@@ -544,20 +544,21 @@ OaksLabScript20:
 	ld a, ~(A_BUTTON | B_BUTTON)
 	ld [wJoyIgnore], a
 	call OaksLabScript_1c78e
-	ld a, $14
-	ldh [hSpriteIndexOrTextID], a
-	call DisplayTextID
-	call DelayFrame
-	call OaksLabScript_1c78e
-	ld a, $15
-	ldh [hSpriteIndexOrTextID], a
-	call DisplayTextID
-	call DelayFrame
-	call OaksLabScript_1c78e
-	ld a, $16
-	ldh [hSpriteIndexOrTextID], a
-	call DisplayTextID
-	call DelayFrame
+	;ld a, $14
+	;ldh [hSpriteIndexOrTextID], a
+	;call DisplayTextID
+	;call DelayFrame
+	;call OaksLabScript_1c78e
+	;ld a, $15
+	;ldh [hSpriteIndexOrTextID], a
+	;call DisplayTextID
+	;call DelayFrame
+	;call OaksLabScript_1c78e
+	;ld a, $16
+	;ldh [hSpriteIndexOrTextID], a
+	;call DisplayTextID
+	;call DelayFrame
+
 	ld a, $17
 	ldh [hSpriteIndexOrTextID], a
 	call DisplayTextID
@@ -569,18 +570,18 @@ OaksLabScript20:
 	ld [wMissableObjectIndex], a
 	predef HideObject
 	call OaksLabScript_1c78e
-	ld a, $18
-	ldh [hSpriteIndexOrTextID], a
-	call DisplayTextID
+	;ld a, $18
+	;ldh [hSpriteIndexOrTextID], a
+	;call DisplayTextID
 	ld a, $1
 	ldh [hSpriteIndex], a
 	ld a, SPRITE_FACING_RIGHT
 	ldh [hSpriteFacingDirection], a
 	call SetSpriteFacingDirectionAndDelay
-	call Delay3
-	ld a, $19
-	ldh [hSpriteIndexOrTextID], a
-	call DisplayTextID
+	;call Delay3
+	;ld a, $19
+	;ldh [hSpriteIndexOrTextID], a
+	;call DisplayTextID
 	; Pokedex ownership is set by GiveItem when Oak's reward is POKEDEX.
 	; Randomized non-Pokedex rewards must not unlock Pokedex-gated checks.
 	ld a, $1
@@ -590,6 +591,9 @@ OaksLabScript20:
 	ld [wMissableObjectIndex], a
 	predef HideObject
 	ld a, HS_OLD_MAN
+	ld [wMissableObjectIndex], a
+	predef HideObject
+	ld a, HS_OLD_MAN_1
 	ld [wMissableObjectIndex], a
 	predef ShowObject
 	ld a, [wSavedNPCMovementDirections2Index]
