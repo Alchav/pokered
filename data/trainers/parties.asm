@@ -126,6 +126,7 @@ BugCatcherData:
 	db 19, BEEDRILL, BEEDRILL, 0
 .Archipelago_Trainer_Party_Route_9_BugCatcher_B_0
 	db 20, CATERPIE, WEEDLE, VENONAT, 0
+.Archipelago_Trainer_Party_Viridian_Forest_BugCatcher_D_0
 	db 8, CATERPIE, METAPOD, 0
 
 LassData:
@@ -174,6 +175,7 @@ LassData:
 	db 23, BELLSPROUT, WEEPINBELL, 0
 .Archipelago_Trainer_Party_Celadon_Gym_Lass_B_0
 	db 23, ODDISH, GLOOM, 0
+.Archipelago_Trainer_Party_Viridian_Forest_Lass_A_0
 	db 6, NIDORAN_F, NIDORAN_M, 0
 
 SailorData:
