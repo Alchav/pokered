@@ -88,6 +88,10 @@ TalkToTrainer::
 	ld c, a
 	ld b, FLAG_TEST
 	call TrainerFlagAction      ; read trainer's flag
+
+	ldh a, [hJoyHeld]
+	bit BIT_SELECT, a
+	jr nz, .trainerNotYetFought
 	ld a, c
 	and a
 	jr z, .trainerNotYetFought     ; test trainer's flag
