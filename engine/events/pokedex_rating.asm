@@ -157,25 +157,27 @@ TrainersanityBagFullText:
 	done
 
 CheckForTrainersanityItem::
-	ld a, [wEndBattleTrainersanityItem]
-	and a
-	jr z, .noItem
-	push af
 	ld a, [wEndBattleTrainersanityFlagByte]
 	ld l, a
 	ld a, [wEndBattleTrainersanityFlagByte + 1]
 	ld h, a
 	ld a, [wEndBattleTrainersanityFlagBit]
 	ld c, a
+	push hl
+	push bc
 	ld b, FLAG_TEST
 	predef FlagActionPredef
 	ld a, c
 	and a
-	pop af
 	jr nz, .noItem
+	ld a, [wEndBattleTrainersanityItem]
+	cp NO_ITEM
+	jr z, .noItem
 	ld b, a
 	ld c, 1
 	call GiveItem
+	pop bc
+	pop hl
 	jr nc, .bagFull
 	ld a, [wEndBattleTrainersanityFlagByte]
 	ld l, a
@@ -187,17 +189,16 @@ CheckForTrainersanityItem::
 	predef FlagActionPredef
 	ld hl, DisplayArchipelagoItem
 	call PrintText
-	xor a
-	ld [wEndBattleTrainersanityItem], a
 	scf
 	ret
 .bagFull
 	ld hl, TrainersanityBagFullText
-	call PrintText
+	jp PrintText
 .noItem
-	xor a
-	ld [wEndBattleTrainersanityItem], a
-	and a
+	pop bc
+	pop hl
+	scf
+	ccf
 	ret
 
 EventBattleTrainersanityDataStart:
@@ -222,6 +223,8 @@ EventBattleTrainersanityDataStart:
 	db $ff
 
 LoadEventBattleTrainersanityData::
+	ld h, d
+	ld l, e
 	ld de, wEndBattleTrainersanityItem
 	ld bc, 4
 	jp CopyData

@@ -800,7 +800,10 @@ OaksLabScript_1c9ac:
 	jp TextScriptEnd
 
 OaksLabText3:
+OaksLabText6:
 	text_asm
+	farcall CheckMissingTrainersanity
+	farcall CheckAllDexSanity
 	CheckEvent EVENT_PALLET_AFTER_GETTING_POKEBALLS
 	jr nz, .asm_1c9d9
 	ld hl, wPokedexOwned
@@ -938,10 +941,6 @@ OaksLabText5:
 
 OaksLabText_1caae:
 	text_far _OaksLabText_1d32c
-	text_end
-
-OaksLabText6:
-	text_far _OaksLabText8
 	text_end
 
 OaksLabText7:
