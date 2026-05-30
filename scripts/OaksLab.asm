@@ -808,6 +808,17 @@ OaksLabText6:
 	text_asm
 	farcall CheckMissingTrainersanity
 	farcall CheckAllDexSanity
+	CheckEvent EVENT_BEAT_ROUTE22_RIVAL_1ST_BATTLE
+	jr z, .checkParcelPending
+	CheckEvent EVENT_GOT_POKEBALLS_FROM_OAK
+	jp z, .Archipelago_Event_Oaks_Gift
+.checkParcelPending
+	CheckEvent EVENT_OAK_GOT_PARCEL
+	jr nz, .checkDexRating
+	ld b, OAKS_PARCEL
+	call IsItemInBag
+	jr nz, .asm_1ca3a
+.checkDexRating
 	CheckEvent EVENT_PALLET_AFTER_GETTING_POKEBALLS
 	jr nz, .asm_1c9d9
 	ld hl, wPokedexOwned
@@ -834,7 +845,7 @@ OaksLabText6:
 	cp 2
 	jp nc, .asm_1ca69
 	CheckEvent EVENT_BEAT_ROUTE22_RIVAL_1ST_BATTLE
-	jr nz, .asm_1ca52
+	jr nz, .asm_1ca69
 	CheckEvent EVENT_OAK_GOT_PARCEL
 	jr nz, .asm_1ca4a
 	CheckEventReuseA EVENT_BATTLED_RIVAL_IN_OAKS_LAB
@@ -850,9 +861,6 @@ OaksLabText6:
 	call PrintText
 	jr .asm_1ca6f
 .asm_1ca2b
-	ld b, OAKS_PARCEL
-	call IsItemInBag
-	jr nz, .asm_1ca3a
 	ld hl, OaksLabText_1ca7c
 	call PrintText
 	jr .asm_1ca6f
