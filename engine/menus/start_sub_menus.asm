@@ -171,13 +171,6 @@ StartMenu_Pokemon::
 	jp z, .loop
 	jp CloseTextDisplay
 .surf
-	bit BIT_SOULBADGE, a
-	jp z, .newBadgeRequired
-	farcall IsSurfingAllowed
-	ld hl, wd728
-	bit 1, [hl]
-	res 1, [hl]
-	jp z, .loop
 	ld a, [wcf91]
 	cp STARTER_PIKACHU
 	jr z, .surfingPikachu
