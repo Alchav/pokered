@@ -160,7 +160,7 @@ DisplayEnemyTrainerTextAndStartBattle::
 	ld [wJoyIgnore], a
 	ld a, [wSpriteIndex]
 	ldh [hSpriteIndexOrTextID], a
-	call DisplayTextID
+	;call DisplayTextID
 	; fall through
 
 StartTrainerBattle::
