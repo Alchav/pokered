@@ -530,7 +530,7 @@ Trainersanity_\1::
 ENDM
 
 MACRO EventBattleTrainersanity
-	ld hl, Trainersanity_\1
+	ld de, Trainersanity_\1
 	farcall LoadEventBattleTrainersanityData
 ENDM
 
