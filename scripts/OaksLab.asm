@@ -808,25 +808,12 @@ OaksLabText6:
 	text_asm
 	farcall CheckMissingTrainersanity
 	farcall CheckAllDexSanity
-	CheckEvent EVENT_BEAT_ROUTE22_RIVAL_1ST_BATTLE
-	jr z, .checkParcelPending
-	CheckEvent EVENT_GOT_POKEBALLS_FROM_OAK
-	jp z, .Archipelago_Event_Oaks_Gift
-.checkParcelPending
-	CheckEvent EVENT_OAK_GOT_PARCEL
-	jr nz, .checkDexRating
-	ld b, OAKS_PARCEL
-	call IsItemInBag
-	jr nz, .asm_1ca3a
-.checkDexRating
 	CheckEvent EVENT_PALLET_AFTER_GETTING_POKEBALLS
 	jr nz, .asm_1c9d9
-	ld hl, wPokedexOwned
-	ld b, wPokedexOwnedEnd - wPokedexOwned
-	call CountSetBits
-	ld a, [wNumSetBits]
-	cp 2
-	jr c, .asm_1c9ec
+	CheckEvent EVENT_OAK_GOT_PARCEL
+	jr z, .asm_1c9ec
+	CheckEvent EVENT_GOT_POKEBALLS_FROM_OAK
+	jr z, .asm_1c9ec
 .asm_1c9d9
 	ld hl, OaksLabText_1ca9f
 	call PrintText
@@ -835,17 +822,8 @@ OaksLabText6:
 	predef DisplayDexRating
 	jp .asm_1ca6f
 .asm_1c9ec
-	ld b, POKE_BALL
-	call IsItemInBag
-	jp nz, .asm_1ca69
-	ld hl, wPokedexOwned
-	ld b, wPokedexOwnedEnd - wPokedexOwned
-	call CountSetBits
-	ld a, [wNumSetBits]
-	cp 2
-	jp nc, .asm_1ca69
 	CheckEvent EVENT_BEAT_ROUTE22_RIVAL_1ST_BATTLE
-	jr nz, .asm_1ca69
+	jr nz, .asm_1ca52
 	CheckEvent EVENT_OAK_GOT_PARCEL
 	jr nz, .asm_1ca4a
 	CheckEventReuseA EVENT_BATTLED_RIVAL_IN_OAKS_LAB
@@ -861,6 +839,9 @@ OaksLabText6:
 	call PrintText
 	jr .asm_1ca6f
 .asm_1ca2b
+	ld b, OAKS_PARCEL
+	call IsItemInBag
+	jr nz, .asm_1ca3a
 	ld hl, OaksLabText_1ca7c
 	call PrintText
 	jr .asm_1ca6f
@@ -872,10 +853,11 @@ OaksLabText6:
 	ld hl, OaksLabText28
 	call PrintText
 	jp TextScriptEnd
-.notBagFull
+	.notBagFull
 	ld hl, OaksLabDeliverParcelText
 	call PrintText
 	call OaksLabScript_RemoveParcel
+	SetEvent EVENT_GAVE_PARCEL
 	ld a, $13
 	ld [wOaksLabCurScript], a
 	jr .asm_1ca6f
@@ -895,7 +877,7 @@ OaksLabText6:
 	SetEvent EVENT_GOT_POKEBALLS_FROM_OAK
 	jr .asm_1ca6f
 .bagFull
-	ld hl, OaksLabText28
+	ld hl, Route1Text_1caf3
 	call PrintText
 	jr .asm_1ca6f
 .asm_1ca69
