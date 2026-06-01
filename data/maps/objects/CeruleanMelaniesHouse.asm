@@ -9,6 +9,7 @@ CeruleanMelaniesHouse_Object:
 
 	def_object_events
 	object_event  3,  1, SPRITE_GIRL, STAY, DOWN, 1 ; person
+.Archipelago_Gift_Bulbasaur_Sprite
 	object_event  4,  1, SPRITE_BULBASAUR, STAY, DOWN, 2 ; person
 	object_event  1,  4, SPRITE_ODDISH, STAY, NONE, 3 ; person
 	object_event  5,  3, SPRITE_SANDSHREW, STAY, LEFT, 4 ; person

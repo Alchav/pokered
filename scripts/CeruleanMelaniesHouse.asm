@@ -14,11 +14,13 @@ CeruleanHouse1Text1:
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	CheckEvent EVENT_GOT_BULBASAUR_IN_CERULEAN
 	jr nz, .asm_1cfbf
+	call LoadMelanieGiftMonName
 	ld hl, CeruleanHouse1Text_1cfc8
 	call PrintText
 	ld a, [wPikachuHappiness]
 	cp 147
 	jr c, .asm_1cfb3
+	call LoadMelanieGiftMonName
 	ld hl, CeruleanHouse1Text_1cfce
 	call PrintText
 	call YesNoChoice
@@ -27,12 +29,10 @@ CeruleanHouse1Text1:
 	jr nz, .asm_1cfb6
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
-	ld a, BULBASAUR
-	ld [wd11e], a
-	ld [wcf91], a
-	call GetMonName
+	call LoadMelanieGiftMonName
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
+.Archipelago_Gift_Bulbasaur_2
 	lb bc, BULBASAUR, 10
 	call GivePokemon
 	jr nc, .asm_1cfb3
@@ -56,6 +56,7 @@ CeruleanHouse1Text1:
 	jp TextScriptEnd
 
 .asm_1cfbf
+	call LoadMelanieGiftMonName
 	ld hl, CeruleanHouse1Text_1cfd9
 	call PrintText
 	jp TextScriptEnd
@@ -85,9 +86,13 @@ CeruleanHouse1Text_1cfdf:
 	text_end
 
 CeruleanHouse1Text2:
-	text_far MelanieBulbasaurText
 	text_asm
-	ld a, BULBASAUR
+	call LoadMelanieGiftMonName
+	ld a, [wcf91]
+	push af
+	ld hl, CeruleanHouse1Text_1cfe5
+	call PrintText
+	pop af
 	call PlayCry
 	jp TextScriptEnd
 
@@ -104,3 +109,14 @@ CeruleanHouse1Text4:
 	ld a, SANDSHREW
 	call PlayCry
 	jp TextScriptEnd
+
+LoadMelanieGiftMonName:
+.Archipelago_Gift_Bulbasaur_Name_1
+	ld a, BULBASAUR
+	ld [wd11e], a
+	ld [wcf91], a
+	jp GetMonName
+
+CeruleanHouse1Text_1cfe5:
+	text_far MelanieBulbasaurText
+	text_end

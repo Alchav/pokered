@@ -285,18 +285,17 @@ Route24Text8:
 	text_asm
 	CheckEvent EVENT_54F
 	jr nz, .asm_515d5
+	call LoadDamianGiftMonName
 	ld hl, Route24Text_515de
 	call PrintText
 	call YesNoChoice
 	ld a, [wCurrentMenuItem]
 	and a
 	jr nz, .asm_515d0
-	ld a, CHARMANDER
-	ld [wd11e], a
-	ld [wcf91], a
-	call GetMonName
+	call LoadDamianGiftMonName
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
+.Archipelago_Gift_Charmander_2
 	lb bc, CHARMANDER, 10
 	call GivePokemon
 	jp nc, TextScriptEnd
@@ -315,6 +314,7 @@ Route24Text8:
 	jr .asm_515d8
 
 .asm_515d5
+	call LoadDamianGiftMonName
 	ld hl, Route24Text_515ee
 .asm_515d8
 	call PrintText
@@ -336,3 +336,10 @@ Route24Text_515e9:
 Route24Text_515ee:
 	text_far _Route24DamianText4
 	text_end
+
+LoadDamianGiftMonName:
+.Archipelago_Gift_Charmander_Name_1
+	ld a, CHARMANDER
+	ld [wd11e], a
+	ld [wcf91], a
+	jp GetMonName

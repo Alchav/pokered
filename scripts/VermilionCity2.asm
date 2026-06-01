@@ -1,8 +1,8 @@
 Func_f1a0f::
 	CheckEvent EVENT_GOT_SQUIRTLE_FROM_OFFICER_JENNY
 	jr nz, .asm_f1a69
-	ld a, [wBeatGymFlags]
-	bit 2, a ; THUNDERBADGE
+	call LoadOfficerJennyGiftMonName
+	CheckEvent EVENT_GOT_THUNDERBADGE
 	jr nz, .asm_f1a24
 	ld hl, OfficerJennyText1
 	call PrintText
@@ -15,12 +15,10 @@ Func_f1a0f::
 	ld a, [wCurrentMenuItem]
 	and a
 	jr nz, .asm_f1a62
-	ld a, SQUIRTLE
-	ld [wd11e], a
-	ld [wcf91], a
-	call GetMonName
+	call LoadOfficerJennyGiftMonName
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
+.Archipelago_Gift_Squirtle_2
 	lb bc, SQUIRTLE, 10
 	call GivePokemon
 	ret nc
@@ -40,6 +38,7 @@ Func_f1a0f::
 	ret
 
 .asm_f1a69
+	call LoadOfficerJennyGiftMonName
 	ld hl, OfficerJennyText5
 	call PrintText
 	ret
@@ -64,6 +63,13 @@ OfficerJennyText4:
 OfficerJennyText5:
 	text_far _OfficerJennyText5
 	text_end
+
+LoadOfficerJennyGiftMonName:
+.Archipelago_Gift_Squirtle_Name_1
+	ld a, SQUIRTLE
+	ld [wd11e], a
+	ld [wcf91], a
+	jp GetMonName
 
 Func_f1a8a::
 	ld hl, VermilionCityText_f1a91

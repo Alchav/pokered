@@ -79,10 +79,13 @@ _VermilionCityText6::
 	done
 
 _OfficerJennyText1::
-	text "I just caught a"
-	line "SQUIRTLE that was"
-	cont "always getting"
-	cont "into mischief."
+	text "I just caught"
+	line "a @"
+	text_ram wcd6d
+	text_start
+	cont "that was always"
+	cont "getting into"
+	cont "mischief."
 
 	para "I think it needs a"
 	line "good trainer to"
@@ -96,10 +99,13 @@ _OfficerJennyText2::
 	para "You must be a"
 	line "good trainer!"
 
-	para "I just caught a"
-	line "SQUIRTLE that was"
-	cont "always getting"
-	cont "into mischief."
+	para "I just caught"
+	line "a @"
+	text_ram wcd6d
+	text_start
+	cont "that was always"
+	cont "getting into"
+	cont "mischief."
 
 	para "Would you take"
 	line "good care of it?"
@@ -107,7 +113,9 @@ _OfficerJennyText2::
 
 _OfficerJennyText3::
 	text "OK! Please treat"
-	line "SQUIRTLE right!@"
+	line "@"
+	text_ram wcd6d
+	text " right!@"
 	text_end
 
 _OfficerJennyText4::
@@ -116,7 +124,9 @@ _OfficerJennyText4::
 	done
 
 _OfficerJennyText5::
-	text "How is SQUIRTLE"
+	text "How is @"
+	text_ram wcd6d
+	text_start
 	line "doing?"
 	done
 
