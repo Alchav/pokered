@@ -476,7 +476,10 @@ WarpFound2::
 	ldh a, [hWarpDestinationMap]
 	ld [wCurMap], a
 	cp ROCK_TUNNEL_1F
+	jr z, .rockTunnel
+	cp ROCK_TUNNEL_B1F
 	jr nz, .notRockTunnel
+.rockTunnel
 	ld a, $06
 	ld [wMapPalOffset], a
 	call GBFadeOutToBlack
@@ -519,6 +522,14 @@ WarpFound2::
 	xor a
 	ld [wMapPalOffset], a
 .done
+	ld a, [wCurMap]
+	cp ROCK_TUNNEL_1F
+	jr z, .rtSkip
+	cp ROCK_TUNNEL_B1F
+	jr z, .rtSkip
+	xor a
+	ld [wMapPalOffset], a
+.rtSkip
 	ld hl, wd736
 	set 0, [hl] ; have the player's sprite step out from the door (if there is one)
 	call IgnoreInputForHalfSecond
