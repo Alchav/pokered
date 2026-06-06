@@ -88,8 +88,10 @@ ViridianCityScript1:
 	; set up battle for Old Man
 	ld a, BATTLE_TYPE_OLD_MAN
 	ld [wBattleType], a
+.Archipelago_Old_Man_Encounter_Mon_Level_1
 	ld a, 5
 	ld [wCurEnemyLVL], a
+.Archipelago_Old_Man_Encounter_Mon_1
 	ld a, WEEDLE
 	ld [wCurOpponent], a
 	ld a, $2
