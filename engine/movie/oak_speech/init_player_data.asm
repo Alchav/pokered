@@ -37,6 +37,7 @@ InitPlayerData2:
 	ld a, 0
 	ld [hl], a
 
+	xor a
 	ld [wMonDataLocation], a
 
 	ld hl, wObtainedBadges
