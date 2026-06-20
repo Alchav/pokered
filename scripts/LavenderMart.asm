@@ -6,6 +6,11 @@ LavenderMart_TextPointers:
 	dw LavenderMartText2
 	dw LavenderMartText3
 
+LavenderCashierText::
+.Archipelago_Shop5
+	script_mart GREAT_BALL, SUPER_POTION, REVIVE, ESCAPE_ROPE, SUPER_REPEL, ANTIDOTE, BURN_HEAL, ICE_HEAL, PARLYZ_HEAL
+	ds 30, 0
+
 LavenderMartText2:
 	text_far _LavenderMartText2
 	text_end

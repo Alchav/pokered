@@ -6,6 +6,11 @@ CinnabarMart_TextPointers:
 	dw CinnabarMartText2
 	dw CinnabarMartText3
 
+CinnabarCashierText::
+.Archipelago_Shop8
+	script_mart ULTRA_BALL, GREAT_BALL, HYPER_POTION, MAX_REPEL, ESCAPE_ROPE, FULL_HEAL, REVIVE
+	ds 30, 0
+
 CinnabarMartText2:
 	text_far _CinnabarMartText2
 	text_end

@@ -136,3 +136,8 @@ IndigoGuardText:
 	para "OK then! Please,"
 	line "go right ahead!@"
 	text_end
+
+IndigoCashierText::
+.Archipelago_Shop10
+	script_mart ULTRA_BALL, GREAT_BALL, FULL_RESTORE, MAX_POTION, FULL_HEAL, REVIVE, MAX_REPEL
+	ds 30, 0
