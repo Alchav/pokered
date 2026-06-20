@@ -271,7 +271,7 @@ FanClubText5:
 .receivedvouchertext
 	text_far ReceivedBikeVoucherText
 	sound_get_key_item
-	text_far ExplainBikeVoucherText
+	;text_far ExplainBikeVoucherText
 	text_end
 
 .nostorytext
