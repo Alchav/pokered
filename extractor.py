@@ -1,13 +1,24 @@
-pokered_addr = "/home/alchav/PycharmProjects/pokered/"
-world_addr = "/home/alchav/PycharmProjects/Archipelago/worlds/pokemon_rby/"
-
-# change to the correct folders on your machine
-# put original pokemon files in pokered folder as "pokered_orig.gbc" and "pokeblue_orig.gbc"
-# build pokered so that the baseroms are created along with the .sym files
-# run this script
+EXTRACT_ROM_SETS = "red_blue"  # "red_blue", "yellow", or "both"
 
 import os
 import subprocess
+
+repo_addr = os.path.abspath(os.getcwd()) + os.sep
+world_addr = os.path.abspath(os.path.join(repo_addr, "..", "Archipelago", "worlds", "pokemon_rby")) + os.sep
+
+# change to the correct folders on your machine
+# put original pokemon files in the configured repo folder, such as "pokered_orig.gbc" and "pokeblue_orig.gbc"
+# build the configured repo so that the baseroms are created along with the .sym files
+# run this script
+
+VALID_ROM_SETS = {"red_blue", "yellow", "both"}
+if EXTRACT_ROM_SETS not in VALID_ROM_SETS:
+    raise ValueError(f"EXTRACT_ROM_SETS must be one of {sorted(VALID_ROM_SETS)}")
+
+EXTRACT_RED_BLUE = EXTRACT_ROM_SETS in {"red_blue", "both"}
+EXTRACT_YELLOW = EXTRACT_ROM_SETS in {"yellow", "both"}
+
+
 def parse_rom_address(address):
     bank, offset = address.split(":")
     if int(bank, 16) == 0:
@@ -41,7 +52,7 @@ def parse_archipelago_label(symbol, address, address_space):
 
 def load_repo_file(ref, path):
     return subprocess.run(
-        ["git", "-C", pokered_addr, "show", f"{ref}:{path}"],
+        ["git", "-C", repo_addr, "show", f"{ref}:{path}"],
         check=True,
         capture_output=True,
         text=True,
@@ -117,7 +128,7 @@ IGNORED_ROM_HOOKS = {
 def extract_rom_addresses(sym_file):
     rom_addresses = {}
     wram_addresses = {}
-    with open(pokered_addr + sym_file, "r") as file:
+    with open(repo_addr + sym_file, "r") as file:
         for line in file:
             line = line.strip()
             if not line:
@@ -159,18 +170,41 @@ def write_address_dict(file, name, addresses):
     file.write("}\n")
 
 
+def load_existing_address_dicts():
+    path = world_addr + "rom_addresses.py"
+    if not os.path.exists(path):
+        return {}
+    namespace = {}
+    with open(path, "r") as file:
+        exec(compile(file.read(), path, "exec"), {}, namespace)
+    return namespace
+
+
 def assert_same(name, red_data, blue_data):
     if red_data != blue_data:
         raise AssertionError(f"Red and Blue {name} diverged")
 
 
-red_addresses, red_wram_addresses = extract_rom_addresses("pokered.sym")
-blue_addresses, blue_wram_addresses = extract_rom_addresses("pokeblue.sym")
-yellow_addresses, yellow_wram_addresses = extract_rom_addresses("pokeyellow.sym")
-rb_missable_flags = extract_missable_flags("pokemon-archipelago")
-yellow_missable_flags = extract_missable_flags("yellow-archipelago")
-assert_same("ROM addresses", red_addresses, blue_addresses)
-assert_same("WRAM addresses", red_wram_addresses, blue_wram_addresses)
+existing_addresses = load_existing_address_dicts()
+
+if EXTRACT_RED_BLUE:
+    red_addresses, red_wram_addresses = extract_rom_addresses("pokered.sym")
+    blue_addresses, blue_wram_addresses = extract_rom_addresses("pokeblue.sym")
+    rb_missable_flags = extract_missable_flags("pokemon-archipelago")
+    assert_same("ROM addresses", red_addresses, blue_addresses)
+    assert_same("WRAM addresses", red_wram_addresses, blue_wram_addresses)
+else:
+    red_addresses = existing_addresses["rom_addresses_rb"]
+    red_wram_addresses = existing_addresses["wram_addresses_rb"]
+    rb_missable_flags = existing_addresses["missable_flags_rb"]
+
+if EXTRACT_YELLOW:
+    yellow_addresses, yellow_wram_addresses = extract_rom_addresses("pokeyellow.sym")
+    yellow_missable_flags = extract_missable_flags("yellow-archipelago")
+else:
+    yellow_addresses = existing_addresses["rom_addresses_yellow"]
+    yellow_wram_addresses = existing_addresses["wram_addresses_yellow"]
+    yellow_missable_flags = existing_addresses["missable_flags_yellow"]
 
 with open(world_addr + "rom_addresses.py", "w") as file:
     write_address_dict(file, "rom_addresses_rb", red_addresses)
@@ -185,44 +219,36 @@ with open(world_addr + "rom_addresses.py", "w") as file:
     file.write("\n\n")
     write_address_dict(file, "missable_flags_yellow", yellow_missable_flags)
 
-basepatch_paths = [
-    pokered_addr + "pokeblue_orig.gbc",
-    pokered_addr + "pokered_orig.gbc",
-    pokered_addr + "pokeyellow_orig.gbc",
-    pokered_addr + "pokeblue.gbc",
-    pokered_addr + "pokered.gbc",
-    pokered_addr + "pokeyellow.gbc",
-]
+basepatch_specs = []
+if EXTRACT_RED_BLUE:
+    basepatch_specs += [
+        ("blue", repo_addr + "pokeblue_orig.gbc", repo_addr + "pokeblue.gbc",
+         world_addr + "basepatch_blue.bsdiff4"),
+        ("red", repo_addr + "pokered_orig.gbc", repo_addr + "pokered.gbc",
+         world_addr + "basepatch_red.bsdiff4"),
+    ]
+if EXTRACT_YELLOW:
+    basepatch_specs.append(
+        ("yellow", repo_addr + "pokeyellow_orig.gbc", repo_addr + "pokeyellow.gbc",
+         world_addr + "basepatch_yellow.bsdiff4")
+    )
 
+basepatch_paths = [
+    path for _, original_path, patched_path, _ in basepatch_specs
+    for path in (original_path, patched_path)
+]
 if not all(os.path.exists(path) for path in basepatch_paths):
     print("base ROM files missing; skipping basepatch generation")
 else:
-    with open(pokered_addr + "pokeblue_orig.gbc", "br") as file:
-        blue = bytes(file.read())
-    with open(pokered_addr + "pokered_orig.gbc", "br") as file:
-        red = bytes(file.read())
-    with open(pokered_addr + "pokeyellow_orig.gbc", "br") as file:
-        yellow = bytes(file.read())
-
-    with open(pokered_addr + "pokeblue.gbc", "br") as file:
-        blueap = bytes(file.read())
-    with open(pokered_addr + "pokered.gbc", "br") as file:
-        redap = bytes(file.read())
-    with open(pokered_addr + "pokeyellow.gbc", "br") as file:
-        yellowap = bytes(file.read())
-
     try:
         import bsdiff4
     except ImportError:
         print("bsdiff4 not installed; skipping basepatch generation")
     else:
-        bluepatch = bsdiff4.diff(blue, blueap)
-        redpatch = bsdiff4.diff(red, redap)
-        yellowpatch = bsdiff4.diff(yellow, yellowap)
-
-        with open(world_addr + "basepatch_blue.bsdiff4", "bw") as file:
-            file.write(bluepatch)
-        with open(world_addr + "basepatch_red.bsdiff4", "bw") as file:
-            file.write(redpatch)
-        with open(world_addr + "basepatch_yellow.bsdiff4", "bw") as file:
-            file.write(yellowpatch)
+        for _, original_path, patched_path, patch_path in basepatch_specs:
+            with open(original_path, "br") as file:
+                original = bytes(file.read())
+            with open(patched_path, "br") as file:
+                patched = bytes(file.read())
+            with open(patch_path, "bw") as file:
+                file.write(bsdiff4.diff(original, patched))
