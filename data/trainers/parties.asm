@@ -896,10 +896,10 @@ RocketData:
 ; Jessie & James
 .Archipelago_Trainer_Party_Mt_Moon_B2F_Rocket_Jessie_James_A_0
 	db 14, EKANS, MEOWTH, KOFFING, 0
-.Archipelago_Trainer_Party_Pokemon_Tower_7F_Rocket_Jessie_James_A_0
-	db 25, KOFFING, MEOWTH, EKANS, 0
 .Archipelago_Trainer_Party_Rocket_Hideout_B4F_Rocket_Jessie_James_A_0
 	db 27, MEOWTH, ARBOK, WEEZING, 0
+.Archipelago_Trainer_Party_Pokemon_Tower_7F_Rocket_Jessie_James_A_0
+	db 25, KOFFING, MEOWTH, EKANS, 0
 .Archipelago_Trainer_Party_Silph_Co_11F_Rocket_Jessie_James_A_0
 	db 31, WEEZING, ARBOK, MEOWTH, 0
 ; Unused
