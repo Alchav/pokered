@@ -83,32 +83,17 @@ _OfficerJennyText1::
 	line "a @"
 	text_ram wcd6d
 	text_start
-	cont "that was always"
-	cont "getting into"
-	cont "mischief."
-
-	para "I think it needs a"
-	line "good trainer to"
-	cont "set it straight."
+	db "!"
 	done
 
 _OfficerJennyText2::
-	text "You have the"
-	line "THUNDERBADGE!?"
 
-	para "You must be a"
-	line "good trainer!"
-
-	para "I just caught"
+	text "Would you take"
 	line "a @"
 	text_ram wcd6d
 	text_start
-	cont "that was always"
-	cont "getting into"
-	cont "mischief."
+	db "?"
 
-	para "Would you take"
-	line "good care of it?"
 	done
 
 _OfficerJennyText3::
