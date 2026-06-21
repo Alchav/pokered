@@ -2,8 +2,18 @@ Func_f1a0f::
 	CheckEvent EVENT_GOT_SQUIRTLE_FROM_OFFICER_JENNY
 	jr nz, .asm_f1a69
 	call LoadOfficerJennyGiftMonName
-	CheckEvent EVENT_GOT_THUNDERBADGE
+.Archipelago_Option_Vermilion_City_Jenny_1
+	ld a, 0
+	cp 1
+	jr z, .checkLtSurge
+	ld a, [wObtainedBadges]
+	bit BIT_THUNDERBADGE, a
 	jr nz, .asm_f1a24
+	jr .needsRequirement
+.checkLtSurge
+	CheckEvent EVENT_BEAT_LT_SURGE
+	jr nz, .asm_f1a24
+.needsRequirement
 	ld hl, OfficerJennyText1
 	call PrintText
 	ret
