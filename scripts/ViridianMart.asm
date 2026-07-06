@@ -75,7 +75,7 @@ ViridianMartScript2:
 	ret
 
 ViridianMart_TextPointers:
-	dw ViridianMartText1
+	dw ViridianCashierText
 	dw ViridianMartText2
 	dw ViridianMartText3
 	dw ViridianMartText4
@@ -85,6 +85,8 @@ ViridianMart_TextPointers2:
 	dw ViridianCashierText
 	dw ViridianMartText2
 	dw ViridianMartText3
+	dw ViridianMartText4
+	dw ViridianMartText5
 
 ViridianCashierText::
 .Archipelago_Shop1
